@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+input, button {
+    appearance: none;
+    
+}
+
+.App {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+form {
+    display: block;
+position: relative;
+}
+
+a {
+    text-decoration: none;
+}
+
+.ir {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: polygon(0 0, 0 0, 0 0);
+  }
