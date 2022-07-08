@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
-
+import './addproduct.css'
 const InputDiv = styled.div`
   display: block;
   font-size: 12px;
@@ -33,45 +33,54 @@ const H1 = styled.h1`
   text-align: center;
 `;
 
-
 const Login = () => {
   const [email, setEmail] = useState("");
-const [pw, setPw] = useState("");
+  const [password, setPassword] = useState("");
 
-const handleEmail = (e) => {
-  setEmail(e.target.value);
-};
-
-const handlePw = (e) => {
-  setPw(e.target.value);
-};
-
-async function login() {
- 
-
-  const url = "https://mandarin.api.weniv.co.kr";
-  const reqPath = "/user/login";
-  const loginData = {
-    user: {
-      email: email,
-      password: pw,
-    },
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
   };
-  const res = await fetch(url + reqPath, {
-    method: "POST",
-    headers: {
-      "Content-type": "application/json",
-    },
-    body: JSON.stringify(loginData),
-  });
-  const json = await res.json();
-  console.log(json, "제이손입니다");
 
-  localStorage.setItem("token", json.user.token);
-}
-const handleSubmit = (e) => {
-  e.preventDefault();
-};
+  const handlePw = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const [isActive, setIsActive] = useState(false);
+  const isPassedLogin = () => {
+    email.includes('@') && password.length > 4
+    ? setIsActive(true):
+      setIsActive(false)
+  };
+
+
+
+
+
+  async function login() {
+    
+    const url = "https://mandarin.api.weniv.co.kr";
+    const reqPath = "/user/login";
+    const loginData = {
+      user: {
+        email: email,
+        password: password,
+      },
+    };
+    const res = await fetch(url + reqPath, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(loginData),
+    });
+    const json = await res.json();
+    console.log(json, "제이손입니다");
+
+    localStorage.setItem("token", json.user.token);
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <LoginMain>
@@ -85,6 +94,7 @@ const handleSubmit = (e) => {
               marginBottom={16}
               type="email"
               onChange={handleEmail}
+              onKeyUp={isPassedLogin}
             />
           </InputDiv>
           <InputDiv>
@@ -92,10 +102,11 @@ const handleSubmit = (e) => {
               label="비밀번호"
               marginBottom={16}
               type="password"
-              onChange={handlePw}
+              onChange={handlePw}         
+              onKeyUp={isPassedLogin}
             />
           </InputDiv>
-          <Button onClick={login} content="로그인" />
+           <Button onClick={login} content="로그인" className={isActive ? 'activeBtn' : 'unactiveBtn'}/>
           <SignUP href="#">이메일로 회원가입</SignUP>
         </form>
       </section>

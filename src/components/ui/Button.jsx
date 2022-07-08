@@ -6,7 +6,7 @@ const StyledButton = styled.button`
     padding: 13px 0px;
     border: none;
     border-radius: 44px;
-    background-color: #FFC7A7;
+    /* background-color: #FFC7A7; */
     font-family: 'Spoqa Han Sans Neo';
     font-style: normal;
     font-weight: 500;
@@ -16,7 +16,7 @@ const StyledButton = styled.button`
     color: #FFFFFF;
     cursor: pointer;
     :hover {
-        background-color: #F26E22
+        /* background-color: #F26E22 */
     }
 `
 

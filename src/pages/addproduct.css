@@ -1,0 +1,9 @@
+.unactiveBtn {
+    background-color: red;
+    color: white;
+}
+
+.activeBtn {
+    background-color: purple;
+    color:blanchedalmond;
+}

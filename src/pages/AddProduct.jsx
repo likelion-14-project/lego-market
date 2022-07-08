@@ -3,6 +3,7 @@ import Input from "../components/ui/Input";
 import styled from "styled-components";
 import TopNav from "../components/ui/TopNav";
 import "../hooks/comma";
+import "./addproduct.css"
 const FileLabel = styled.label`
   display: inline-block;
   position: relative;
@@ -54,20 +55,36 @@ const AddProduct = () => {
   const [itemimg, setItemImg] = useState("");
   const token = localStorage.getItem("token");
 
+
   const handleItem = (e) => {
     setItem(e.target.value);
   };
   const handlePrice = (e) => {
     setPrice(e.target.value);
+  
   };
   const handleLink = (e) => {
     setLink(e.target.value);
   };
-  // const handleItemimg = (e) => {
-  //   setItemImg(e.target.src);
-  // };
+
   price = parseInt(price);
-  console.log(typeof price);
+
+
+
+const [isActive, setIsActive] = useState(false);
+const ispassedSave = () => {
+  return item.length>2 && price.length>1 && link.length > 3
+   ? setIsActive(true) 
+   : setIsActive(false);
+};
+
+
+
+
+
+
+
+  price.toLocaleString()
   const url = "https://mandarin.api.weniv.co.kr";
 
   async function imageUpload(file) {
@@ -87,7 +104,8 @@ const AddProduct = () => {
     const file = e.target.files[0];
     const imgSrc = await imageUpload(file);
     document.querySelector("#aa").src = imgSrc;
-  }
+    setItemImg(imgSrc)
+  };
 
   async function add() {
     const reqData = {
@@ -113,7 +131,7 @@ const AddProduct = () => {
 
   return (
     <div>
-      <TopNav content="저장" onClick={add} />
+      <TopNav content="저장" onClick={add} className={isActive ? 'activeBtn' : 'unactiveBtn'} />
       <Section>
         <div className="filebox">
           <LabelDiv>이미지 등록</LabelDiv>
@@ -126,6 +144,7 @@ const AddProduct = () => {
             id="ex-file"
             accept="image/*"
             onChange={handleGetImageUrl}
+            onKeyUP={ispassedSave}
           ></InputFile>
         </div>
         <DIV>
@@ -134,17 +153,17 @@ const AddProduct = () => {
             type="text"
             placeholder="2~15자 이내여야 합니다."
             marginBottom={16}
-            id="itemName"
+            onKeyUP={ispassedSave}
             onChange={handleItem}
           />
         </DIV>
         <div>
           <Input
             label="가격"
-            type="text"
+            type="number"
             placeholder="숫자만 입력 가능합니다."
             marginBottom={16}
-            id="price"
+            onKeyUP={ispassedSave}
             onChange={handlePrice}
           />
         </div>
@@ -154,7 +173,7 @@ const AddProduct = () => {
             type="text"
             placeholder="URL을 입력해 주세요."
             marginBottom={16}
-            id="link"
+            onKeyUP={ispassedSave}
             onChange={handleLink}
           />
         </div>
