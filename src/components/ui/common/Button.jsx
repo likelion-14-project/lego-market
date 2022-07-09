@@ -5,7 +5,7 @@ const StyledButton = styled.button`
     width: 100%;
     border: none;
     border-radius: 44px;
-    background-color: #FFC7A7;
+    background-color: #F26E22;
     font-family: 'Spoqa Han Sans Neo';
     font-style: normal;
     font-weight: 500;
@@ -14,21 +14,32 @@ const StyledButton = styled.button`
     text-align: center;
     color: #FFFFFF;
     cursor: pointer;
-    :hover {
-        background-color: #F26E22
+
+    :disabled {
+        background-color: #FFC7A7;
+        cursor: default;
     }
+
 `
 
 
 function Button(props) {
 
-    const {onClick, content} = props
+    const {onClick, content, disabled} = props
 
     return (   
-        <StyledButton onClick={onClick} className={props.className}>
+        <StyledButton 
+            onClick={onClick} 
+            className={props.className}
+            disabled={disabled}
+        >
             {content}
         </StyledButton>
     )
+}
+
+Button.defaultProps = {
+    disabled : true
 }
 
 export default Button
