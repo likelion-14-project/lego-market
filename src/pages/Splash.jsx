@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-// import fullLogo from "../../../asset/full-logo.png";
-// import fullLogoWhite from "../../../asset/full-logo-white.png";
 // import LoginModal from "../loginModal/LoginModal";
 // import { useNavigate } from "react-router-dom";
 
@@ -38,7 +36,9 @@ const MainHeader = styled.header`
 //4. loginState 가 null 이면 loginModal 올라오도록 하기
 
 function Splash() {
-    // const [logosrc, setLogoSrc] = useState("icons/full-logo.png");
+    const [logosrc, setLogoSrc] = useState(
+        process.env.PUBLIC_URL + `icons/full-logo.png`
+    );
     const [accessToken, setAccessToken] = useState(null);
     const [splashLoading, setsplashLoading] = useState(false);
     const [loginState, setLoginState] = useState(null);
@@ -49,7 +49,7 @@ function Splash() {
         if (accessToken === null) {
             console.log("token not exist");
             setLoginState(false);
-            //     // setLogoSrc("icons/full-logo-white.png");
+            setLogoSrc(process.env.PUBLIC_URL + `icons/full-logo-white.png`);
         } else {
             console.log("token exist");
             setLoginState(true);
@@ -80,7 +80,14 @@ function Splash() {
 
     return (
         <>
-            <MainDiv></MainDiv>
+            <MainDiv>
+                <MainHeader loginState={loginState}>
+                    <img
+                        alt="레고마켓로고"
+                        src={loginState === null ? logosrc : logosrc}
+                    />
+                </MainHeader>
+            </MainDiv>
         </>
     );
 }
