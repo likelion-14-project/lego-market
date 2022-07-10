@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
 function App() {
     return (
         <div className="App">
+            <GlobalStyle />
             <Splash />
         </div>
     );
