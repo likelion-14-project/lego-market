@@ -56,15 +56,17 @@ function ProfileSetting() {
     const [imgSrc, setImgSrc] = useState('')
     const {watch, register, handleSubmit, formState : {errors, isValid}} = useForm({mode : "onChange"})
 
-    // const usernameValid = (a) => {
-    //     watch('username').length >= 2
-    // }
+    const onSubmit = (data) => {
+        console.log(data)
+    }
+
+    console.log('파일 : ', watch('file'))
 
     return (
         <Wrapper>
             <H1>프로필 설정</H1>
             <P>나중에 언제든지 변경할 수 있습니다.</P>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
             <PictureWrapper>
                 <ProfileImage width="110px" imgSrc={imgSrc} />
                 <StyledImageSelect width="36px" setImgSrc={setImgSrc} imgSrc={imgSrc}/>
@@ -91,14 +93,38 @@ function ProfileSetting() {
                 label="계정 ID"
                 placeholder="영문, 숫자, 특수문자(.),(_)만 사용 가능합니다."
                 marginTop={16}
+                register={register}
+                condition={{
+                    required : {
+                        value : true,
+                        message : '필수 값입니다.'
+                    },
+                    pattern : {
+                        value : /^[a-z|A-Z|0-9|.,_]+$/,
+                        message : '*영문, 숫자, 밑줄 및 마침표만 사용할 수 있습니다.'
+                    }
+                }}
+                errors={errors}
             />
             <Input
                 name="intro"
                 label="소개"
                 placeholder="자신과 판매할 상품에 대해 소개해 주세요!"
                 marginTop={16}
+                register={register}
+                condition={{
+                    required : {
+                        value : true,
+                        message : '필수 값입니다.'
+                    },
+                    maxLength : {
+                        value : 20,
+                        message : '20자 까지 입력 가능합니다.'
+                    }
+                }}
+                errors={errors}
             />
-            <StyledButton content="감귤마켓 시작하기" />
+            <StyledButton disabled={!isValid} content="감귤마켓 시작하기" />
             </form>
         </Wrapper>
     )
