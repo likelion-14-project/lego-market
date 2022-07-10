@@ -3,7 +3,6 @@ import Input from "../components/ui/Input";
 import styled from "styled-components";
 import TopNav from "../components/ui/TopNav";
 import "../hooks/comma";
-import "./addproduct.css"
 const FileLabel = styled.label`
   display: inline-block;
   position: relative;
@@ -70,7 +69,7 @@ const AddProduct = () => {
   price = parseInt(price);
 
 
-
+//버튼 활성화
 const [isActive, setIsActive] = useState(false);
 const ispassedSave = () => {
   return item.length>2 && price.length>1 && link.length > 3
@@ -131,7 +130,7 @@ const ispassedSave = () => {
 
   return (
     <div>
-      <TopNav content="저장" onClick={add} className={isActive ? 'activeBtn' : 'unactiveBtn'} />
+      <TopNav content="저장" onClick={add} background={isActive ? `#F26E22` : `#FFC7A7`}  />
       <Section>
         <div className="filebox">
           <LabelDiv>이미지 등록</LabelDiv>

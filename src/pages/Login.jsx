@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
-import './addproduct.css'
 const InputDiv = styled.div`
   display: block;
   font-size: 12px;
@@ -31,6 +30,8 @@ const SignUP = styled.a`
 `;
 const H1 = styled.h1`
   text-align: center;
+  font-weight: 500;
+  font-size: 24px;
 `;
 
 const Login = () => {
@@ -47,17 +48,12 @@ const Login = () => {
 
   const [isActive, setIsActive] = useState(false);
   const isPassedLogin = () => {
-    email.includes('@') && password.length > 4
-    ? setIsActive(true):
-      setIsActive(false)
+    email.includes("@") && password.length > 4
+      ? setIsActive(true)
+      : setIsActive(false);
   };
 
-
-
-
-
   async function login() {
-    
     const url = "https://mandarin.api.weniv.co.kr";
     const reqPath = "/user/login";
     const loginData = {
@@ -77,6 +73,7 @@ const Login = () => {
     console.log(json, "제이손입니다");
 
     localStorage.setItem("token", json.user.token);
+    window.location.replace("/home")
   }
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -102,11 +99,16 @@ const Login = () => {
               label="비밀번호"
               marginBottom={16}
               type="password"
-              onChange={handlePw}         
+              onChange={handlePw}
               onKeyUp={isPassedLogin}
             />
           </InputDiv>
-           <Button onClick={login} content="로그인" className={isActive ? 'activeBtn' : 'unactiveBtn'}/>
+          <Button
+            onClick={login}
+            content="로그인"
+            background={isActive ? `#F26E22` : `#FFC7A7`}
+            disabled={email === '' || password === ''? true:false}
+          />
           <SignUP href="#">이메일로 회원가입</SignUP>
         </form>
       </section>

@@ -43,7 +43,7 @@ display:block;
 
 function Input(props) {
 
-    const {label, marginBottom, placeholder, onChange, type, name, id} = props
+    const {label, marginBottom, placeholder, onChange, type, name, id, onKeyUp} = props
     const inputRef = useRef()
 
     
@@ -51,14 +51,7 @@ function Input(props) {
         <>
             <InputLabel>{label}</InputLabel>
             <InputData
-                required
-                name={name}
-                type={type}
-                onChange={onChange}
-                marginBottom={marginBottom} 
-                placeholder={placeholder}
-                ref={inputRef}
-                id={id}
+                {...props}
             />
         </>
     )
