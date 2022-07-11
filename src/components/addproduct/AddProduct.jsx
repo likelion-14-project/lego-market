@@ -5,7 +5,6 @@ import Input from "../components/ui/Input";
 import WarningMessage from "../components/ui/WarningMessage";
 import styled from "styled-components";
 import TopNav from "../components/ui/TopNav";
-import "../hooks/comma";
 
 const FileLabel = styled.label`
   display: inline-block;
