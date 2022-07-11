@@ -3,30 +3,20 @@ import Router from "./routes/Router";
 import reset from "styled-reset";
 
 const GlobalStyle = createGlobalStyle`
+        :root {
+        --main-color: #F26e22;
+        --gray-text: #767676;
+    }
     ${reset}
     * { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
-    input,
-    button {
-        font-size: inherit;
-        font-family: inherit;
-    }
-
-    button {
-        cursor: pointer;
-    }
-
-
-    a {
-        border-radius: 0.8rem;
-        overflow: hidden;
-    }
-    img {
-        vertical-align: bottom;
-    }
     button{border: none;}
     a{text-decoration: none;}
     a:focus { text-decoration: none; }
     a:hover, a:active { text-decoration: none; }
+    body{
+        width:100%;
+        height:100vh;
+    }
     a {
     color: --gray-text;
     }
@@ -41,10 +31,6 @@ const GlobalStyle = createGlobalStyle`
     .wrapper-account {
         width: 322px;
         padding: 0 34px;
-    }
-    body{
-        width : 100%;
-        height : 100vh;
     }
     .mainWrapper {
         width : 390px;
