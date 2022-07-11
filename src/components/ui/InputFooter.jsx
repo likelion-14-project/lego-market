@@ -41,7 +41,6 @@ function InputFooter({ img, placeholder, btnTxt }) {
             <FooterWap>
                 <BtnImg>
                     <img src={process.env.PUBLIC_URL + img} />
-                    {/* `/images/원하는이미지` */}
                 </BtnImg>
                 <Input type="text" placeholder={placeholder} />
                 <BtnSend>{btnTxt}</BtnSend>
