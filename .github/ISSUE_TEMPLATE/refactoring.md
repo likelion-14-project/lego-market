@@ -1,8 +1,8 @@
 ---
 name: refactoring
 about: '코드 리팩토링 필요할 때 '
-title: ''
-labels: invalid
+title: 'refactoring ♻️: '
+labels: "\b♻️ refactoring"
 assignees: ''
 
 ---
