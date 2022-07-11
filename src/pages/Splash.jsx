@@ -1,36 +1,34 @@
 import React, { useEffect, useState } from "react";
-import styled, { css } from "styled-components";
-// import fullLogo from "../../../asset/full-logo.png";
-// import fullLogoWhite from "../../../asset/full-logo-white.png";
-// import LoginModal from "../loginModal/LoginModal";
-// import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import LoginModal from "../components/login/LoginModal";
+import { useNavigate } from "react-router-dom";
 
-const center = css`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+const MainWrapper = styled.div`
+    width: 390px;
+    margin: auto;
 `;
 
 const MainDiv = styled.div`
-    width: 390px;
     height: 820px;
     text-align: center;
     overflow: hidden;
     box-sizing: content-box;
     background-color: ${(props) =>
-        props.loginState === null ? "#fff" : "orange"};
-    ${center}/* transition: all 600ms cubic-bezier(0.86, 0, 0.5, 1);  */
+        props.loginState === false ? "#fff" : "orange"};
+    margin: auto;
+    /* transition: all 600ms cubic-bezier(0.86, 0, 0.5, 1);  */
 `;
-
 const MainHeader = styled.header`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     transition: all 600ms cubic-bezier(0.86, 0, 0.5, 1);
-    ${center}
     img {
         width: 200px;
         height: 200px;
     }
-    top: ${(props) => (props.loginState === null ? "50%" : "30%")};
+    top: ${(props) => (props.loginState === false ? "50%" : "30%")};
 `;
 //1. 2초딜레이 -> 토큰여부확인
 //2. 토큰이 있으면 loginState = true
@@ -38,50 +36,73 @@ const MainHeader = styled.header`
 //4. loginState 가 null 이면 loginModal 올라오도록 하기
 
 function Splash() {
-    // const [logosrc, setLogoSrc] = useState("icons/full-logo.png");
     const [accessToken, setAccessToken] = useState(null);
-    const [splashLoading, setsplashLoading] = useState(false);
-    const [loginState, setLoginState] = useState(null);
-    // const navigate = useNavigate();
+    const [splashLoading, setsplashLoading] = useState(true);
+    const [loginState, setLoginState] = useState(false);
+    const navigate = useNavigate();
 
     function checkLoginState() {
         console.log("checkLoginState");
-        if (accessToken === null) {
+        const usertoken = accessToken;
+        if (usertoken === null) {
             console.log("token not exist");
-            setLoginState(false);
-            //     // setLogoSrc("icons/full-logo-white.png");
+            setLoginState(true);
         } else {
             console.log("token exist");
+            setsplashLoading(false);
             setLoginState(true);
-            // navigate("home", { state: accessToken });
+            navigate("home", { state: usertoken });
         }
-        setsplashLoading(true);
     }
     function saveToken() {
         const token =
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjQwZjM0MTZjYTFiNjNmODY1NzgwMCIsImV4cCI6MTY2MjM1ODkyNCwiaWF0IjoxNjU3MTc0OTI0fQ.-RKmj5O6CIrTDq4RsQODLjP4CkPRvmGb3kEoTaJLkMo";
-        // 아놔 토큰이 계속 바뀜;
-        setAccessToken(token);
-        // navigate("home" , {state: {accessToken}});
+        localStorage.setItem("token", token);
+        setAccessToken(localStorage.getItem("token"));
+        setLoginState(false);
     }
     function deleteToken() {
-        setAccessToken(null);
         setLoginState(false);
     }
 
     useEffect(() => {
+        setAccessToken(localStorage.getItem("token"));
+    }, [accessToken]);
+
+    useEffect(() => {
         let splash = setTimeout(() => {
             checkLoginState();
-        }, 2000);
+        }, 1500);
         return () => {
             clearTimeout(splash);
         };
-    }, [accessToken]);
+    }, [navigate, loginState, accessToken]);
 
     return (
-        <>
-            <MainDiv></MainDiv>
-        </>
+        <MainWrapper>
+            {accessToken === null ? (
+                <button onClick={saveToken}>토큰 저장 버튼</button>
+            ) : (
+                <button onClick={deleteToken}>토큰 삭제 버튼</button>
+            )}
+            {splashLoading && (
+                <MainDiv loginState={loginState}>
+                    <MainHeader loginState={loginState}>
+                        <img
+                            alt="레고마켓로고"
+                            src={
+                                loginState === false
+                                    ? process.env.PUBLIC_URL +
+                                      "/icons/full-logo.png"
+                                    : process.env.PUBLIC_URL +
+                                      "/icons/full-logo-white.png"
+                            }
+                        />
+                    </MainHeader>
+                    <LoginModal loginState={loginState} />
+                </MainDiv>
+            )}
+        </MainWrapper>
     );
 }
 
