@@ -1,25 +1,40 @@
 import React from "react";
 import styled from "styled-components";
+
 const StyledButton = styled.button`
-  width: 100%;
-  padding: 13px 0px;
-  border: none;
-  border-radius: 44px;
-  background: ${(props) => props.background};
-  font-family: "Spoqa Han Sans Neo";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 18px;
-  text-align: center;
-  color: #ffffff;
-  cursor: pointer;
+    width: 100%;
+    border: none;
+    border-radius: 44px;
+    background-color: #ffc85f;
+    font-family: "Spoqa Han Sans Neo";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+    color: #ffffff;
+    cursor: pointer;
+    :disabled {
+        background-color: #d4d4d4;
+    }
 `;
 
 function Button(props) {
-  const { onClick, content, background, disabled } = props;
+    const { onClick, content, disabled } = props;
 
-  return <StyledButton {...props}>{content}</StyledButton>;
+    return (
+        <StyledButton
+            onClick={onClick}
+            className={props.className}
+            disabled={disabled}
+        >
+            {content}
+        </StyledButton>
+    );
 }
+
+Button.defaultProps = {
+    disabled: true,
+};
 
 export default Button;
