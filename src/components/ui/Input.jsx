@@ -1,60 +1,72 @@
-import React, { useEffect } from 'react'
-import styled from 'styled-components'
-import { useRef } from 'react'
+import styled from "styled-components";
 
+const Wrapper = styled.div`
+    margin-top: ${(props) => props.marginTop}px;
+`;
 
 const InputLabel = styled.label`
-    font-family: 'Spoqa Han Sans Neo';
+    font-family: "Spoqa Han Sans Neo";
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
     color: #767676;
     margin-bottom: 10px;
     display: block;
-    
-`
+`;
 
-const InputData = styled.input.attrs({
-    required : true
-})`
-display:block;
+const InputData = styled.input`
     border: none;
-    border-bottom: 1px solid #DBDBDB;
+    border-bottom: 1px solid #dbdbdb;
     padding-bottom: 8px;
     width: 100%;
     box-sizing: border-box;
-    &:focus-within {
-    display: block;
-    width: 100%;
-    outline: none;
-    border: none;
-    border-bottom: solid 1px #f26e22;
-  }
     ::placeholder {
-        font-family: 'Spoqa Han Sans Neo';
+        font-family: "Spoqa Han Sans Neo";
         font-style: normal;
         font-weight: 400;
         font-size: 14px;
-        color: #DBDBDB;
+        color: #dbdbdb;
     }
-    margin-bottom: ${(props) => (props.marginBottom)}px;
-`
 
+    &:focus-within {
+        width: 100%;
+        outline: none;
+        border: none;
+        border-bottom: solid 1px #f26e22;
+    }
+`;
 
 function Input(props) {
+    const {
+        label,
+        placeholder,
+        type,
+        className,
+        marginTop,
+        register,
+        errors,
+        WarningMessage,
+        onChange
+    } = props;
 
-    const {label, marginBottom, placeholder, onChange, type, name, id, onKeyUp} = props
-    const inputRef = useRef()
-
-    
     return (
-        <>
+        <Wrapper className={className} marginTop={marginTop}>
             <InputLabel>{label}</InputLabel>
-            <InputData
-                {...props}
-            />
-        </>
-    )
+            <InputData type={type} placeholder={placeholder} onChange={onChange} {...register} />
+            {errors[label] && errors[label].type && WarningMessage && (
+                <WarningMessage>{errors[label].message}</WarningMessage>
+            )}
+        </Wrapper>
+    );
 }
 
-export default Input
+Input.defaultProps = {
+    errors: {},
+    name: "",
+    register: () => {},
+    condition: {},
+};
+
+export default Input;
+
+

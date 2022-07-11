@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import Button from './Button'
 
-
 const Wrapper = styled.div`
     padding : 8px 16px;
     border-bottom: 0.5px solid #DBDBDB;

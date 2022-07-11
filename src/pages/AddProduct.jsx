@@ -1,8 +1,12 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import Input from "../components/ui/Input";
+
+import WarningMessage from "../components/ui/WarningMessage";
 import styled from "styled-components";
 import TopNav from "../components/ui/TopNav";
 import "../hooks/comma";
+
 const FileLabel = styled.label`
   display: inline-block;
   position: relative;
@@ -14,10 +18,16 @@ const FileLabel = styled.label`
 `;
 const IMG = styled.img`
   position: absolute;
+  width: ${(props) => props.width}px;
+  height: ${(props) => props.height}px;
+  border-radius: 10px;
+`;
+const UiImg = styled.img`
   bottom: 12px;
   right: 12px;
+  position: absolute;
 `;
-const DIV = styled.div`
+const Form = styled.form`
   margin-bottom: 30px;
 `;
 
@@ -40,52 +50,46 @@ const LabelDiv = styled.div`
 `;
 const Section = styled.section`
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  align-items: center;
   min-width: 390px;
   height: 100vh;
   background-color: #fff;
 `;
 
-const AddProduct = () => {
+const AddProduct = (props) => {
+  const {
+    watch,
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    setError,
+    resetField,
+  } = useForm({
+    mode: "onChange",
+  });
+
+  const { width, height } = props;
   const [item, setItem] = useState("");
   let [price, setPrice] = useState("");
   const [link, setLink] = useState("");
   const [itemimg, setItemImg] = useState("");
   const token = localStorage.getItem("token");
 
-
   const handleItem = (e) => {
     setItem(e.target.value);
   };
   const handlePrice = (e) => {
     setPrice(e.target.value);
-  
   };
   const handleLink = (e) => {
     setLink(e.target.value);
   };
+  // price = parseInt(price);
+  console.log(price)
 
-  price = parseInt(price);
-
-
-//버튼 활성화
-const [isActive, setIsActive] = useState(false);
-const ispassedSave = () => {
-  return item.length>2 && price.length>1 && link.length > 3
-   ? setIsActive(true) 
-   : setIsActive(false);
-};
-
-
-
-
-
-
-
-  price.toLocaleString()
+  //이미지 업로드
   const url = "https://mandarin.api.weniv.co.kr";
-
   async function imageUpload(file) {
     const formData = new FormData();
     formData.append("image", file);
@@ -103,9 +107,9 @@ const ispassedSave = () => {
     const file = e.target.files[0];
     const imgSrc = await imageUpload(file);
     document.querySelector("#aa").src = imgSrc;
-    setItemImg(imgSrc)
-  };
-
+    setItemImg(imgSrc);
+  }
+//서버 등록
   async function add() {
     const reqData = {
       product: {
@@ -126,54 +130,75 @@ const ispassedSave = () => {
     });
     const json = await response.json();
     console.log(json);
+    console.log(item);
+    console.log(price);
   }
 
   return (
     <div>
-      <TopNav content="저장" onClick={add} background={isActive ? `#F26E22` : `#FFC7A7`}  />
+      <TopNav content="저장" onClick={add} disabled={!isValid} />
       <Section>
         <div className="filebox">
           <LabelDiv>이미지 등록</LabelDiv>
           <FileLabel for="ex-file" onChange={handleGetImageUrl}>
-            <img id="aa"></img>
-            <IMG src="./images/img-button.png" />
+            <IMG id="aa" width={"322"} height={"204"}></IMG>
+            <UiImg src="./images/img-button.png" />
           </FileLabel>
           <InputFile
             type="file"
             id="ex-file"
             accept="image/*"
             onChange={handleGetImageUrl}
-            onKeyUP={ispassedSave}
           ></InputFile>
         </div>
-        <DIV>
+        <Form>
           <Input
-            label="상품명"
             type="text"
+            label="상품명"
+            marginTop={16}
             placeholder="2~15자 이내여야 합니다."
-            marginBottom={16}
-            onKeyUP={ispassedSave}
+            register={register("상품명", {
+              required: {
+                value: true,
+                message: "*필수 입력 값입니다.",
+              },
+            })}
+            errors={errors}
+            WarningMessage={WarningMessage}
             onChange={handleItem}
           />
-        </DIV>
+        </Form>
         <div>
           <Input
-            label="가격"
             type="number"
-            placeholder="숫자만 입력 가능합니다."
-            marginBottom={16}
-            onKeyUP={ispassedSave}
+            label="가격"
+            marginTop={16}
+            register={register("가격", {
+              required: {
+                value: true,
+                message: "*필수 입력 값입니다.",
+              },
+            })}
+            errors={errors}
             onChange={handlePrice}
+            WarningMessage={WarningMessage}
           />
         </div>
         <div>
           <Input
-            label="판매 링크"
             type="text"
-            placeholder="URL을 입력해 주세요."
-            marginBottom={16}
-            onKeyUP={ispassedSave}
+            label="판매 링크"
+            marginTop={16}
+            placeholder="URL을 입력해 주세요"
+            register={register("판매 링크", {
+              required: {
+                value: true,
+                message: "*필수 입력 값입니다.",
+              },
+            })}
+            errors={errors}
             onChange={handleLink}
+            WarningMessage={WarningMessage}
           />
         </div>
       </Section>
