@@ -2,32 +2,51 @@ import React from "react";
 import styled from "styled-components";
 
 const FooterWap = styled.footer`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 260px;
-    padding: 13px 20px 12px 16px;
-    background: #ffffff;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    min-width: 390px;
+    width: 100%;
+    background-color: #fff;
+    z-index: 10;
+    border-top: 0.5px solid #c4c4c4;
 `;
 
-const Input = styled.input`
+const Section = styled.section`
+    position: relative;
+    display: flex;
+    align-items: center;
     width: 100%;
-    margin: 0 15px 0;
-    outline: none;
-    border: none;
-    padding: 15px 0 15px;
-    font-weight: 400;
-    font-size: 14px;
+    height: 60px;
+    padding: 0 14px;
 `;
+
 const BtnImg = styled.button`
     display: flex;
     border: none;
     background: none;
     cursor: pointer;
 `;
+const InputLabel = styled.label`
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+`;
+
+const Input = styled.input`
+    width: calc(100% - 128px);
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 400;
+    margin: 0 10px;
+    border: none;
+    outline: none;
+`;
 
 const BtnSend = styled.button`
-    display: flex;
     border: none;
     background: none;
     cursor: pointer;
@@ -35,17 +54,18 @@ const BtnSend = styled.button`
     color: #c4c4c4;
 `;
 
-function InputFooter({ img, placeholder, btnTxt }) {
+function InputFooter({ img, ir, placeholder, btnTxt }) {
     return (
-        <>
-            <FooterWap>
+        <FooterWap>
+            <Section>
                 <BtnImg>
                     <img src={process.env.PUBLIC_URL + img} />
                 </BtnImg>
+                <label className="ir">{ir}</label>
                 <Input type="text" placeholder={placeholder} />
                 <BtnSend>{btnTxt}</BtnSend>
-            </FooterWap>
-        </>
+            </Section>
+        </FooterWap>
     );
 }
 
