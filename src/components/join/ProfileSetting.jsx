@@ -48,7 +48,9 @@ const StyledButton = styled(Button)`
     margin-top: 30px;
 `
 
-function ProfileSetting() {
+function ProfileSetting(props) {
+
+    const {account} = props
 
     const [imgSrc, setImgSrc] = useState(null)
 
@@ -91,8 +93,33 @@ function ProfileSetting() {
     }
 
 
-    const onValid = (data) => {
-        console.log(data)
+    const onValid = async (data) => {
+        try {
+            const url = "https://mandarin.api.weniv.co.kr/user"
+            const reqData = {
+                    "user": {
+                            "username": data["사용자 이름"],
+                            "email": account.email,
+                            "password": account.password,
+                            "accountname": data["계정 ID"],
+                            "intro": data["소개"],
+                            "image": imgSrc
+                    }
+            }
+    
+            const response = await fetch(url,{
+                method : "POST",
+                headers : {
+                    "Content-type" : "application/json"
+                },
+                body : JSON.stringify(reqData)
+            })
+    
+            const json = await response.json()
+            console.log(json)
+        } catch(err) {
+            console.error(err)
+        }
     }
 
 
