@@ -3,9 +3,12 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const LoginArticle = styled.article`
-    position: fixed;
-    width: 390px;
-    height: 362px;
+    position : absolute;
+    width : 100%;
+    display : flex;
+    flex-direction : column;
+    align-items : center;
+    height: 462px;
     background-color: #fff;
     border-radius: 20px 20px 0px 0px;
     top: ${(props) => (props.loginState === false ? "140%" : "64%")};

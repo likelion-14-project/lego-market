@@ -16,6 +16,10 @@ const GlobalStyle = createGlobalStyle`
     body{
         width:100%;
         height:100vh;
+        overflow : hidden;
+    }
+    body > #root{
+        height : 100vh;
     }
     a {
     color: --gray-text;

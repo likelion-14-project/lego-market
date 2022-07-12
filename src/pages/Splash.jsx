@@ -3,20 +3,16 @@ import styled from "styled-components";
 import LoginModal from "../components/login/LoginModal";
 import { useNavigate } from "react-router-dom";
 
-const MainWrapper = styled.div`
-    width: 390px;
-    margin: auto;
-`;
-
 const MainDiv = styled.div`
-    height: 820px;
+    width : 100%;
+    height: 100vh;
     text-align: center;
     overflow: hidden;
     box-sizing: content-box;
     background-color: ${(props) =>
         props.loginState === false ? "#fff" : "orange"};
     margin: auto;
-    /* transition: all 600ms cubic-bezier(0.86, 0, 0.5, 1);  */
+    transition: all 600ms cubic-bezier(0.86, 0, 0.5, 1); 
 `;
 const MainHeader = styled.header`
     position: absolute;
@@ -30,10 +26,6 @@ const MainHeader = styled.header`
     }
     top: ${(props) => (props.loginState === false ? "50%" : "30%")};
 `;
-//1. 2초딜레이 -> 토큰여부확인
-//2. 토큰이 있으면 loginState = true
-//3. loginState 가 true 면 Home.jsx 로 이동
-//4. loginState 가 null 이면 loginModal 올라오도록 하기
 
 function Splash() {
     const [accessToken, setAccessToken] = useState(null);
@@ -79,7 +71,7 @@ function Splash() {
     }, [navigate, loginState, accessToken]);
 
     return (
-        <MainWrapper>
+        <>
             {accessToken === null ? (
                 <button onClick={saveToken}>토큰 저장 버튼</button>
             ) : (
@@ -102,7 +94,7 @@ function Splash() {
                     <LoginModal loginState={loginState} />
                 </MainDiv>
             )}
-        </MainWrapper>
+        </>
     );
 }
 
