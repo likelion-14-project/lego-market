@@ -1,34 +1,32 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Input from "../components/ui/Input";
-
 import WarningMessage from "../components/ui/WarningMessage";
 import styled from "styled-components";
 import TopNav from "../components/ui/TopNav";
 
-
+const Wrapper = styled.div`
+    padding: 30px 34px;
+`;
 const FileLabel = styled.label`
   display: inline-block;
   position: relative;
   background-color: #dbdbdb;
   cursor: pointer;
-  width: 322px;
+
   height: 204px;
   border-radius: 10px;
 `;
 const IMG = styled.img`
-  position: absolute;
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
   border-radius: 10px;
+  border:none;
 `;
 const UiImg = styled.img`
   bottom: 12px;
   right: 12px;
   position: absolute;
-`;
-const Form = styled.form`
-  margin-bottom: 30px;
 `;
 
 const InputFile = styled.input`
@@ -48,31 +46,34 @@ const LabelDiv = styled.div`
   margin-bottom: 10px;
   display: block;
 `;
-const Section = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 390px;
-  height: 100vh;
-  background-color: #fff;
-`;
+function getNumber(obj){
+    
+  var num01;
+  var num02;
+  num01 = obj.value;
+  num02 = num01.replace(/\D/g,""); //숫자가 아닌것을 제거, 
+                                   //즉 [0-9]를 제외한 문자 제거; /[^0-9]/g 와 같은 표현
+  num01 = setComma(num02); //콤마 찍기
+  obj.value =  num01;
+
+}
+function setComma(n) {
+  var reg = /(^[+-]?\d+)(\d{3})/;   // 정규식
+  n += '';                          // 숫자를 문자열로 변환         
+  while (reg.test(n)) {
+     n = n.replace(reg, '$1' + ',' + '$2');
+  }         
+  return n;
+}
 
 const AddProduct = (props) => {
   const {
     watch,
     register,
-    handleSubmit,
     formState: { errors, isValid },
-    setError,
-    resetField,
   } = useForm({
     mode: "onChange",
   });
-
-  const { width, height } = props;
-  const [item, setItem] = useState("");
-  let [price, setPrice] = useState("");
-  const [link, setLink] = useState("");
   const [itemimg, setItemImg] = useState("");
   const token = localStorage.getItem("token");
 
@@ -122,10 +123,10 @@ const AddProduct = (props) => {
   }
 
   return (
-    <div>
+    <>
       <TopNav content="저장" onClick={add} disabled={!isValid} />
-      <Section>
-        <div className="filebox">
+      <Wrapper>
+        <section>
           <LabelDiv>이미지 등록</LabelDiv>
           <FileLabel for="ex-file" onChange={handleGetImageUrl}>
             <IMG id="aa" width={"322"} height={"204"}></IMG>
@@ -137,8 +138,8 @@ const AddProduct = (props) => {
             accept="image/*"
             onChange={handleGetImageUrl}
           ></InputFile>
-        </div>
-        <Form>
+        </section>
+        <form>
           <Input
             type="text"
             label="상품명"
@@ -152,14 +153,14 @@ const AddProduct = (props) => {
             })}
             errors={errors}
             WarningMessage={WarningMessage}
-            // onChange={handleItem}
           />
-        </Form>
+        </form>
         <div>
           <Input
             type="number"
             label="가격"
             marginTop={16}
+            placeholder="숫자만 입력 가능합니다."
             register={register("가격", {
               required: {
                 value: true,
@@ -167,8 +168,9 @@ const AddProduct = (props) => {
               },
             })}
             errors={errors}
-            // onChange={handlePrice}
             WarningMessage={WarningMessage}
+            onChange="getNumber(this);"
+            onKeyUp="getNumber(this);"
           />
         </div>
         <div>
@@ -184,12 +186,11 @@ const AddProduct = (props) => {
               },
             })}
             errors={errors}
-            // onChange={handleLink}
             WarningMessage={WarningMessage}
           />
         </div>
-      </Section>
-    </div>
+    </Wrapper>
+    </>
   );
 };
 
