@@ -11,7 +11,7 @@ const Home = () => {
     const url = "https://mandarin.api.weniv.co.kr";
     const reqPath = "/post/feed";
     const headers = {
-        Authorization: `Bearer ${state}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
         "Content-type": "application/json",
     };
     console.log(url + reqPath, headers);

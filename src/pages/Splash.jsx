@@ -4,7 +4,7 @@ import LoginModal from "../components/login/LoginModal";
 import { useNavigate } from "react-router-dom";
 
 const MainDiv = styled.div`
-    width : 100%;
+    width: 100%;
     height: 100vh;
     text-align: center;
     overflow: hidden;
@@ -12,7 +12,7 @@ const MainDiv = styled.div`
     background-color: ${(props) =>
         props.loginState === false ? "#fff" : "orange"};
     margin: auto;
-    transition: all 600ms cubic-bezier(0.86, 0, 0.5, 1); 
+    transition: all 600ms cubic-bezier(0.86, 0, 0.5, 1);
 `;
 const MainHeader = styled.header`
     position: absolute;
@@ -43,24 +43,9 @@ function Splash() {
             console.log("token exist");
             setsplashLoading(false);
             setLoginState(true);
-            navigate("home", { state: usertoken });
+            navigate("home");
         }
     }
-    function saveToken() {
-        const token =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjQwZjM0MTZjYTFiNjNmODY1NzgwMCIsImV4cCI6MTY2MjM1ODkyNCwiaWF0IjoxNjU3MTc0OTI0fQ.-RKmj5O6CIrTDq4RsQODLjP4CkPRvmGb3kEoTaJLkMo";
-        localStorage.setItem("token", token);
-        setAccessToken(localStorage.getItem("token"));
-        setLoginState(false);
-    }
-    function deleteToken() {
-        setLoginState(false);
-    }
-
-    useEffect(() => {
-        setAccessToken(localStorage.getItem("token"));
-    }, [accessToken]);
-
     useEffect(() => {
         let splash = setTimeout(() => {
             checkLoginState();
@@ -72,11 +57,6 @@ function Splash() {
 
     return (
         <>
-            {accessToken === null ? (
-                <button onClick={saveToken}>토큰 저장 버튼</button>
-            ) : (
-                <button onClick={deleteToken}>토큰 삭제 버튼</button>
-            )}
             {splashLoading && (
                 <MainDiv loginState={loginState}>
                     <MainHeader loginState={loginState}>
