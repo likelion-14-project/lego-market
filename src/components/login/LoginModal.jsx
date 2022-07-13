@@ -100,9 +100,9 @@ function LoginModal({ loginState }) {
                 </ul>
                 <section className="cont-signup wrapper-account">
                     <h2 className="visually_hidden">로그인 및 회원가입</h2>
-                    <a href="#" onClick={() => {}}>
+                    <Link to="/loginpage">
                         <strong> 이메일로 로그인</strong>
-                    </a>
+                    </Link>
                     <Link to="/joinpage">
                         <strong>회원가입</strong>
                     </Link>

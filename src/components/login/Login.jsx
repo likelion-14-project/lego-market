@@ -1,8 +1,9 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 import WarningMessage from "../ui/WarningMessage";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 const Wrapper = styled.div`
@@ -40,6 +41,7 @@ const StyledButton = styled(Button)`
 `;
 
 function LoginPage() {
+    const navigate = useNavigate();
     const {
         watch,
         register,
@@ -91,7 +93,7 @@ function LoginPage() {
             });
             resetField("비밀번호");
         } else {
-            // 라우팅처리를 해주려고합니다.
+            navigate("/home");
         }
     };
 
