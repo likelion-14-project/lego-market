@@ -22,7 +22,7 @@ function HomeHeader() {
             <img
                 src={process.env.PUBLIC_URL + "/icons/icon-search.png"}
                 alt="피드찾기"
-                onClick={()=>navigate("/home/search")}
+                onClick={()=>navigate("/search")}
             ></img>
         </HomeHeaderWrap>
     );
