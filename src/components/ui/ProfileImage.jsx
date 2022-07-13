@@ -10,11 +10,11 @@ const Image = styled.img`
 
 function ProfileImage(props) {
 
-    const {imgSrc} = props
+    const {imgSrc, className} = props
 
     const defaultImgSrc = process.env.PUBLIC_URL + "/images/LegoDefaultImage.png"
 
-    return <Image src={imgSrc === null ? defaultImgSrc : imgSrc}/>
+    return <Image className={className} src={imgSrc === null ? defaultImgSrc : imgSrc}/>
 }
 
 ProfileImage.defaultProps = {
