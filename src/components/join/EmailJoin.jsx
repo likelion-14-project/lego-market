@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "../ui/Button";
-import Input from "../ui/Input";
+import Input from "../ui/Input.jsx";
 import { useForm } from "react-hook-form";
 import WarningMessage from "../ui/WarningMessage";
 
@@ -25,7 +25,7 @@ const StyledButton = styled(Button)`
 `;
 
 function EmailJoin(props) {
-    const { setNextPage } = props;
+    const { setNextPage, setAccount } = props;
 
     const {
         register,
@@ -63,9 +63,15 @@ function EmailJoin(props) {
             } else {
                 console.log(reqMsg);
                 console.log(data);
+                setAccount({
+                    email : data?.이메일,
+                    password : data?.비밀번호
+                })
                 setNextPage(true);
             }
-        } catch (error) {}
+        } catch (error) {
+            console.error(error)
+        }
     };
 
     return (
