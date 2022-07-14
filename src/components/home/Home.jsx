@@ -7,7 +7,6 @@ import axios from "axios";
 
 const Home = () => {
     const navigate = useNavigate();
-    const { state } = useLocation();
     const url = "https://mandarin.api.weniv.co.kr";
     const reqPath = "/post/feed";
     const headers = {
@@ -30,7 +29,6 @@ const Home = () => {
             <div className="mainWrapper">
                 <HomeMain />
             </div>
-            <NavBar />
         </>
     );
 };

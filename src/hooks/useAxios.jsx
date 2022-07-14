@@ -38,5 +38,5 @@ export const useAxios = (axiosParams) => {
         getData(axiosParams);
     }, [refetch]);
 
-    return { error, isPending, response, callRefetch };
+    return { error, isPending, response, callRefetch ,getData};
 };

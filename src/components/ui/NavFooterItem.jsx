@@ -6,7 +6,7 @@ const NavDiv = styled.div`
     width: 84px;
     height: 59px;
     padding: 11.5px 0 6px;
-    margin : 0 auto;
+    margin: 0 auto;
 `;
 const NavImg = styled.img`
     width: 24px;
@@ -17,10 +17,12 @@ const NavImg = styled.img`
 const NavStrong = styled.strong`
     display: block;
     text-align: center;
-    font-size: 15px;
+    font-size: 10px;
     line-height: 14px;
+    font-weight: 400;
     margin-top: 4px;
     color: #767676;
+    cursor: pointer;
 `;
 const NavFooterItem = ({ link, content, activeIcon, inActiveIcon }) => {
     const { pathname } = useLocation();
