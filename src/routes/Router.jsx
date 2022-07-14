@@ -16,6 +16,7 @@ const Router = () => {
                 <Route path="/search" element={<SearchUserPage />} />
                 <Route path="/joinpage" element={<JoinPage />} />
                 {/* 여기에 추가 하시면 됩니다 !  */}
+                <Route path="/myprofile" element={<Profile />} />
             </Routes>
         </BrowserRouter>
     );

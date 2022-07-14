@@ -5,6 +5,7 @@ import Button from "../ui/Button";
 import WarningMessage from "../ui/WarningMessage";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import {useLogin} from "../../hooks/useLogin"
 
 const Wrapper = styled.div`
     padding: 30px 34px;
@@ -53,37 +54,11 @@ function LoginPage() {
         mode: "onChange",
     });
 
-    const login = async (data) => {
-        const url = "https://mandarin.api.weniv.co.kr/user/login";
-
-        const loginData = {
-            user: {
-                email: data["이메일"],
-                password: data["비밀번호"],
-            },
-        };
-
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify(loginData),
-        });
-
-        const json = await response.json();
-        console.log("json : ", json);
-
-        if (json.user) {
-            localStorage.setItem("token", json.user.token);
-            return json.user.token;
-        } else if (json.message) {
-            return json.message;
-        }
-    };
+    const {error, isPending, login} = useLogin()
 
     const onValid = async (data) => {
-        const result = await login(data);
+        console.log(data)
+        const result = await login(data["이메일"],data["비밀번호"]);
         console.log(result);
 
         if (result === "이메일 또는 비밀번호가 일치하지 않습니다.") {
