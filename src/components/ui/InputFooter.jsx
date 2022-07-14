@@ -19,14 +19,14 @@ const Section = styled.section`
     width: 100%;
     height: 60px;
     padding: 0 14px;
+    img {
+        width: 36px;
+        height: 36px;
+        border: 0.5px solid #dbdbdb;
+        border-radius: 50%;
+    }
 `;
 
-const BtnImg = styled.button`
-    display: flex;
-    border: none;
-    background: none;
-    cursor: pointer;
-`;
 const InputLabel = styled.label`
     position: absolute;
     left: -10000px;
@@ -51,19 +51,30 @@ const BtnSend = styled.button`
     background: none;
     cursor: pointer;
     font-size: 14px;
-    color: #c4c4c4;
+    color: #df6565;
+    :disabled {
+        color: #ccc;
+    }
 `;
 
-function InputFooter({ img, ir, placeholder, btnTxt }) {
+function InputFooter(props) {
+    const { img, ir, placeholder, value, onChange, onClick, btnTxt, disabled } =
+        props;
+
     return (
         <FooterWap>
             <Section>
-                <BtnImg>
-                    <img src={process.env.PUBLIC_URL + img} />
-                </BtnImg>
+                <img src={img} />
                 <label className="ir">{ir}</label>
-                <Input type="text" placeholder={placeholder} />
-                <BtnSend>{btnTxt}</BtnSend>
+                <Input
+                    type="text"
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={onChange}
+                />
+                <BtnSend type="button" onClick={onClick} disabled={disabled}>
+                    {btnTxt}
+                </BtnSend>
             </Section>
         </FooterWap>
     );
