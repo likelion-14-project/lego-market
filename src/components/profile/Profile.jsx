@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import ProfileImage from '../ui/ProfileImage'
 import Button from '../ui/Button'
 import { Link } from "react-router-dom";
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useProfile } from '../../hooks/useProfile';
 
 const Wrapper = styled.div`
     max-width: 390px;
@@ -98,36 +100,50 @@ const StyledSpan = styled.span`
 `
 
 function Profile() {
-    return (
-        <Wrapper>
-            <StyledProfileImg />
-            <Username>애월읍 위니브 감귤농장</Username>
-            <UserId>@ weniv_Mandarin</UserId>
-            <StyledP>애월읍 감귤 전국 배송, 귤따기 체험, 감귤 농장</StyledP>
-            <StyledUl>
-                <StyledLi>
-                    <StyledButton 
-                        content="프로필 수정"
-                        disabled={false}
-                    />
-                </StyledLi>
-                <StyledLi>
-                    <StyledButton 
-                        content="상품 등록"
-                        disabled={false}
-                    />
-                </StyledLi>
-            </StyledUl>
-            <FollowerWrapper>
-                <StyledStrong>2950</StyledStrong>
-                <StyledSpan>followers</StyledSpan>
-            </FollowerWrapper>
-            <FollowingWrapper>
-                <StyledStrong>128</StyledStrong>
-                <StyledSpan>followings</StyledSpan>
-            </FollowingWrapper>
-        </Wrapper>
-    )
+
+    console.log('profile 렌더링')
+
+    const {user} = useAuthContext();
+    
+    console.log('user : ', user)
+    const {error, profile, isPending, getProfile} = useProfile('test13');
+    
+    console.log('프라필 : ', profile)
+
+    if(profile) {
+        return (
+            <Wrapper>
+                <StyledProfileImg />
+                <Username>{profile.username}</Username>
+                <UserId>{profile.accountname}</UserId>
+                <StyledP>{profile.intro}</StyledP>
+                <StyledUl>
+                    <StyledLi>
+                        <StyledButton 
+                            content="프로필 수정"
+                            disabled={false}
+                        />
+                    </StyledLi>
+                    <StyledLi>
+                        <StyledButton 
+                            content="상품 등록"
+                            disabled={false}
+                        />
+                    </StyledLi>
+                </StyledUl>
+                <FollowerWrapper>
+                    <StyledStrong>{profile.followerCount}</StyledStrong>
+                    <StyledSpan>followers</StyledSpan>
+                </FollowerWrapper>
+                <FollowingWrapper>
+                    <StyledStrong>{profile.followingCount}</StyledStrong>
+                    <StyledSpan>followings</StyledSpan>
+                </FollowingWrapper>
+            </Wrapper>
+        )
+    }
+
+
 }
 
 export default Profile
