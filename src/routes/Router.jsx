@@ -5,6 +5,7 @@ import Splash from "../pages/Splash";
 import SearchUserPage from "../pages/SearchUserPage";
 import LoginPage from "../pages/LoginPage";
 import JoinPage from "../pages/JoinPage";
+import Profile from '../components/profile/Profile';
 
 const Router = () => {
     return (

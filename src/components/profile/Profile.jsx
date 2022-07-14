@@ -106,16 +106,16 @@ function Profile() {
     const {user} = useAuthContext();
     
     console.log('user : ', user)
-    const {error, profile, isPending, getProfile} = useProfile('test13');
+    const {error, profile, isPending} = useProfile('nodeepdive.');
     
     console.log('프라필 : ', profile)
 
     if(profile) {
         return (
             <Wrapper>
-                <StyledProfileImg />
+                <StyledProfileImg imgSrc={profile.image}/>
                 <Username>{profile.username}</Username>
-                <UserId>{profile.accountname}</UserId>
+                <UserId>@ {profile.accountname}</UserId>
                 <StyledP>{profile.intro}</StyledP>
                 <StyledUl>
                     <StyledLi>
