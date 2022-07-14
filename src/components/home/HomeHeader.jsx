@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const HomeHeaderWrap = styled.div`
+const HomeHeaderWrap = styled.section`
     display: flex;
     padding: 13px 16px;
     border-bottom: #dbdbdb 1px solid;

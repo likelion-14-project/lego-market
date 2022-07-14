@@ -5,8 +5,11 @@ import NavFooterItem from "./NavFooterItem";
 const NavBarWrap = styled.nav`
     position: fixed;
     bottom: 0;
-    right: 0;
     left: 0;
+    min-width : 390px;
+    width : 100%;
+    height : 61px;
+    padding : 0 6px;
     display: flex;
     justify-content: space-between;
     border-top: 1px solid black;

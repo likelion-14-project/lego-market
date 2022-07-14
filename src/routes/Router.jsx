@@ -5,17 +5,25 @@ import Splash from "../pages/Splash";
 import SearchUserPage from "../pages/SearchUserPage";
 import LoginPage from "../pages/LoginPage";
 import JoinPage from "../pages/JoinPage";
+import WithoutNav from "./WithoutNav";
+import WithNav from "./WithNav";
+
+
+
 
 const Router = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Splash />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/loginpage" element={<LoginPage />} />
-                <Route path="/search" element={<SearchUserPage />} />
-                <Route path="/joinpage" element={<JoinPage />} />
-                {/* 여기에 추가 하시면 됩니다 !  */}
+                <Route element={<WithoutNav />}>
+                    <Route path="/" element={<Splash />} />
+                </Route>
+                <Route element={<WithNav/>}>
+                        <Route path="/home" element={<Home />} />
+                        <Route path="/loginpage" element={<LoginPage />} />
+                        <Route path="/search" element={<SearchUserPage />} />
+                        <Route path="/joinpage" element={<JoinPage />} />
+                </Route>
             </Routes>
         </BrowserRouter>
     );
