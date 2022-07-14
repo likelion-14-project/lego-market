@@ -55,6 +55,17 @@ function Splash() {
         };
     }, [navigate, loginState, accessToken]);
 
+    useEffect(()=> {
+        if(localStorage.getItem('token')){
+            let loginDelay = setTimeout(()=> {
+                navigate('/home');
+            },1500);
+            return () => {
+                clearTimeout(loginDelay);
+            }
+        }
+    })
+
     return (
         <>
             {splashLoading && (
