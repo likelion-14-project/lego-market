@@ -2,51 +2,81 @@ import React from "react";
 import styled from "styled-components";
 
 const FooterWap = styled.footer`
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    min-width: 390px;
+    width: 100%;
+    background-color: #fff;
+    z-index: 10;
+    border-top: 0.5px solid #c4c4c4;
+`;
+
+const Section = styled.section`
+    position: relative;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-top: 260px;
-    padding: 13px 20px 12px 16px;
-    background: #ffffff;
+    width: 100%;
+    height: 60px;
+    padding: 0 14px;
+    img {
+        width: 36px;
+        height: 36px;
+        border: 0.5px solid #dbdbdb;
+        border-radius: 50%;
+    }
+`;
+
+const InputLabel = styled.label`
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
 `;
 
 const Input = styled.input`
-    width: 100%;
-    margin: 0 15px 0;
-    outline: none;
-    border: none;
-    padding: 15px 0 15px;
-    font-weight: 400;
+    width: calc(100% - 128px);
     font-size: 14px;
-`;
-const BtnImg = styled.button`
-    display: flex;
+    line-height: 18px;
+    font-weight: 400;
+    margin: 0 10px;
     border: none;
-    background: none;
-    cursor: pointer;
+    outline: none;
 `;
 
 const BtnSend = styled.button`
-    display: flex;
     border: none;
     background: none;
     cursor: pointer;
     font-size: 14px;
-    color: #c4c4c4;
+    color: #df6565;
+    :disabled {
+        color: #ccc;
+    }
 `;
 
-function InputFooter({ img, placeholder, btnTxt }) {
+function InputFooter(props) {
+    const { img, ir, placeholder, value, onChange, onClick, btnTxt, disabled } =
+        props;
+
     return (
-        <>
-            <FooterWap>
-                <BtnImg>
-                    <img src={process.env.PUBLIC_URL + img} />
-                    {/* `/images/원하는이미지` */}
-                </BtnImg>
-                <Input type="text" placeholder={placeholder} />
-                <BtnSend>{btnTxt}</BtnSend>
-            </FooterWap>
-        </>
+        <FooterWap>
+            <Section>
+                <img src={img} />
+                <label className="ir">{ir}</label>
+                <Input
+                    type="text"
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={onChange}
+                />
+                <BtnSend type="button" onClick={onClick} disabled={disabled}>
+                    {btnTxt}
+                </BtnSend>
+            </Section>
+        </FooterWap>
     );
 }
 
