@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import NavFooterItem from "./NavFooterItem";
+import {useAuthContext} from "../../hooks/useAuthContext"
 
 const NavBarWrap = styled.nav`
     position: fixed;
@@ -13,6 +14,11 @@ const NavBarWrap = styled.nav`
     z-index: 10;
 `;
 function NavBar() {
+
+    const {user} = useAuthContext();
+
+    console.log('NavBar안에서의 user값 : ', user)
+
     return (
         <NavBarWrap>
             <NavFooterItem
@@ -48,7 +54,7 @@ function NavBar() {
                 }
             />
             <NavFooterItem
-                link="/myprofile"
+                link={"/myprofile/" + user.accountname}
                 content="프로필"
                 activeIcon={
                     process.env.PUBLIC_URL + "/icons/icon-user-fill.png"
@@ -56,6 +62,7 @@ function NavBar() {
                 inActiveIcon={
                     process.env.PUBLIC_URL + "/icons/icon-user.png"
                 }
+                user={user}
             />
         </NavBarWrap>
     );

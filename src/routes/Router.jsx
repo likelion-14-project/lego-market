@@ -6,6 +6,7 @@ import SearchUserPage from "../pages/SearchUserPage";
 import LoginPage from "../pages/LoginPage";
 import JoinPage from "../pages/JoinPage";
 import Profile from '../components/profile/Profile';
+import ProfileModification from '../components/profile/ProfileModification';
 
 const Router = () => {
     return (
@@ -17,7 +18,8 @@ const Router = () => {
                 <Route path="/search" element={<SearchUserPage />} />
                 <Route path="/joinpage" element={<JoinPage />} />
                 {/* 여기에 추가 하시면 됩니다 !  */}
-                <Route path="/myprofile" element={<Profile />} />
+                <Route path="/myprofile/:accountname" element={<Profile />} />
+                <Route path="/profileModify" element={<ProfileModification />}/>
             </Routes>
         </BrowserRouter>
     );

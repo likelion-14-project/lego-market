@@ -1,34 +1,22 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 import ImageSelect from "../ui/ImageSelect";
-import ProfileImage from "../ui/ProfileImage";
+import Button from "../ui/Button";
+import WarningMessage from "../ui/WarningMessage";
 import Input from "../ui/Input.jsx";
 import { useForm } from "react-hook-form";
-import WarningMessage from "../ui/WarningMessage";
-import Button from "../ui/Button";
-import { useNavigate } from "react-router-dom";
+import ProfileImage from "../ui/ProfileImage";
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import TopNav from '../ui/TopNav';
+import BackButton from '../ui/BackButton';
+import ModalButton from '../ui/ModalButton';
+
+
+
 
 const Wrapper = styled.div`
     padding: 30px 34px;
-`;
-
-const H1 = styled.h1`
-    font-style: normal;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 30px;
-    margin-bottom: 12px;
-    text-align: center;
-`;
-
-const P = styled.p`
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 14px;
-    color: #767676;
-    text-align: center;
-    margin-bottom: 30px;
 `;
 
 const ImageWrapper = styled.div`
@@ -49,9 +37,9 @@ const StyledButton = styled(Button)`
     margin-top: 30px;
 `;
 
-function ProfileSetting(props) {
+function ProfileModification() {
+
     const navigate = useNavigate();
-    const { account } = props;
 
     const [imgSrc, setImgSrc] = useState(null);
 
@@ -91,43 +79,14 @@ function ProfileSetting(props) {
         }
     };
 
-    const onValid = async (data) => {
-        try {
-            const url = "https://mandarin.api.weniv.co.kr/user";
-            const reqData = {
-                user: {
-                    username: data["사용자 이름"],
-                    email: account.email,
-                    password: account.password,
-                    accountname: data["계정 ID"],
-                    intro: data["소개"],
-                    image: imgSrc,
-                },
-            };
-
-            const response = await fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json",
-                },
-                body: JSON.stringify(reqData),
-            });
-
-            const json = await response.json();
-            console.log(json);
-            if(json){
-                navigate('/')
-            }
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
     return (
-        <Wrapper>
-            <H1>프로필 설정</H1>
-            <P>나중에 언제든지 변경할 수 있습니다.</P>
-            <form onSubmit={handleSubmit(onValid)}>
+        <>
+            <TopNav 
+                leftChild={<BackButton />}
+                rightChild={<ModalButton />}
+            />
+            <Wrapper>
+            <form onSubmit={handleSubmit()}>
                 <ImageWrapper>
                     <ProfileImage imgSrc={imgSrc} />
                     <StyledImageSelect width={30} setImgSrc={setImgSrc} />
@@ -189,7 +148,8 @@ function ProfileSetting(props) {
                 <StyledButton content="레고마켓 시작하기" disabled={!isValid} />
             </form>
         </Wrapper>
-    );
+    </>
+    )
 }
 
-export default ProfileSetting;
+export default ProfileModification
