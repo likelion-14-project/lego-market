@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import TopNav from '../ui/TopNav';
 import BackButton from '../ui/BackButton';
-import ModalButton from '../ui/ModalButton';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 
 
@@ -32,16 +32,16 @@ const StyledImageSelect = styled(ImageSelect)`
     right: 0;
 `;
 
-const StyledButton = styled(Button)`
-    padding: 13px 0px;
-    margin-top: 30px;
-`;
+const SaveButton = styled(Button)`
+    padding: 7px 0px;
+    width: 90px;
+`
 
 function ProfileModification() {
 
     const navigate = useNavigate();
-
     const [imgSrc, setImgSrc] = useState(null);
+    const {user, dispatch} = useAuthContext()
 
     const {
         watch,
@@ -79,76 +79,114 @@ function ProfileModification() {
         }
     };
 
+    const save = async () => {
+        try {
+            const token = localStorage.getItem("token")
+            
+            const url = "https://mandarin.api.weniv.co.kr/user"
+            const reqData = {
+                    "user":{
+                            "username": watch("사용자 이름"),
+                            "accountname": watch("계정 ID"),
+                            "intro": watch("소개"),
+                            "image": imgSrc
+                    }
+            }
+
+            const response = await fetch(url, {
+                method : "PUT",
+                headers : {
+                    "Authorization" : `Bearer ${token}`,
+                    "Content-type" : "application/json"
+                },
+                body : JSON.stringify(reqData)
+            })
+
+            const json = await response.json()
+            dispatch({type : "modify", payload : json.user})
+
+            navigate("/home")
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     return (
         <>
             <TopNav 
                 leftChild={<BackButton />}
-                rightChild={<ModalButton />}
+                rightChild={
+                    <SaveButton 
+                        content="저장" 
+                        disabled={!isValid}
+                        onClick={save}
+                    />
+                }
             />
             <Wrapper>
-            <form onSubmit={handleSubmit()}>
-                <ImageWrapper>
-                    <ProfileImage imgSrc={imgSrc} />
-                    <StyledImageSelect width={30} setImgSrc={setImgSrc} />
-                </ImageWrapper>
-                <Input
-                    label="사용자 이름"
-                    type="text"
-                    placeholder="2~10자 이내여야 합니다."
-                    register={register("사용자 이름", {
-                        required: {
-                            value: true,
-                            message: "*필수 입력 값입니다.",
-                        },
-                        validate: {
-                            always: (value) =>
-                                (value.length >= 2 && value.length <= 10) ||
-                                "*2~10자 이내여야 합니다.",
-                        },
-                    })}
-                    errors={errors}
-                    WarningMessage={WarningMessage}
-                />
-                <Input
-                    label="계정 ID"
-                    type="text"
-                    placeholder="영문, 숫자, 특수문자(.),(_)만 사용 가능합니다."
-                    register={register("계정 ID", {
-                        required: {
-                            value: true,
-                            message: "*필수 입력 값입니다.",
-                        },
-                        pattern: {
-                            value: /^[a-zA-Z0-9._]*$/,
-                            message:
-                                "*영문, 숫자, 특수문자(.),(_)만 사용 가능합니다.",
-                        },
-                        validate: {
-                            always: accountValid,
-                        },
-                    })}
-                    errors={errors}
-                    WarningMessage={WarningMessage}
-                    marginTop={16}
-                />
-                <Input
-                    label="소개"
-                    type="text"
-                    placeholder="자신과 판매할 상품에 대해 소개해 주세요!"
-                    register={register("소개", {
-                        required: {
-                            value: true,
-                            message: "*필수 입력 값입니다.",
-                        },
-                    })}
-                    errors={errors}
-                    WarningMessage={WarningMessage}
-                    marginTop={16}
-                />
-                <StyledButton content="레고마켓 시작하기" disabled={!isValid} />
-            </form>
-        </Wrapper>
-    </>
+                <form onSubmit={handleSubmit()}>
+                    <ImageWrapper>
+                        <ProfileImage imgSrc={imgSrc} />
+                        <StyledImageSelect width={30} setImgSrc={setImgSrc} />
+                    </ImageWrapper>
+                    <Input
+                        label="사용자 이름"
+                        type="text"
+                        placeholder="2~10자 이내여야 합니다."
+                        register={register("사용자 이름", {
+                            required: {
+                                value: true,
+                                message: "*필수 입력 값입니다.",
+                            },
+                            validate: {
+                                always: (value) =>
+                                    (value.length >= 2 && value.length <= 10) ||
+                                    "*2~10자 이내여야 합니다.",
+                            },
+                        })}
+                        errors={errors}
+                        WarningMessage={WarningMessage}
+                    />
+                    <Input
+                        label="계정 ID"
+                        type="text"
+                        placeholder="영문, 숫자, 특수문자(.),(_)만 사용 가능합니다."
+                        register={register("계정 ID", {
+                            required: {
+                                value: true,
+                                message: "*필수 입력 값입니다.",
+                            },
+                            pattern: {
+                                value: /^[a-zA-Z0-9._]*$/,
+                                message:
+                                    "*영문, 숫자, 특수문자(.),(_)만 사용 가능합니다.",
+                            },
+                            validate: {
+                                always: accountValid,
+                            },
+                        })}
+                        errors={errors}
+                        WarningMessage={WarningMessage}
+                        marginTop={16}
+                    />
+                    <Input
+                        label="소개"
+                        type="text"
+                        placeholder="자신과 판매할 상품에 대해 소개해 주세요!"
+                        register={register("소개", {
+                            required: {
+                                value: true,
+                                message: "*필수 입력 값입니다.",
+                            },
+                        })}
+                        errors={errors}
+                        WarningMessage={WarningMessage}
+                        marginTop={16}
+                    />
+                </form>
+            </Wrapper>
+        </>
     )
 }
 

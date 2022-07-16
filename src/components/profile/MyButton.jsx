@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Button from '../ui/Button'
 
@@ -9,7 +10,7 @@ justify-content: center;
 gap: 12px;
 `
 
-const StyledButtonLeft = styled(Button)`
+const ProfileModifyButton = styled(Button)`
     width: 120px;
     background-color: #fff;
     padding: 8px 0px;
@@ -17,7 +18,7 @@ const StyledButtonLeft = styled(Button)`
     border: 1px solid #DBDBDB;
 `
 
-const StyledButtonRight = styled(Button)`
+const ProductRegisterButton = styled(Button)`
     width: 100px;
     background-color: #fff;
     padding: 8px 0px;
@@ -27,16 +28,19 @@ const StyledButtonRight = styled(Button)`
 
 function MyButton() {
 
+    const navigate = useNavigate()
+
     return (
         <StyledUl>
             <li>
-                <StyledButtonLeft 
+                <ProfileModifyButton 
                     content="프로필 수정"
                     disabled={false}
+                    onClick={() => navigate("/profileModify")}
                 />
             </li>
             <li>
-                <StyledButtonRight 
+                <ProductRegisterButton 
                     content="상품 등록"
                     disabled={false}
                 />
