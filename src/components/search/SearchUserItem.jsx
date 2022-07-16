@@ -1,11 +1,22 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useLocation } from "react-router-dom";
 
+const fadeOut = keyframes`
+  0%{
+    opacity : 0;
+    
+  }
+  100%{
+    opacity : 1;
+  }
+`
 const ListWrap = styled.li`
     position: relative;
     display: flex;
     align-items: center;
+    margin-bottom : 16px;
+    animation: ${fadeOut} 0.5s linear both;
 `;
 const UserAnchor = styled.a`
     position: relative;
@@ -46,16 +57,28 @@ const UserId = styled.strong`
     }
 `;
 
-function SearchUserItem() {
-    return <ListWrap>
-      <UserAnchor>
-        <UserProfileImg />
-        <UserInfoDiv>
-          <UserName></UserName>
-          <UserId></UserId>
-        </UserInfoDiv>
-      </UserAnchor>
-    </ListWrap>;
+
+
+function SearchUserItem({ profileImg, userName, userId }) {
+    const defaultImgSrc =
+        process.env.PUBLIC_URL + "/images/LegoDefaultImage.png";
+    return (
+        <ListWrap>
+            <UserAnchor>
+                <UserProfileImg
+                    src={profileImg === null ? defaultImgSrc : profileImg}
+                />
+                <UserInfoDiv>
+                    <UserName>{userName}</UserName>
+                    <UserId>{userId}</UserId>
+                </UserInfoDiv>
+            </UserAnchor>
+        </ListWrap>
+    );
 }
+
+SearchUserItem.defaultProps = {
+    profileImg: null,
+};
 
 export default SearchUserItem;
