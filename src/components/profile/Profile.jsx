@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import ProfileImage from '../ui/ProfileImage'
-import Button from '../ui/Button'
-import { Link } from "react-router-dom";
+import UserButton from "./UserButton"
+import MyButton from "./MyButton"
+import { Link, useParams } from "react-router-dom";
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useProfile } from '../../hooks/useProfile';
+import TopNav from '../ui/TopNav'
+import BackButton from '../ui/BackButton'
+import ModalButton from '../ui/ModalButton'
 
 const Wrapper = styled.div`
     max-width: 390px;
@@ -47,25 +51,6 @@ const StyledP = styled.p`
     margin-top: 16px;
 `
 
-const StyledUl = styled.ul`
-    margin-top: 24px;
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-`
-
-const StyledLi = styled.li`
-
-`
-
-const StyledButton = styled(Button)`
-    width: 120px;
-    background-color: #fff;
-    padding: 8px 0px;
-    color: #767676;
-    border: 1px solid #DBDBDB;
-`
-
 const FollowerWrapper = styled.div`
     position: absolute;
     text-align: center;
@@ -98,48 +83,42 @@ const StyledSpan = styled.span`
     line-height: 12px;
     color: #767676;
 `
-
 function Profile() {
 
-    console.log('profile 렌더링')
-
     const {user} = useAuthContext();
+    const {accountname} = useParams();
+
     
-    console.log('user : ', user)
-    const {error, profile, isPending, getProfile} = useProfile('test13');
-    
-    console.log('프라필 : ', profile)
+    const {error, profile, isPending} = useProfile(accountname);
 
     if(profile) {
         return (
-            <Wrapper>
-                <StyledProfileImg />
-                <Username>{profile.username}</Username>
-                <UserId>{profile.accountname}</UserId>
-                <StyledP>{profile.intro}</StyledP>
-                <StyledUl>
-                    <StyledLi>
-                        <StyledButton 
-                            content="프로필 수정"
-                            disabled={false}
-                        />
-                    </StyledLi>
-                    <StyledLi>
-                        <StyledButton 
-                            content="상품 등록"
-                            disabled={false}
-                        />
-                    </StyledLi>
-                </StyledUl>
-                <FollowerWrapper>
-                    <StyledStrong>{profile.followerCount}</StyledStrong>
-                    <StyledSpan>followers</StyledSpan>
-                </FollowerWrapper>
-                <FollowingWrapper>
-                    <StyledStrong>{profile.followingCount}</StyledStrong>
-                    <StyledSpan>followings</StyledSpan>
-                </FollowingWrapper>
-            </Wrapper>
+            <>
+                <TopNav 
+                    leftChild={<BackButton />}
+                    rightChild={<ModalButton />}
+                />
+                <Wrapper>
+                    <StyledProfileImg imgSrc={profile.image}/>
+                    <Username>{profile.username}</Username>
+                    <UserId>@ {profile.accountname}</UserId>
+                    <StyledP>{profile.intro}</StyledP>
+                    
+                    {user && user.accountname == accountname ?
+                    <MyButton /> :
+                    <UserButton />
+                    }
+
+                    <FollowerWrapper>
+                        <StyledStrong>{profile.followerCount}</StyledStrong>
+                        <StyledSpan>followers</StyledSpan>
+                    </FollowerWrapper>
+                    <FollowingWrapper>
+                        <StyledStrong>{profile.followingCount}</StyledStrong>
+                        <StyledSpan>followings</StyledSpan>
+                    </FollowingWrapper>
+                </Wrapper>
+            </>
         )
     }
 

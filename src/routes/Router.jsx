@@ -10,6 +10,8 @@ import WithNav from "./WithNav";
 
 
 
+import ProfilePage from '../pages/ProfilePage';
+import ProfileModifyPage from '../pages/ProfileModifyPage';
 
 const Router = () => {
     return (

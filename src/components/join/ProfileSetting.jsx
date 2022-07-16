@@ -65,7 +65,7 @@ function ProfileSetting(props) {
         mode: "onChange",
     });
 
-    const emailValid = async () => {
+    const accountValid = async () => {
         const url = "https://mandarin.api.weniv.co.kr/user/accountnamevalid";
 
         const reqData = {
@@ -165,7 +165,7 @@ function ProfileSetting(props) {
                                 "*영문, 숫자, 특수문자(.),(_)만 사용 가능합니다.",
                         },
                         validate: {
-                            always: emailValid,
+                            always: accountValid,
                         },
                     })}
                     errors={errors}
