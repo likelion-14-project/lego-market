@@ -21,8 +21,11 @@ const GlobalStyle = createGlobalStyle`
     body > #root{
         height : 100vh;
     }
-    a {
+    a:link {
     color: --gray-text;
+    }
+    a{
+        color: #000;
     }
     .visually_hidden { 
         position: absolute; 
