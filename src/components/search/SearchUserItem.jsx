@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const fadeOut = keyframes`
   0%{
@@ -58,22 +58,25 @@ const UserId = styled.strong`
 `;
 
 
+//  
 
 function SearchUserItem({ profileImg, userName, userId }) {
     const defaultImgSrc =
         process.env.PUBLIC_URL + "/images/LegoDefaultImage.png";
     return (
-        <ListWrap>
-            <UserAnchor>
-                <UserProfileImg
-                    src={profileImg === null ? defaultImgSrc : profileImg}
-                />
-                <UserInfoDiv>
-                    <UserName>{userName}</UserName>
-                    <UserId>{userId}</UserId>
-                </UserInfoDiv>
-            </UserAnchor>
-        </ListWrap>
+        <Link to={`/profile/${userName}`}>
+          <ListWrap>
+              <UserAnchor>
+                  <UserProfileImg
+                      src={profileImg === null ? defaultImgSrc : profileImg}
+                  />
+                  <UserInfoDiv>
+                      <UserName>{userName}</UserName>
+                      <UserId>{userId}</UserId>
+                  </UserInfoDiv>
+              </UserAnchor>
+          </ListWrap>
+        </Link>
     );
 }
 
