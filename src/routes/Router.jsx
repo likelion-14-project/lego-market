@@ -19,12 +19,14 @@ const Router = () => {
             <Routes>
                 <Route element={<WithoutNav />}>
                     <Route path="/" element={<Splash />} />
+                    <Route path="/loginpage" element={<LoginPage />} />
+                    <Route path="/joinpage" element={<JoinPage />} />
                 </Route>
                 <Route element={<WithNav/>}>
-                        <Route path="/home" element={<Home />} />
-                        <Route path="/loginpage" element={<LoginPage />} />
-                        <Route path="/search" element={<SearchUserPage />} />
-                        <Route path="/joinpage" element={<JoinPage />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/search" element={<SearchUserPage />} />
+                    <Route path="/profile/:accountname" element={<ProfilePage />} />
+                    <Route path="/profileModify" element={<ProfileModifyPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import ProfileImage from '../ui/ProfileImage'
 import UserButton from "./UserButton"
@@ -9,6 +9,7 @@ import { useProfile } from '../../hooks/useProfile';
 import TopNav from '../ui/TopNav'
 import BackButton from '../ui/BackButton'
 import ModalButton from '../ui/ModalButton'
+import Modal from '../modal/Modal'
 
 const Wrapper = styled.div`
     max-width: 390px;
@@ -88,15 +89,17 @@ function Profile() {
     const {user} = useAuthContext();
     const {accountname} = useParams();
 
-    
     const {error, profile, isPending} = useProfile(accountname);
+    const [modalState, setModalState] = useState(false)
 
     if(profile) {
         return (
             <>
                 <TopNav 
                     leftChild={<BackButton />}
-                    rightChild={<ModalButton />}
+                    rightChild={
+                        <ModalButton onClick={() => setModalState(!modalState)}/>
+                    }
                 />
                 <Wrapper>
                     <StyledProfileImg imgSrc={profile.image}/>
@@ -118,6 +121,7 @@ function Profile() {
                         <StyledSpan>followings</StyledSpan>
                     </FollowingWrapper>
                 </Wrapper>
+                <Modal modalState={modalState} setModalState={setModalState}/>
             </>
         )
     }
