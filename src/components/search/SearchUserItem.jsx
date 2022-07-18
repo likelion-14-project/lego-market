@@ -1,24 +1,8 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const fadeOut = keyframes`
-  0%{
-    opacity : 0;
-    
-  }
-  100%{
-    opacity : 1;
-  }
-`
-const ListWrap = styled.li`
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-bottom : 16px;
-    animation: ${fadeOut} 0.5s linear both;
-`;
-const UserAnchor = styled.a`
+const UserAnchor = styled(Link)`
     position: relative;
     display: flex;
     align-items: center;
@@ -64,9 +48,7 @@ function SearchUserItem({ profileImg, userName, userId }) {
     const defaultImgSrc =
         process.env.PUBLIC_URL + "/images/LegoDefaultImage.png";
     return (
-        <Link to={`/profile/${userId}`}>
-          <ListWrap>
-              <UserAnchor>
+        <UserAnchor to={`/profile/${userId}`}>
                   <UserProfileImg
                       src={profileImg === null ? defaultImgSrc : profileImg}
                   />
@@ -74,9 +56,7 @@ function SearchUserItem({ profileImg, userName, userId }) {
                       <UserName>{userName}</UserName>
                       <UserId>{userId}</UserId>
                   </UserInfoDiv>
-              </UserAnchor>
-          </ListWrap>
-        </Link>
+        </UserAnchor>
     );
 }
 
