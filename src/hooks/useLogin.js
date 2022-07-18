@@ -35,7 +35,8 @@ export const useLogin = () => {
 
             if (json.user) {
                 localStorage.setItem("token", json.user.token);
-                dispatch({ type: "login", payload: json.user });
+                localStorage.setItem("accountname", json.user.accountname)
+                dispatch({type : 'login', payload : json.user})
                 setError(null);
                 setIsPending(false);
                 return json.user.token;

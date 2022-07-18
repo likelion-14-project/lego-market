@@ -19,8 +19,7 @@ const NavBarWrap = styled.nav`
 function NavBar() {
 
     const {user} = useAuthContext();
-
-    console.log('NavBar안에서의 user값 : ', user)
+    const accountname = localStorage.getItem("accountname")
 
     return (
         <NavBarWrap>
@@ -57,7 +56,7 @@ function NavBar() {
                 }
             />
             <NavFooterItem
-                link={"/myprofile/"}
+                link={"/myprofile/" + accountname}
                 content="프로필"
                 activeIcon={
                     process.env.PUBLIC_URL + "/icons/icon-user-fill.png"
