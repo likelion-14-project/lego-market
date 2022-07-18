@@ -12,8 +12,8 @@ export const useLogin = () => {
             setError(null);
             setIsPending(true);
 
-            // const url = "https://mandarin.api.weniv.co.kr/user/login";
-            const url = "http://146.56.183.55:5050/user/login";
+            const url = "https://mandarin.api.weniv.co.kr/user/login";
+            // const url = "http://146.56.183.55:5050/user/login";
 
             const loginData = {
                 user: {
