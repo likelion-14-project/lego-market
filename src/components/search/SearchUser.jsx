@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAxios } from "../../hooks/useAxios";
 import styled, { keyframes } from "styled-components";
 import TopUtilBar from "../ui/TopUtilBar";

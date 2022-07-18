@@ -7,6 +7,7 @@ const FeedArticle = styled.article`
     position: relative;
     max-width: 358px;
     width: 100%;
+    margin-bottom: 20px;
 `;
 const AuthorSection = styled.section`
     display: flex;
@@ -33,14 +34,18 @@ const PostImgDiv = styled.div`
     /* 슬라이드 형식으로 구현 염두 */
 `;
 const PostImgList = styled.ul`
-  display: flex;
-  transition: all .4s;
-`
+    display: flex;
+    transition: all 0.4s;
+`;
 const PostImg = styled.img`
-  min-width: 304px;
-  width:100%;
-  min-height:228px;
-`
+    min-width: 304px;
+    width: 100%;
+    height: 100%;
+    max-height: 228px;
+    min-height: 228px;
+    overflow: hidden;
+    object-fit: cover;
+`;
 
 const LikeCommentDiv = styled.div`
     display: flex;
@@ -72,17 +77,25 @@ const LinkToPost = styled(Link)`
     padding: 0;
 `;
 
-const Feed = ({ postDatas }) => {
-  const [imgNum, setImgNum] = useState('0');
+const PostDate = styled.strong`
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #767676;
+`;
+
+const Post = ({ datas }) => {
+    const [imgNum, setImgNum] = useState("0");
+    // 이미지가 여러개일 경우 추가하려고 작성(미완성)
     useEffect(() => {
-        console.log(postDatas);
-    }, [postDatas]);
+        console.log(datas);
+    }, [datas]);
 
     return (
         <>
-            {postDatas.map((v, i) => {
-              const PostImgSrc = v.image.split(",");
-              console.log(PostImgSrc);
+            {datas.map((v, i) => {
+                const PostImgSrc = v.image.split(",");
+                console.log(PostImgSrc);
                 return (
                     <FeedArticle>
                         <AuthorSection>
@@ -95,11 +108,15 @@ const Feed = ({ postDatas }) => {
                         </AuthorSection>
                         <PostSection>
                             <PostTxt>{v.content}</PostTxt>
-                            <PostImgDiv>
-                                <PostImgList>
-                                  <li><PostImg src={v.image}/></li>
-                                </PostImgList>
-                              </PostImgDiv>
+                            {PostImgSrc[imgNum] && (
+                                <PostImgDiv>
+                                    <PostImgList>
+                                        <li key={i}>
+                                            <PostImg src={PostImgSrc[imgNum]} />
+                                        </li>
+                                    </PostImgList>
+                                </PostImgDiv>
+                            )}
                             <LikeCommentDiv>
                                 <LikeButton>
                                     <LIkeCommentIcon
@@ -108,7 +125,9 @@ const Feed = ({ postDatas }) => {
                                             "./icons/icon-heart.png"
                                         }
                                     />
-                                    <LikeCommentCounter>4</LikeCommentCounter>
+                                    <LikeCommentCounter>
+                                        {v.heartCount}
+                                    </LikeCommentCounter>
                                 </LikeButton>
                                 <LinkToPost to={`/postdetail/${v.id}`}>
                                     <LIkeCommentIcon
@@ -117,9 +136,17 @@ const Feed = ({ postDatas }) => {
                                             "./icons/icon-message-circle.png"
                                         }
                                     />
-                                    <LikeCommentCounter>4</LikeCommentCounter>
+                                    <LikeCommentCounter>
+                                        {v.commentCount}
+                                    </LikeCommentCounter>
                                 </LinkToPost>
                             </LikeCommentDiv>
+                            <PostDate>
+                                {v.createdAt
+                                    .slice(0, 10)
+                                    .replace("-", "년 ")
+                                    .replace("-", "월 ") + "일 "}
+                            </PostDate>
                         </PostSection>
                     </FeedArticle>
                 );
@@ -128,4 +155,4 @@ const Feed = ({ postDatas }) => {
     );
 };
 
-export default Feed;
+export default Post;
