@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import ModalPortal from "../../Portal";
 
 const ModalWrapper = styled.div`
     position: fixed;
@@ -23,7 +24,6 @@ const ModalContent = styled.div`
     bottom: 0;
     transition: all 600ms;
     transform: translateY(${(props) => (props.modalState === false ? "150%" : "0")});
-    z-index: 10000;
     ::before {
         content: "";
         width: 50px;
@@ -43,20 +43,21 @@ const StyledLi = styled.li`
     cursor: pointer;
 `
 
-const mywant = (e) => {
-    if(e.target === ModalContent) {
-        return
-    }else {
-        setModalState(!modalState)
-    }
-}
+// const mywant = (e) => {
+//     if(e.target === ModalContent) {
+//         return
+//     }else {
+//         setModalState(!modalState)
+//     }
+// }
 
 function Modal(props) {
     const { modalState, setModalState } = props;
 
     return (
         <>
-            <ModalWrapper modalState={modalState} onClick={mywant}>
+            <ModalPortal>
+            <ModalWrapper modalState={modalState}>
                 <ModalContent modalState={modalState}>
                     <ul>
                         <StyledLi>1</StyledLi>
@@ -65,6 +66,7 @@ function Modal(props) {
                     </ul>
                 </ModalContent>
             </ModalWrapper>
+            </ModalPortal>
         </>
     );
 }

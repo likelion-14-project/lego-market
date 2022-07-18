@@ -10,6 +10,7 @@ import TopNav from '../ui/TopNav'
 import BackButton from '../ui/BackButton'
 import ModalButton from '../ui/ModalButton'
 import Modal from '../modal/Modal'
+import ModalPortal from '../../Portal'
 
 const Wrapper = styled.div`
     max-width: 390px;
@@ -121,7 +122,9 @@ function Profile() {
                         <StyledSpan>followings</StyledSpan>
                     </FollowingWrapper>
                 </Wrapper>
-                <Modal modalState={modalState} setModalState={setModalState}/>
+                <ModalPortal>
+                    <Modal modalState={modalState} setModalState={setModalState}/>
+                </ModalPortal>
             </>
         )
     }
