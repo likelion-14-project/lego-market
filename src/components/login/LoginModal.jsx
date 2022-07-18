@@ -63,7 +63,6 @@ const LoginArticle = styled.article`
         text-align: center;
     }
     li:nth-child(2n) {
-        /* first child 는 왜 안되는걸까 */
         margin: 13px 0px;
     }
 
