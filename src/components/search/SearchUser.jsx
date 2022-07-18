@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useAxios } from "../../hooks/useAxios";
-import styled ,{ keyframes }from "styled-components";
+import styled, { keyframes } from "styled-components";
 import TopUtilBar from "../ui/TopUtilBar";
 import { useLocation } from "react-router-dom";
 import { MainWrap } from "../../styles/GlobalStyle";
