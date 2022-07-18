@@ -10,8 +10,7 @@ import TopNav from '../ui/TopNav'
 import BackButton from '../ui/BackButton'
 import ModalButton from '../ui/ModalButton'
 import Modal from '../modal/Modal'
-import ModalPortal from '../../Portal'
-import Modal2 from '../modal/Modal2'
+import AlertModal from '../modal/AlertModal'
 
 const Wrapper = styled.div`
     max-width: 390px;
@@ -92,24 +91,33 @@ function Profile() {
     const {accountname} = useParams();
 
     const {error, profile, isPending} = useProfile(accountname);
-    const [modalState, setModalState] = useState(false)
+    const [modal, setModal] = useState(false);
+    const [alertModal, setAlertModal] = useState(false);
 
-    const Toggle = () => setModalState(!modalState)
+    const modalMenuList = [
+        {
+            content : '설정 및 개인정보',
+            onClick : () => {}
+        },
+        {
+            content : '로그아웃',
+            onClick : () => {setAlertModal(true)}
+        }
+    ]
+
+    const alertButton = {
+        content : "로그아웃",
+        onClick : () => {}
+    }
+
 
     if(profile) {
         return (
             <>
-                <button onClick={() => Toggle()}>모달</button>
-
-                <Modal2 show={modalState} close={Toggle} title="Dynamic Title">
-                    This is modal dynamic content
-                </Modal2>
-
-
                 <TopNav 
                     leftChild={<BackButton />}
                     rightChild={
-                        <ModalButton onClick={() => setModalState(!modalState)}/>
+                        <ModalButton onClick={() => setModal(!modal)}/>
                     }
                 />
                 <Wrapper>
@@ -132,10 +140,18 @@ function Profile() {
                         <StyledSpan>followings</StyledSpan>
                     </FollowingWrapper>
                 </Wrapper>
-                {/* <ModalPortal>
-                    <Modal modalState={modalState} setModalState={setModalState}/>
-                </ModalPortal> */}
-
+                <Modal 
+                    modal={modal} 
+                    setModal={setModal}
+                    modalMenuList={modalMenuList}
+                />
+                <AlertModal 
+                    alertModal={alertModal}
+                    setAlertModal={setAlertModal}
+                    setModal={setModal}
+                    content={"로그아웃하시겠어요?"}
+                    alertButton={alertButton}
+                />
             </>
         )
     }

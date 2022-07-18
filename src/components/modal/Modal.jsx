@@ -9,9 +9,10 @@ const ModalWrapper = styled.div`
     background-color: rgba(0, 0, 0, 0.3);
     height: 100vh;
     width: 100%;
-    transition: all 3s;
-    z-index: ${(props) => (props.modalState === false ? "-1" : "1000")};
-    opacity: ${(props) => (props.modalState === false ? "0" : "1")};
+    z-index: 100;
+    transition: all 600ms;
+    visibility: ${(props) => (props.modal === false ? "hidden" : "visible")};
+    opacity: ${(props) => (props.modal === false ? "0" : "1")};
 `;
 
 const ModalContent = styled.div`
@@ -23,9 +24,8 @@ const ModalContent = styled.div`
     padding-top: 36px;
     padding-bottom: 16px;
     bottom: 0;
-    transition: all 3s;
-    z-index: 10000;
-    transform: translateY(${(props) => (props.modalState === false ? "150%" : "0")});
+    transition: all 600ms;
+    transform: translateY(${(props) => (props.modal === false ? "150%" : "0")});
     ::before {
         content: "";
         width: 50px;
@@ -43,28 +43,32 @@ const ModalContent = styled.div`
 const StyledLi = styled.li`
     padding: 14px 26px;
     cursor: pointer;
+    font-family: 'Spoqa Han Sans Neo';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
 `
 
-// const mywant = (e) => {
-//     if(e.target === ModalContent) {
-//         return
-//     }else {
-//         setModalState(!modalState)
-//     }
-// }
-
 function Modal(props) {
-    const { modalState, setModalState } = props;
+    const { modal, setModal, modalMenuList } = props;
 
     return (
         <>
             <ModalPortal>
-            <ModalWrapper modalState={modalState} onClick={() => setModalState(false)}>
-                <ModalContent modalState={modalState}>
+            <ModalWrapper modal={modal} onClick={() => setModal(false)}>
+                <ModalContent modal={modal} onClick={(e) => e.stopPropagation()}>
                     <ul>
-                        <StyledLi>1</StyledLi>
-                        <StyledLi>1</StyledLi>
-                        <StyledLi>1</StyledLi>
+                        {modalMenuList.map((item,index) => {
+                            return (
+                                <StyledLi 
+                                    key={index}
+                                    onClick={item.onClick}
+                                >
+                                    {item.content}
+                                </StyledLi>
+                            )
+                        })}
                     </ul>
                 </ModalContent>
             </ModalWrapper>
