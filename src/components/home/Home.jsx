@@ -15,7 +15,7 @@ const Home = () => {
         useAxios(getFollowersPost);
 
     useEffect(() => {
-        console.log(response);
+        console.log(response, error);
     },[]);
     return (
         <>

@@ -3,15 +3,22 @@ import axios from "axios";
 
 axios.defaults.baseURL = "http://146.56.183.55:5050";
 // axios.defaults.baseURL = "https://mandarin.api.weniv.co.kr";
-const token = localStorage.getItem("token");
-axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
-    "token"
-)}`;
 axios.defaults.headers["content-Type"] = "application/json";
+
+axios.interceptors.request.use(
+    function (config) {
+        config.headers["Authorization"] = `Bearer ${localStorage.getItem(
+            "token"
+        )}`;
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
 export const useAxios = (axiosParams) => {
     console.log(axiosParams);
-    console.log(token);
 
     const [response, setResponse] = useState(null);
     const [error, setError] = useState(null);
