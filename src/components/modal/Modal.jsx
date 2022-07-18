@@ -9,6 +9,7 @@ const ModalWrapper = styled.div`
     background-color: rgba(0, 0, 0, 0.3);
     height: 100vh;
     width: 100%;
+    transition: all 3s;
     z-index: ${(props) => (props.modalState === false ? "-1" : "1000")};
     opacity: ${(props) => (props.modalState === false ? "0" : "1")};
 `;
@@ -22,7 +23,8 @@ const ModalContent = styled.div`
     padding-top: 36px;
     padding-bottom: 16px;
     bottom: 0;
-    transition: all 600ms;
+    transition: all 3s;
+    z-index: 10000;
     transform: translateY(${(props) => (props.modalState === false ? "150%" : "0")});
     ::before {
         content: "";
@@ -57,7 +59,7 @@ function Modal(props) {
     return (
         <>
             <ModalPortal>
-            <ModalWrapper modalState={modalState}>
+            <ModalWrapper modalState={modalState} onClick={() => setModalState(false)}>
                 <ModalContent modalState={modalState}>
                     <ul>
                         <StyledLi>1</StyledLi>

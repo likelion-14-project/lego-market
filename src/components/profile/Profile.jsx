@@ -11,6 +11,7 @@ import BackButton from '../ui/BackButton'
 import ModalButton from '../ui/ModalButton'
 import Modal from '../modal/Modal'
 import ModalPortal from '../../Portal'
+import Modal2 from '../modal/Modal2'
 
 const Wrapper = styled.div`
     max-width: 390px;
@@ -93,9 +94,18 @@ function Profile() {
     const {error, profile, isPending} = useProfile(accountname);
     const [modalState, setModalState] = useState(false)
 
+    const Toggle = () => setModalState(!modalState)
+
     if(profile) {
         return (
             <>
+                <button onClick={() => Toggle()}>모달</button>
+
+                <Modal2 show={modalState} close={Toggle} title="Dynamic Title">
+                    This is modal dynamic content
+                </Modal2>
+
+
                 <TopNav 
                     leftChild={<BackButton />}
                     rightChild={
@@ -122,9 +132,10 @@ function Profile() {
                         <StyledSpan>followings</StyledSpan>
                     </FollowingWrapper>
                 </Wrapper>
-                <ModalPortal>
+                {/* <ModalPortal>
                     <Modal modalState={modalState} setModalState={setModalState}/>
-                </ModalPortal>
+                </ModalPortal> */}
+
             </>
         )
     }
