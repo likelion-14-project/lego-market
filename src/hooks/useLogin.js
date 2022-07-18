@@ -1,19 +1,19 @@
-import { useState } from 'react'
-import { useAuthContext } from './useAuthContext';
+import { useState } from "react";
+import { useAuthContext } from "./useAuthContext";
 
 export const useLogin = () => {
     const [error, setError] = useState(null);
-    const [isPending, setIsPending] = useState(false)
+    const [isPending, setIsPending] = useState(false);
 
-    const {dispatch} = useAuthContext();
+    const { dispatch } = useAuthContext();
 
     const login = async (email, password) => {
         try {
-
             setError(null);
-            setIsPending(true)
+            setIsPending(true);
 
             const url = "https://mandarin.api.weniv.co.kr/user/login";
+            // const url = "http://146.56.183.55:5050/user/login";
 
             const loginData = {
                 user: {
@@ -21,7 +21,7 @@ export const useLogin = () => {
                     password: password,
                 },
             };
-    
+
             const response = await fetch(url, {
                 method: "POST",
                 headers: {
@@ -29,10 +29,10 @@ export const useLogin = () => {
                 },
                 body: JSON.stringify(loginData),
             });
-    
+
             const json = await response.json();
             console.log("json : ", json);
-    
+
             if (json.user) {
                 localStorage.setItem("token", json.user.token);
                 localStorage.setItem("accountname", json.user.accountname)
@@ -44,12 +44,11 @@ export const useLogin = () => {
                 return json.message;
             }
         } catch (error) {
-            setError(error)
-            setIsPending(false)
-            console.log(error)
+            setError(error);
+            setIsPending(false);
+            console.log(error);
         }
-
     };
 
-    return {error, isPending, login}
-}
+    return { error, isPending, login };
+};

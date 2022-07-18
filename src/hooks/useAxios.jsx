@@ -1,13 +1,21 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-// https://cors-anywhere.herokuapp.com/
-// axios.defaults.baseURL = "http://146.56.183.55:5050";
-axios.defaults.baseURL = "https://mandarin.api.weniv.co.kr";
-axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
-    "token"
-)}`;
+
+axios.defaults.baseURL = "http://146.56.183.55:5050";
+// axios.defaults.baseURL = "https://mandarin.api.weniv.co.kr";
 axios.defaults.headers["content-Type"] = "application/json";
-// axios.defaults.withCredentials = false;
+
+axios.interceptors.request.use(
+    function (config) {
+        config.headers["Authorization"] = `Bearer ${localStorage.getItem(
+            "token"
+        )}`;
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
 export const useAxios = (axiosParams) => {
     console.log(axiosParams);
@@ -38,5 +46,5 @@ export const useAxios = (axiosParams) => {
         getData(axiosParams);
     }, [refetch]);
 
-    return { error, isPending, response, callRefetch ,getData};
+    return { error, isPending, response, callRefetch, getData };
 };

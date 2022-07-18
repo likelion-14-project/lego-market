@@ -1,32 +1,16 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const fadeOut = keyframes`
-  0%{
-    opacity : 0;
-    
-  }
-  100%{
-    opacity : 1;
-  }
-`
-const ListWrap = styled.li`
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-bottom : 16px;
-    animation: ${fadeOut} 0.5s linear both;
-`;
-const UserAnchor = styled.a`
+const UserAnchor = styled(Link)`
     position: relative;
     display: flex;
     align-items: center;
     width: 100%;
 `;
 const UserProfileImg = styled.img`
-    width: 50px;
-    height: 50px;
+    width: ${(props) => (props.imgSize === "small" ? "42px" : "50px")};
+    height: ${(props) => (props.imgSize === "small" ? "42px" : "50px")};
     border-radius: 50%;
     border: 0.5px solid #f2f2f2;
     font-size: 10px;
@@ -57,26 +41,22 @@ const UserId = styled.strong`
     }
 `;
 
+//
 
-//  
-
-function SearchUserItem({ profileImg, userName, userId }) {
+function SearchUserItem({ profileImg, userName, userId, imgSize }) {
     const defaultImgSrc =
         process.env.PUBLIC_URL + "/images/LegoDefaultImage.png";
     return (
-        <Link to={`/profile/${userId}`}>
-          <ListWrap>
-              <UserAnchor>
-                  <UserProfileImg
-                      src={profileImg === null ? defaultImgSrc : profileImg}
-                  />
-                  <UserInfoDiv>
-                      <UserName>{userName}</UserName>
-                      <UserId>{userId}</UserId>
-                  </UserInfoDiv>
-              </UserAnchor>
-          </ListWrap>
-        </Link>
+        <UserAnchor to={`/profile/${userId}`}>
+            <UserProfileImg
+                src={profileImg === null ? defaultImgSrc : profileImg}
+                imgSize={imgSize}
+            />
+            <UserInfoDiv>
+                <UserName>{userName}</UserName>
+                <UserId>{userId}</UserId>
+            </UserInfoDiv>
+        </UserAnchor>
     );
 }
 
