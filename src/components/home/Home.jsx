@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import NavBar from "../ui/NavBar";
 import HomeHeader from "./HomeHeader";
 import HomeMain from "./HomeMain";
 import axios from "axios";
 
 const Home = () => {
     const navigate = useNavigate();
-    const url = "https://mandarin.api.weniv.co.kr";
+    // const url = "https://mandarin.api.weniv.co.kr";
+    const url = "http://146.56.183.55:5050";
     const reqPath = "/post/feed";
     const headers = {
         Authorization: `Bearer ${localStorage.getItem('token')}`,

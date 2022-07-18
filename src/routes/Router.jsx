@@ -8,10 +8,8 @@ import JoinPage from "../pages/JoinPage";
 import WithoutNav from "./WithoutNav";
 import WithNav from "./WithNav";
 
-
-
-import ProfilePage from '../pages/ProfilePage';
-import ProfileModifyPage from '../pages/ProfileModifyPage';
+import ProfilePage from "../pages/ProfilePage";
+import ProfileModifyPage from "../pages/ProfileModifyPage";
 
 const Router = () => {
     return (
@@ -19,12 +17,12 @@ const Router = () => {
             <Routes>
                 <Route element={<WithoutNav />}>
                     <Route path="/" element={<Splash />} />
+                    <Route path="/loginpage" element={<LoginPage />} />
                 </Route>
-                <Route element={<WithNav/>}>
-                        <Route path="/home" element={<Home />} />
-                        <Route path="/loginpage" element={<LoginPage />} />
-                        <Route path="/search" element={<SearchUserPage />} />
-                        <Route path="/joinpage" element={<JoinPage />} />
+                <Route element={<WithNav />}>
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/search" element={<SearchUserPage />} />
+                    <Route path="/joinpage" element={<JoinPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>
