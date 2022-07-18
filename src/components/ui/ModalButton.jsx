@@ -8,9 +8,12 @@ const StyledButton = styled.button`
     cursor: pointer;
 `
 
-function ModalButton() {
+function ModalButton(props) {
+
+    const {onClick} = props
+
     return (
-        <StyledButton>
+        <StyledButton onClick={onClick}>
             <img src={process.env.PUBLIC_URL + "/icons/icon-more-vertical.png"} alt="" width="22px" height="22px"/>
         </StyledButton>
     )

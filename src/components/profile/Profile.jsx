@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import ProfileImage from "../ui/ProfileImage";
-import UserButton from "./UserButton";
-import MyButton from "./MyButton";
+import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
+import ProfileImage from '../ui/ProfileImage'
+import UserButton from "./UserButton"
+import MyButton from "./MyButton"
 import { Link, useParams } from "react-router-dom";
-import { useAuthContext } from "../../hooks/useAuthContext";
-import { useProfile } from "../../hooks/useProfile";
-import TopNav from "../ui/TopNav";
-import BackButton from "../ui/BackButton";
-import ModalButton from "../ui/ModalButton";
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useProfile } from '../../hooks/useProfile';
+import TopNav from '../ui/TopNav'
+import BackButton from '../ui/BackButton'
+import ModalButton from '../ui/ModalButton'
+import Modal from '../modal/Modal'
+import AlertModal from '../modal/AlertModal'
 
 const Wrapper = styled.div`
     max-width: 390px;
@@ -89,12 +91,35 @@ function Profile() {
 
     const { error, profile, isPending } = useProfile(accountname);
 
-    if (profile) {
+
+    const [modal, setModal] = useState(false);
+    const [alertModal, setAlertModal] = useState(false);
+
+    const modalMenuList = [
+        {
+            content : '설정 및 개인정보',
+            onClick : () => {}
+        },
+        {
+            content : '로그아웃',
+            onClick : () => {setAlertModal(true)}
+        }
+    ]
+
+    const alertButton = {
+        content : "로그아웃",
+        onClick : () => {}
+    }
+
+
+    if(profile) {
         return (
             <>
                 <TopNav
                     leftChild={<BackButton />}
-                    rightChild={<ModalButton />}
+                    rightChild={
+                        <ModalButton onClick={() => setModal(!modal)}/>
+                    }
                 />
                 <Wrapper>
                     <StyledProfileImg imgSrc={profile.image} />
@@ -117,6 +142,18 @@ function Profile() {
                         <StyledSpan>followings</StyledSpan>
                     </FollowingWrapper>
                 </Wrapper>
+                <Modal 
+                    modal={modal} 
+                    setModal={setModal}
+                    modalMenuList={modalMenuList}
+                />
+                <AlertModal 
+                    alertModal={alertModal}
+                    setAlertModal={setAlertModal}
+                    setModal={setModal}
+                    content={"로그아웃하시겠어요?"}
+                    alertButton={alertButton}
+                />
             </>
         );
     }
