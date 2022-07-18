@@ -57,7 +57,7 @@ function NavBar() {
                 }
             />
             <NavFooterItem
-                link={"/myprofile/" + user.accountname}
+                link={"/myprofile/"}
                 content="프로필"
                 activeIcon={
                     process.env.PUBLIC_URL + "/icons/icon-user-fill.png"

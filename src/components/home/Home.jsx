@@ -3,24 +3,20 @@ import { useNavigate, useLocation } from "react-router-dom";
 import HomeHeader from "./HomeHeader";
 import HomeMain from "./HomeMain";
 import axios from "axios";
+import { useAxios } from "../../hooks/useAxios";
 
 const Home = () => {
     const navigate = useNavigate();
-    // const url = "https://mandarin.api.weniv.co.kr";
-    const url = "http://146.56.183.55:5050";
-    const reqPath = "/post/feed";
-    const headers = {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-        "Content-type": "application/json",
+    const getFollowersPost = {
+        url: `/post/feed`,
+        method: "GET",
     };
-    console.log(url + reqPath, headers);
+    const { error, isPending, response, callRefetch } =
+        useAxios(getFollowersPost);
 
     useEffect(() => {
-        (async () => {
-            const res = await axios.get(url + reqPath, { headers });
-            console.log(res);
-        })();
-    });
+        console.log(response);
+    },[]);
     return (
         <>
             {/* 임시 버튼 */}
