@@ -35,8 +35,7 @@ function Splash() {
 
     function checkLoginState() {
         console.log("checkLoginState");
-        const usertoken = accessToken;
-        if (usertoken === null) {
+        if (accessToken === null) {
             console.log("token not exist");
             setLoginState(true);
         } else {
@@ -47,24 +46,17 @@ function Splash() {
         }
     }
     useEffect(() => {
+        setAccessToken(localStorage.getItem("token"));
+    }, [accessToken]);
+
+    useEffect(() => {
         let splash = setTimeout(() => {
             checkLoginState();
         }, 1500);
         return () => {
             clearTimeout(splash);
         };
-    }, [navigate, loginState, accessToken]);
-
-    useEffect(()=> {
-        if(localStorage.getItem('token')){
-            let loginDelay = setTimeout(()=> {
-                navigate('/home');
-            },1500);
-            return () => {
-                clearTimeout(loginDelay);
-            }
-        }
-    })
+    });
 
     return (
         <>
