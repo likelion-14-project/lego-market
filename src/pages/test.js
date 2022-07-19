@@ -55,3 +55,62 @@ function toggleNumToString(num) {
       return parseInt(num.replace(",", ""));
     }
   }
+
+// ****************************************************
+
+  function getNumber(obj){
+    
+    var num01;
+    var num02;
+    num01 = obj.value;
+    num02 = num01.replace(/\D/g,""); //숫자가 아닌것을 제거, 
+                                     //즉 [0-9]를 제외한 문자 제거; /[^0-9]/g 와 같은 표현
+    num01 = setComma(num02); //콤마 찍기
+    obj.value =  num01;
+  
+  }
+  function setComma(n) {
+    var reg = /(^[+-]?\d+)(\d{3})/;   // 정규식
+    n += '';                          // 숫자를 문자열로 변환         
+    while (reg.test(n)) {
+       n = n.replace(reg, '$1' + ',' + '$2');
+    }         
+    return n;
+  }
+
+  // import React, { useState } from "react";
+// import Input from '../components/ui/Input'
+// export default function App() {
+//   const [num, setNum] = useState(0);
+
+//   const inputPriceFormat = (str) => {
+//     console.log("s", str);
+//     const comma = (str) => {
+//       str = String(str);
+//       return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+//     };
+//     const uncomma = (str) => {
+//       str = String(str);
+//       return str.replace(/[^\d]+/g, "");
+//     };
+//     return comma(uncomma(str));
+//   };
+
+//   return (
+//     <div className="App">
+//       <Input
+//         type="text"
+//         value={num}
+//         onChange={(e) => setNum(inputPriceFormat(e.target.value))}
+//       />
+//       <button
+//         onClick={(e) => {
+//           // ,를 뺀 원본 숫자 데이터를 얻기 위함
+//           console.log(num.split(",").reduce((curr, acc) => curr + acc, ""));
+//         }}
+//       >
+//         test
+//       </button>
+//     </div>
+//   );
+// }

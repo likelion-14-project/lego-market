@@ -32,7 +32,7 @@ const InputData = styled.input`
         width: 100%;
         outline: none;
         border: none;
-        border-bottom: solid 1px #f26e22;
+        border-bottom: solid 3px #ffb52d;
     }
 `;
 
@@ -46,13 +46,14 @@ function Input(props) {
         register,
         errors,
         WarningMessage,
-        onChange
+        onChange,
+        value
     } = props;
 
     return (
         <Wrapper className={className} marginTop={marginTop}>
             <InputLabel>{label}</InputLabel>
-            <InputData type={type} placeholder={placeholder} onChange={onChange} {...register} />
+            <InputData type={type} placeholder={placeholder} onChange={onChange} value={value} {...register} />
             {errors[label] && errors[label].type && WarningMessage && (
                 <WarningMessage>{errors[label].message}</WarningMessage>
             )}

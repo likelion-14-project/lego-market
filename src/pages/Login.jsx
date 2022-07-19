@@ -1,119 +1,143 @@
-import React, { useState } from "react";
+import React, { Component, useState } from "react";
 import styled from "styled-components";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
-const InputDiv = styled.div`
-  display: block;
-  font-size: 12px;
-  color: #767676;
-  width: 322px;
-  margin: 10px auto 6px;
-  text-align: left;
+import WarningMessage from "../components/ui/WarningMessage";
+import { useForm } from "react-hook-form";
+
+const Wrapper = styled.div`
+    padding: 30px 34px;
 `;
 
-const LoginMain = styled.main`
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  margin-top: 30px;
-  font-size: 22px;
-  font-weight: 500;
-  margin-bottom: 30px;
-`;
-const SignUP = styled.a`
-  display: block;
-  color: #767676;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 20px;
-  text-decoration: none;
-`;
 const H1 = styled.h1`
-  text-align: center;
-  font-weight: 500;
-  font-size: 24px;
+    font-family: "Spoqa Han Sans Neo";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 30px;
+    text-align: center;
+    margin-bottom: ${(props) => props.marginBottom}px;
 `;
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const A = styled.a.attrs({
+    href: "#",
+})`
+    font-family: "Spoqa Han Sans Neo";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    text-decoration: none;
+    color: #767676;
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+`;
 
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-  };
+const StyledButton = styled(Button)`
+    padding: 13px 0px;
+    margin-top: 30px;
+`;
 
-  const handlePw = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const [isActive, setIsActive] = useState(false);
-  const isPassedLogin = () => {
-    email.includes("@") && password.length > 4
-      ? setIsActive(true)
-      : setIsActive(false);
-  };
-
-  async function login() {
-    const url = "https://mandarin.api.weniv.co.kr";
-    const reqPath = "/user/login";
-    const loginData = {
-      user: {
-        email: email,
-        password: password,
-      },
-    };
-    const res = await fetch(url + reqPath, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(loginData),
+function LoginPage() {
+    const {
+        watch,
+        register,
+        handleSubmit,
+        formState: { errors, isValid },
+        setError,
+        resetField,
+    } = useForm({
+        mode: "onChange",
     });
-    const json = await res.json();
-    console.log(json, "제이손입니다");
 
-    localStorage.setItem("token", json.user.token);
-    window.location.replace("/home")
-  }
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+    const login = async (data) => {
+        const url = "https://mandarin.api.weniv.co.kr/user/login";
 
-  return (
-    <LoginMain>
-      <section class="login-email-container">
-        {/* <h2 class="ir">이메일, 비밀번호 입력</h2> */}
-        <form onSubmit={handleSubmit}>
-          <H1 class="main-title login-email-title">로그인</H1>
-          <InputDiv>
-            <Input
-              label="이메일"
-              marginBottom={16}
-              type="email"
-              onChange={handleEmail}
-              onKeyUp={isPassedLogin}
-            />
-          </InputDiv>
-          <InputDiv>
-            <Input
-              label="비밀번호"
-              marginBottom={16}
-              type="password"
-              onChange={handlePw}
-              onKeyUp={isPassedLogin}
-            />
-          </InputDiv>
-          <Button
-            onClick={login}
-            content="로그인"
-            background={isActive ? `#F26E22` : `#FFC7A7`}
-            disabled={email === '' || password === ''? true:false}
-          />
-          <SignUP href="#">이메일로 회원가입</SignUP>
-        </form>
-      </section>
-    </LoginMain>
-  );
-};
+        const loginData = {
+            user: {
+                email: data["이메일"],
+                password: data["비밀번호"],
+            },
+        };
 
-export default Login;
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify(loginData),
+        });
+
+        const json = await response.json();
+        console.log("json : ", json);
+
+        if (json.user) {
+            localStorage.setItem("token", json.user.token);
+            return json.user.token;
+        } else if (json.message) {
+            return json.message;
+        }
+    };
+
+    const onValid = async (data) => {
+        const result = await login(data);
+        console.log(result);
+
+        if (result === "이메일 또는 비밀번호가 일치하지 않습니다.") {
+            setError("이메일", {
+                type: "custom",
+                message: "*이메일 또는 비밀번호가 일치하지 않습니다.",
+            });
+            resetField("비밀번호");
+        } else {
+            // 라우팅처리를 해주려고합니다.
+        }
+    };
+
+    const onInvalid = (errors) => {
+        console.log(errors);
+    };
+
+    return (
+        <Wrapper>
+            <H1 marginBottom={40}>로그인</H1>
+            <form onSubmit={handleSubmit(onValid, onInvalid)}>
+                <Input
+                    type="email"
+                    label="이메일"
+                    register={register("이메일", {
+                        required: {
+                            value: true,
+                            message: "*필수 입력 값입니다.",
+                        },
+                        pattern: {
+                            value: /[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]$/i,
+                            message: "*올바른 이메일 형식이 아닙니다.",
+                        },
+                    })}
+                    errors={errors}
+                    WarningMessage={WarningMessage}
+                />
+                <Input
+                    type="password"
+                    label="비밀번호"
+                    marginTop={16}
+                    register={register("비밀번호", {
+                        required: {
+                            value: true,
+                            message: "*필수 입력 값입니다.",
+                        },
+                    })}
+                    errors={errors}
+                    WarningMessage={WarningMessage}
+                />
+                <StyledButton content="로그인" disabled={!isValid} />
+                {/* 링크로 수정해야합니다. */}
+                <A>이메일로 회원가입</A>
+            </form>
+        </Wrapper>
+    );
+}
+
+export default LoginPage;

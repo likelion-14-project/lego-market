@@ -1,34 +1,32 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Input from "../components/ui/Input";
-
 import WarningMessage from "../components/ui/WarningMessage";
 import styled from "styled-components";
 import TopNav from "../components/ui/TopNav";
-import "../hooks/comma";
 
+const Wrapper = styled.div`
+    padding: 30px 34px;
+`;
 const FileLabel = styled.label`
   display: inline-block;
   position: relative;
   background-color: #dbdbdb;
   cursor: pointer;
-  width: 322px;
+
   height: 204px;
   border-radius: 10px;
 `;
 const IMG = styled.img`
-  position: absolute;
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
   border-radius: 10px;
+  border:none;
 `;
 const UiImg = styled.img`
   bottom: 12px;
   right: 12px;
   position: absolute;
-`;
-const Form = styled.form`
-  margin-bottom: 30px;
 `;
 
 const InputFile = styled.input`
@@ -48,45 +46,32 @@ const LabelDiv = styled.div`
   margin-bottom: 10px;
   display: block;
 `;
-const Section = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 390px;
-  height: 100vh;
-  background-color: #fff;
-`;
+
 
 const AddProduct = (props) => {
   const {
     watch,
     register,
-    handleSubmit,
     formState: { errors, isValid },
-    setError,
-    resetField,
   } = useForm({
     mode: "onChange",
   });
-
-  const { width, height } = props;
-  const [item, setItem] = useState("");
-  let [price, setPrice] = useState("");
-  const [link, setLink] = useState("");
   const [itemimg, setItemImg] = useState("");
   const token = localStorage.getItem("token");
 
-  const handleItem = (e) => {
-    setItem(e.target.value);
+  const [num, setNum] = useState("");
+  const inputPriceFormat = (str) => {
+    const comma = (str) => {
+      str = String(str);
+      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+    };
+    const uncomma = (str) => {
+      str = String(str);
+      return str.replace(/[^\d]+/g, "");
+    };
+    return comma(uncomma(str));
+    
   };
-  const handlePrice = (e) => {
-    setPrice(e.target.value);
-  };
-  const handleLink = (e) => {
-    setLink(e.target.value);
-  };
-  // price = parseInt(price);
-  console.log(price)
 
   //이미지 업로드
   const url = "https://mandarin.api.weniv.co.kr";
@@ -113,9 +98,9 @@ const AddProduct = (props) => {
   async function add() {
     const reqData = {
       product: {
-        itemName: item,
-        price: price,
-        link: link,
+        itemName: watch('상품명'),
+        price: parseInt(watch('가격')),
+        link: watch('판매 링크'),
         itemImage: itemimg,
       },
     };
@@ -130,15 +115,15 @@ const AddProduct = (props) => {
     });
     const json = await response.json();
     console.log(json);
-    console.log(item);
-    console.log(price);
+    console.log(num.split(",").reduce((curr, acc) => curr + acc, ""));
+    num= parseInt(num)
   }
-
   return (
-    <div>
+    
+    <>
       <TopNav content="저장" onClick={add} disabled={!isValid} />
-      <Section>
-        <div className="filebox">
+      <Wrapper>
+        <section>
           <LabelDiv>이미지 등록</LabelDiv>
           <FileLabel for="ex-file" onChange={handleGetImageUrl}>
             <IMG id="aa" width={"322"} height={"204"}></IMG>
@@ -150,8 +135,8 @@ const AddProduct = (props) => {
             accept="image/*"
             onChange={handleGetImageUrl}
           ></InputFile>
-        </div>
-        <Form>
+        </section>
+        <form>
           <Input
             type="text"
             label="상품명"
@@ -161,26 +146,34 @@ const AddProduct = (props) => {
               required: {
                 value: true,
                 message: "*필수 입력 값입니다.",
-              },
+              },minLength:{
+                value:2,
+                message: "*상품명은 2글자 이상 이어야 합니다."
+              },maxLength:{
+                value:15,
+                message: "*상품명은 15자까지 작성할 수 있습니다."
+              }
             })}
             errors={errors}
             WarningMessage={WarningMessage}
-            onChange={handleItem}
           />
-        </Form>
+        </form>
         <div>
           <Input
-            type="number"
+            type="text"
+            value={num}
             label="가격"
             marginTop={16}
-            register={register("가격", {
-              required: {
-                value: true,
-                message: "*필수 입력 값입니다.",
-              },
-            })}
+            
+            onChange={(e) => setNum(inputPriceFormat(e.target.value))}
+            placeholder="숫자만 입력 가능합니다."
+            // register={register("가격", {
+            //   required: {
+            //     value: true,
+            //     message: "*필수 입력 값입니다.",
+            //   },
+            // })}
             errors={errors}
-            onChange={handlePrice}
             WarningMessage={WarningMessage}
           />
         </div>
@@ -197,12 +190,14 @@ const AddProduct = (props) => {
               },
             })}
             errors={errors}
-            onChange={handleLink}
             WarningMessage={WarningMessage}
           />
         </div>
-      </Section>
-    </div>
+    </Wrapper>
+    
+    </>
+    
+
   );
 };
 

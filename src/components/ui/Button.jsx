@@ -26,7 +26,6 @@ function Button(props) {
         <StyledButton
             onClick={onClick}
             className={props.className}
-
         >
             {content}
         </StyledButton>

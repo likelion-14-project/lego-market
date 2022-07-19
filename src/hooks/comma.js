@@ -1,13 +1,42 @@
-function inputNumberFormat(obj) {
-    obj.value = comma(uncomma(obj.value));
-}
+import { useState, useEffect } from "react";
+import axios from "axios";
+// https://cors-anywhere.herokuapp.com/
+// axios.defaults.baseURL = "http://146.56.183.55:5050";
+axios.defaults.baseURL = "https://mandarin.api.weniv.co.kr";
+axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+    "token"
+)}`;
+axios.defaults.headers["content-Type"] = "application/json";
+// axios.defaults.withCredentials = false;
 
-function comma(str) {
-    str = String(str);
-    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-}
+export const useAxios = (axiosParams) => {
+    console.log(axiosParams);
 
-function uncomma(str) {
-    str = String(str);
-    return str.replace(/[^\d]+/g, '');
-}
+    const [response, setResponse] = useState(null);
+    const [error, setError] = useState(null);
+    const [isPending, setIsPending] = useState(false);
+    const [refetch, setRefetch] = useState(0);
+
+    const callRefetch = () => {
+        setRefetch(Date.now());
+    };
+
+    const getData = async (params) => {
+        try {
+            const response = await axios.request(params);
+            console.log(response.data);
+            setResponse(response);
+            setIsPending(true);
+        } catch (err) {
+            setError(err.message);
+            setIsPending(false);
+            console.log(err.message);
+        }
+    };
+
+    useEffect(() => {
+        getData(axiosParams);
+    }, [refetch]);
+
+    return { error, isPending, response, callRefetch };
+};
