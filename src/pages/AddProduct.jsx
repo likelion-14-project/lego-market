@@ -70,7 +70,6 @@ const AddProduct = (props) => {
       return str.replace(/[^\d]+/g, "");
     };
     return comma(uncomma(str));
-    
   };
 
   //이미지 업로드
@@ -115,8 +114,8 @@ const AddProduct = (props) => {
     });
     const json = await response.json();
     console.log(json);
-    console.log(num.split(",").reduce((curr, acc) => curr + acc, ""));
-    num= parseInt(num)
+    
+    num = num.split(",").reduce((curr, acc) => curr + acc, "")
   }
   return (
     
@@ -161,18 +160,20 @@ const AddProduct = (props) => {
         <div>
           <Input
             type="text"
-            value={num}
+            // value={num}
             label="가격"
-            marginTop={16}
-            
+            marginTop={16}  
             onChange={(e) => setNum(inputPriceFormat(e.target.value))}
             placeholder="숫자만 입력 가능합니다."
-            // register={register("가격", {
-            //   required: {
-            //     value: true,
-            //     message: "*필수 입력 값입니다.",
-            //   },
-            // })}
+            register={register("가격", {
+              required: {
+                value: true,
+                message: "*필수 입력 값입니다.",
+                setValue:{
+                  value:{num},
+                }
+              },
+            })}
             errors={errors}
             WarningMessage={WarningMessage}
           />
@@ -187,7 +188,11 @@ const AddProduct = (props) => {
               required: {
                 value: true,
                 message: "*필수 입력 값입니다.",
-              },
+              }, 
+              pattern:{
+                value:/^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/,
+                message: "*URL을 입력하세요."
+              }
             })}
             errors={errors}
             WarningMessage={WarningMessage}
