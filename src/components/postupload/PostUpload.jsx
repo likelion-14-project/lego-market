@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import TopNav from "../ui/TopNav";
+import TopAdd from "../ui/TopAdd";
 
 const Main = styled.main`
     width: 100%;
@@ -9,8 +9,9 @@ const Main = styled.main`
     background-color: #fff;
     box-sizing: border-box;
     display: flex;
-    padding: 20px 0 20px 16px;
     min-width: 390px;
+    margin-top: 48px;
+    padding: 20px 0 20px 16px;
 `;
 
 const UserProfile = styled.img`
@@ -47,7 +48,7 @@ const PostTextarea = styled.textarea`
 `;
 
 const UploadImgSection = styled.section`
-    display: none;
+    /* display: none; */
 `;
 
 const UploadImgInput = styled.input`
@@ -80,33 +81,79 @@ const UploadImgList = styled.ul`
     overflow-y: hidden;
 `;
 
+const ImgItem = styled.li`
+    position: relative;
+    border-radius: 10px;
+    width: 304px;
+    height: 228px;
+    overflow: hidden;
+    border: 0.5px solid #767676;
+`;
+
+const PostUploadImg = styled.img`
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+`;
+
+const RemoveBtn = styled.button`
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    height: 22px;
+    width: 22px;
+    background-image: url(${process.env.PUBLIC_URL + `/icons/icon-delete.png`});
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+`;
+
 function PostUpload() {
     const [postContent, setPostContent] = useState("");
-    const [postImg, setPostImg] = useState("");
-    const {
-        register,
-        handleSubmit,
-        formState: { isValid },
-    } = useForm({
-        mode: "onChange",
-    });
+    const [postImg, setPostImg] = useState([]);
+    const [disabled, setDisabled] = useState(false);
+    // const {
+    //     register,
+    //     handleSubmit,
+    //     formState: { isValid },
+    // } = useForm({
+    //     mode: "onChange",
+    // });
+
+    const url = "https://mandarin.api.weniv.co.kr";
+
+    //이미지 업로드
+    async function imageUpload(file) {
+        const formData = new FormData();
+        formData.append("image", file);
+        const res = await fetch(url + "/image/uploadfile", {
+            method: "POST",
+            body: formData,
+        });
+        console.log(res);
+        const json = await res.json();
+        console.log(json);
+        return url + "/" + json.filename;
+    }
+    async function handleGetImageUrl(e) {
+        console.log(e.target.files);
+        const file = e.target.files[0];
+        const imgSrc = await imageUpload(file);
+        document.querySelector("#aa").src = imgSrc;
+        setPostImg(imgSrc);
+    }
 
     async function uploadPost() {
-        localStorage.setItem(
-            "token",
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzk5OWIyODJmZGNjNzEyZjQzN2ExZiIsImV4cCI6MTY2MzIxODE2MCwiaWF0IjoxNjU4MDM0MTYwfQ.J27H1LYzMHbJz8-2XTZ9ZwqD8tfMK-AXD1usRExZeAQ"
-        );
-
         const token = localStorage.getItem("token");
 
         const reqData = {
             post: {
-                content: "content",
-                image: "image", //"imageurl1, imageurl2" 형식으로
+                content: postContent,
+                image: postImg, //"imageurl1, imageurl2" 형식으로
             },
         };
 
-        const res = await fetch("https://mandarin.api.weniv.co.kr/post", {
+        const res = await fetch(url + "post", {
             method: "post",
 
             headers: {
@@ -118,10 +165,11 @@ function PostUpload() {
 
         const json = await res.json();
         console.log(json);
+        // return json;
     }
     return (
         <>
-            <TopNav></TopNav>
+            <TopAdd content="저장" onClick={uploadPost} disabled={disabled} />
             <Main>
                 <h2 className="visually_hidden">게시글 작성</h2>
                 <UserProfile
@@ -133,18 +181,32 @@ function PostUpload() {
                             type="text"
                             placeholder="게시글 입력하기"
                             maxLength="200"
+                            onChange={(e) => {
+                                e.target.value.length > 0
+                                    ? setDisabled(false)
+                                    : setDisabled(true);
+                            }}
                         ></PostTextarea>
-                        <h4 className="visually_hidden">
-                            게시글 이미지 업로드
-                        </h4>
-                        <UploadImgIcon htmlFor="uploadImg"></UploadImgIcon>
+                        <UploadImgIcon
+                            htmlFor="uploadImg"
+                            onChange={handleGetImageUrl}
+                        />
                         <UploadImgInput
                             type="file"
                             accept="image/*"
                             id="uploadImg"
+                            onChange={handleGetImageUrl}
                         />
                         <UploadImgSection>
-                            <UploadImgList></UploadImgList>
+                            <h4 className="visually_hidden">업로드된 사진</h4>
+                            <UploadImgList>
+                                <ImgItem />
+                                <RemoveBtn type="button">
+                                    <span className="visually_hidden ">
+                                        이미지삭제버튼
+                                    </span>
+                                </RemoveBtn>
+                            </UploadImgList>
                         </UploadImgSection>
                     </Form>
                 </Article>
