@@ -11,6 +11,7 @@ import WithNav from "./WithNav";
 import ProfilePage from "../pages/ProfilePage";
 import ProfileModifyPage from "../pages/ProfileModifyPage";
 import { useInfo } from "../hooks/useInfo";
+import PostUploadPage from "../pages/PostUploadPage";
 
 const Router = () => {
     const { myinfo } = useInfo();
@@ -29,6 +30,7 @@ const Router = () => {
                         path="/profileModify"
                         element={<ProfileModifyPage />}
                     />
+                    <Route path="/editpost" element={<PostUploadPage />} />
                 </Route>
                 <Route element={<WithNav />}>
                     <Route path="/home" element={<Home />} />
