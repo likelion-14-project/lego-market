@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
 export const useProfile = (accountname) => {
     const [error, setError] = useState(null);
@@ -7,24 +7,28 @@ export const useProfile = (accountname) => {
 
     const getProfile = async (accountname) => {
         const url = "https://mandarin.api.weniv.co.kr/profile/" + accountname;
-    
+
         const token = localStorage.getItem("token");
-    
+
+        if (accountname === undefined) {
+            return;
+        }
+
         const response = await fetch(url, {
-            method : "GET",
-            headers : {
-                "Authorization" : `Bearer ${token}`,
-                "Content-type" : "application/json"
-            }
-        })
-    
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-type": "application/json",
+            },
+        });
+
         const json = await response.json();
-        setProfile(json.profile)
-    }
+        setProfile(json.profile);
+    };
 
     useEffect(() => {
-        getProfile(accountname)
-    },[])
+        getProfile(accountname);
+    }, [accountname]);
 
-    return {error, isPending, getProfile, profile}
-}
+    return { error, isPending, getProfile, profile };
+};

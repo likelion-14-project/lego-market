@@ -5,7 +5,8 @@ import Button from "../ui/Button";
 import WarningMessage from "../ui/WarningMessage";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import {useLogin} from "../../hooks/useLogin"
+import { useLogin } from "../../hooks/useLogin";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
     padding: 30px 34px;
@@ -21,9 +22,7 @@ const H1 = styled.h1`
     margin-bottom: ${(props) => props.marginBottom}px;
 `;
 
-const A = styled.a.attrs({
-    href: "#",
-})`
+const StyledLink = styled(Link)`
     font-family: "Spoqa Han Sans Neo";
     font-style: normal;
     font-weight: 400;
@@ -54,12 +53,10 @@ function LoginPage() {
         mode: "onChange",
     });
 
-    const {error, isPending, login} = useLogin()
+    const { error, isPending, login } = useLogin();
 
     const onValid = async (data) => {
-        console.log(data)
-        const result = await login(data["이메일"],data["비밀번호"]);
-        console.log(result);
+        const result = await login(data["이메일"], data["비밀번호"]);
 
         if (result === "이메일 또는 비밀번호가 일치하지 않습니다.") {
             setError("이메일", {
@@ -110,8 +107,7 @@ function LoginPage() {
                     WarningMessage={WarningMessage}
                 />
                 <StyledButton content="로그인" disabled={!isValid} />
-                {/* 링크로 수정해야합니다. */}
-                <A>이메일로 회원가입</A>
+                <StyledLink to={"/joinpage"}>이메일로 회원가입</StyledLink>
             </form>
         </Wrapper>
     );

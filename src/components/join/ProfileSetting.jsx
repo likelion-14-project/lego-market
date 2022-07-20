@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import WarningMessage from "../ui/WarningMessage";
 import Button from "../ui/Button";
 import { useNavigate } from "react-router-dom";
+import { useLogin } from "../../hooks/useLogin";
 
 const Wrapper = styled.div`
     padding: 30px 34px;
@@ -54,6 +55,7 @@ function ProfileSetting(props) {
     const { account } = props;
 
     const [imgSrc, setImgSrc] = useState(null);
+    const { login } = useLogin();
 
     const {
         watch,
@@ -115,8 +117,9 @@ function ProfileSetting(props) {
 
             const json = await response.json();
             console.log(json);
-            if(json){
-                navigate('/')
+            if (json) {
+                login(account.email, account.password);
+                navigate("/");
             }
         } catch (err) {
             console.error(err);
