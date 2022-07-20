@@ -115,7 +115,7 @@ function PostUpload() {
     const [postContent, setPostContent] = useState("");
     const [postImg, setPostImg] = useState([]);
     const MAX_IMG_UPLOAD = 3;
-    const [disabled, setDisabled] = useState(false);
+    const [disabled, setDisabled] = useState(true);
     const { user } = useAuthContext();
     const url = "https://mandarin.api.weniv.co.kr";
 
@@ -141,6 +141,7 @@ function PostUpload() {
             const copyPostImg = [...postImg];
             copyPostImg.push(imgSrc);
             setPostImg(copyPostImg);
+            setDisabled(false);
         } else {
             alert("이미지는 최대 3개까지 업로드할 수 있습니다.");
         }
@@ -176,12 +177,19 @@ function PostUpload() {
 
     return (
         <>
-            <TopAdd content="저장" onClick={uploadPost} disabled={disabled} />
+            <TopAdd content="업로드" onClick={uploadPost} disabled={disabled} />
             <Main>
                 <h2 className="visually_hidden">게시글 작성</h2>
-                <UserProfile
-                    src={process.env.PUBLIC_URL + "/images/초기프로필.png"}
-                />
+                {user ? (
+                    <UserProfile src={user.image} />
+                ) : (
+                    <UserProfile
+                        src={
+                            process.env.PUBLIC_URL +
+                            "/images/LegoDefaultImage.png"
+                        }
+                    />
+                )}
                 <Article>
                     <Form autocomplete="off">
                         <PostTextarea
