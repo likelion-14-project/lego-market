@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 import WarningMessage from "../ui/WarningMessage";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useLogin } from "../../hooks/useLogin";
 import { Link } from "react-router-dom";
@@ -65,7 +65,7 @@ function LoginPage() {
             });
             resetField("비밀번호");
         } else {
-            navigate("/home");
+            navigate("/");
         }
     };
 

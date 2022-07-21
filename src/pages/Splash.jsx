@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import LoginModal from "../components/login/LoginModal";
 import { useNavigate } from "react-router-dom";
+import { checkToken } from "../utils/CheckToken";
 
 const MainDiv = styled.div`
     width: 100%;
@@ -10,7 +11,7 @@ const MainDiv = styled.div`
     overflow: hidden;
     box-sizing: content-box;
     background-color: ${(props) =>
-        props.loginState === false ? "#fff" : "orange"};
+        props.splashLoading === false ? "#fff" : "orange"};
     margin: auto;
     transition: all 600ms cubic-bezier(0.86, 0, 0.5, 1);
 `;
@@ -24,34 +25,19 @@ const MainHeader = styled.header`
         width: 200px;
         height: 200px;
     }
-    top: ${(props) => (props.loginState === false ? "50%" : "30%")};
+    top: ${(props) => (props.splashLoading === false ? "50%" : "30%")};
 `;
 
 function Splash() {
-    const [accessToken, setAccessToken] = useState(null);
-    const [splashLoading, setsplashLoading] = useState(true);
-    const [loginState, setLoginState] = useState(false);
+    const [splashLoading, setsplashLoading] = useState(false);
     const navigate = useNavigate();
-
-    function checkLoginState() {
-        console.log("checkLoginState");
-        if (accessToken === null) {
-            console.log("token not exist");
-            setLoginState(true);
-        } else {
-            console.log("token exist");
-            setsplashLoading(false);
-            setLoginState(true);
-            navigate("home");
-        }
-    }
-    useEffect(() => {
-        setAccessToken(localStorage.getItem("token"));
-    }, [accessToken]);
-
     useEffect(() => {
         let splash = setTimeout(() => {
-            checkLoginState();
+            if (checkToken()) {
+                setsplashLoading(false);
+                navigate("/home");
+            }
+            setsplashLoading(true);
         }, 1500);
         return () => {
             clearTimeout(splash);
@@ -59,25 +45,20 @@ function Splash() {
     });
 
     return (
-        <>
-            {splashLoading && (
-                <MainDiv loginState={loginState}>
-                    <MainHeader loginState={loginState}>
-                        <img
-                            alt="레고마켓로고"
-                            src={
-                                loginState === false
-                                    ? process.env.PUBLIC_URL +
-                                      "/icons/full-logo.png"
-                                    : process.env.PUBLIC_URL +
-                                      "/icons/full-logo-white.png"
-                            }
-                        />
-                    </MainHeader>
-                    <LoginModal loginState={loginState} />
-                </MainDiv>
-            )}
-        </>
+        <MainDiv splashLoading={splashLoading}>
+            <MainHeader splashLoading={splashLoading}>
+                <img
+                    alt="레고마켓로고"
+                    src={
+                        splashLoading === false
+                            ? process.env.PUBLIC_URL + "/icons/full-logo.png"
+                            : process.env.PUBLIC_URL +
+                              "/icons/full-logo-white.png"
+                    }
+                />
+            </MainHeader>
+            <LoginModal splashLoading={splashLoading} />
+        </MainDiv>
     );
 }
 
