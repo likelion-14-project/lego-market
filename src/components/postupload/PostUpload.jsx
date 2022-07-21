@@ -135,9 +135,10 @@ function PostUpload() {
 
     async function handleGetImageUrl(e) {
         console.log(e.target.files);
-        const file = e.target.files[0];
-        const imgSrc = await imageUpload(file);
-        if (postImg.length <= MAX_IMG_UPLOAD - 1) {
+
+        if (postImg.length < MAX_IMG_UPLOAD) {
+            const file = e.target.files[0];
+            const imgSrc = await imageUpload(file);
             const copyPostImg = [...postImg];
             copyPostImg.push(imgSrc);
             setPostImg(copyPostImg);
@@ -153,11 +154,11 @@ function PostUpload() {
         const reqData = {
             post: {
                 content: postContent,
-                image: postImg, //"imageurl1, imageurl2" 형식으로
+                image: postImg.join(","),
             },
         };
 
-        const res = await fetch(url + "post", {
+        const res = await fetch(url + "/post", {
             method: "post",
 
             headers: {
@@ -172,6 +173,9 @@ function PostUpload() {
         return json;
     }
     const onRemoveImg = (deleteUrl) => {
+        if (postImg.length === 1) {
+            setDisabled(true);
+        }
         setPostImg(postImg.filter((photo) => photo != deleteUrl));
     };
 
@@ -197,6 +201,7 @@ function PostUpload() {
                             placeholder="게시글 입력하기"
                             maxLength="200"
                             onChange={(e) => {
+                                setPostContent(e.target.value);
                                 e.target.value.length > 0
                                     ? setDisabled(false)
                                     : setDisabled(true);
