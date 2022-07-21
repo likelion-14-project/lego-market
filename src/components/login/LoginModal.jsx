@@ -3,15 +3,15 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const LoginArticle = styled.article`
-    position : absolute;
-    width : 100%;
-    display : flex;
-    flex-direction : column;
-    align-items : center;
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     height: 462px;
     background-color: #fff;
     border-radius: 20px 20px 0px 0px;
-    top: ${(props) => (props.loginState === false ? "140%" : "64%")};
+    top: ${(props) => (props.splashLoading === false ? "140%" : "64%")};
     transition: all 600ms cubic-bezier(0.86, 0, 0.7, 1);
     .login-sns {
         display: flex;
@@ -24,7 +24,8 @@ const LoginArticle = styled.article`
         float: left;
         width: 24px;
         height: 24px;
-        background-image: url(${process.env.PUBLIC_URL + `/icons/sprite-sns-2x.png`});
+        background-image: url(${process.env.PUBLIC_URL +
+        `/icons/sprite-sns-2x.png`});
         background-repeat: no-repeat;
         background-size: 96px 34px;
         margin-left: 14px;
@@ -81,10 +82,10 @@ const LoginArticle = styled.article`
         display: inline-block;
     }
 `;
-function LoginModal({ loginState }) {
+function LoginModal({ splashLoading }) {
     return (
         <>
-            <LoginArticle loginState={loginState}>
+            <LoginArticle splashLoading={splashLoading}>
                 <h2 className="visually_hidden">소셜로그인 및 회원가입</h2>
                 <ul className="login-sns wrapper-account">
                     <li className="login-kakao">

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import LoginModal from "../components/login/LoginModal";
 import { useNavigate } from "react-router-dom";
+import { checkToken } from "../utils/CheckToken";
 
 const MainDiv = styled.div`
     width: 100%;
@@ -28,30 +29,15 @@ const MainHeader = styled.header`
 `;
 
 function Splash() {
-    const [accessToken, setAccessToken] = useState(null);
-    const [splashLoading, setsplashLoading] = useState(true);
-    const [loginState, setLoginState] = useState(false);
+    const [splashLoading, setsplashLoading] = useState(false);
     const navigate = useNavigate();
-
-    function checkLoginState() {
-        console.log("checkLoginState");
-        if (accessToken === null) {
-            console.log("token not exist");
-            setLoginState(true);
-        } else {
-            console.log("token exist");
-            setsplashLoading(false);
-            setLoginState(true);
-            navigate("home");
-        }
-    }
-    useEffect(() => {
-        setAccessToken(localStorage.getItem("token"));
-    }, [accessToken]);
-
     useEffect(() => {
         let splash = setTimeout(() => {
-            checkLoginState();
+            if (checkToken()) {
+                setsplashLoading(false);
+                navigate("/home");
+            }
+            setsplashLoading(true);
         }, 1500);
         return () => {
             clearTimeout(splash);
@@ -61,12 +47,12 @@ function Splash() {
     return (
         <>
             {splashLoading && (
-                <MainDiv loginState={loginState}>
-                    <MainHeader loginState={loginState}>
+                <MainDiv splashLoading={splashLoading}>
+                    <MainHeader splashLoading={splashLoading}>
                         <img
                             alt="레고마켓로고"
                             src={
-                                loginState === false
+                                splashLoading === false
                                     ? process.env.PUBLIC_URL +
                                       "/icons/full-logo.png"
                                     : process.env.PUBLIC_URL +
@@ -74,7 +60,7 @@ function Splash() {
                             }
                         />
                     </MainHeader>
-                    <LoginModal loginState={loginState} />
+                    <LoginModal splashLoading={splashLoading} />
                 </MainDiv>
             )}
         </>
