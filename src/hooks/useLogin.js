@@ -13,7 +13,6 @@ export const useLogin = () => {
             setIsPending(true);
 
             const url = "https://mandarin.api.weniv.co.kr/user/login";
-            // const url = "http://146.56.183.55:5050/user/login";
 
             const loginData = {
                 user: {
@@ -31,12 +30,11 @@ export const useLogin = () => {
             });
 
             const json = await response.json();
-            console.log("json : ", json);
 
             if (json.user) {
                 localStorage.setItem("token", json.user.token);
-                localStorage.setItem("accountname", json.user.accountname)
-                dispatch({type : 'login', payload : json.user})
+                localStorage.setItem("accountname", json.user.accountname);
+                dispatch({ type: "login", payload: json.user });
                 setError(null);
                 setIsPending(false);
                 return json.user.token;

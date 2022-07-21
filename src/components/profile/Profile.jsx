@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import ProfileImage from '../ui/ProfileImage'
-import UserButton from "./UserButton"
-import MyButton from "./MyButton"
-import { Link, useParams } from "react-router-dom";
-import { useAuthContext } from '../../hooks/useAuthContext';
-import { useProfile } from '../../hooks/useProfile';
-import TopNav from '../ui/TopNav'
-import BackButton from '../ui/BackButton'
-import ModalButton from '../ui/ModalButton'
-import Modal from '../modal/Modal'
-import AlertModal from '../modal/AlertModal'
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import ProfileImage from "../ui/ProfileImage";
+import UserButton from "./UserButton";
+import MyButton from "./MyButton";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { useProfile } from "../../hooks/useProfile";
+import TopNav from "../ui/TopNav";
+import BackButton from "../ui/BackButton";
+import ModalButton from "../ui/ModalButton";
+import Modal from "../modal/Modal";
+import AlertModal from "../modal/AlertModal";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
     max-width: 390px;
@@ -85,40 +85,64 @@ const StyledSpan = styled.span`
     line-height: 12px;
     color: #767676;
 `;
-function Profile() {
+
+const FollowLink = styled(Link)`
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 23px;
+`;
+
+const FollowingLink = styled(FollowLink)`
+    color: #767676;
+`;
+
+function Profile(props) {
+    const { accountname } = props;
+
     const { user } = useAuthContext();
-    const { accountname } = useParams();
 
-    const { error, profile, isPending } = useProfile(accountname);
+    let profileAccountName;
+    let myAccountName;
+    if (user) {
+        myAccountName = user.accountname;
+        console.log(myAccountName);
 
+        accountname === undefined
+            ? (profileAccountName = myAccountName)
+            : (profileAccountName = accountname);
+    }
+
+    const { error, profile, isPending } = useProfile(profileAccountName);
 
     const [modal, setModal] = useState(false);
     const [alertModal, setAlertModal] = useState(false);
 
     const modalMenuList = [
         {
-            content : '설정 및 개인정보',
-            onClick : () => {}
+            content: "설정 및 개인정보",
+            onClick: () => {},
         },
         {
-            content : '로그아웃',
-            onClick : () => {setAlertModal(true)}
-        }
-    ]
+            content: "로그아웃",
+            onClick: () => {
+                setAlertModal(true);
+            },
+        },
+    ];
 
     const alertButton = {
-        content : "로그아웃",
-        onClick : () => {}
-    }
+        content: "로그아웃",
+        onClick: () => {},
+    };
 
-
-    if(profile) {
+    if (profile) {
         return (
             <>
                 <TopNav
                     leftChild={<BackButton />}
                     rightChild={
-                        <ModalButton onClick={() => setModal(!modal)}/>
+                        <ModalButton onClick={() => setModal(!modal)} />
                     }
                 />
                 <Wrapper>
@@ -127,27 +151,35 @@ function Profile() {
                     <UserId>@ {profile.accountname}</UserId>
                     <StyledP>{profile.intro}</StyledP>
 
-                    {user && user.accountname == accountname ? (
+                    {myAccountName === profileAccountName ? (
                         <MyButton />
                     ) : (
                         <UserButton />
                     )}
 
                     <FollowerWrapper>
-                        <StyledStrong>{profile.followerCount}</StyledStrong>
+                        <FollowLink
+                            to={`/follow/${profileAccountName}/follower`}
+                        >
+                            {profile.followerCount}
+                        </FollowLink>
                         <StyledSpan>followers</StyledSpan>
                     </FollowerWrapper>
                     <FollowingWrapper>
-                        <StyledStrong>{profile.followingCount}</StyledStrong>
+                        <FollowingLink
+                            to={`/follow/${profileAccountName}/following`}
+                        >
+                            {profile.followingCount}
+                        </FollowingLink>
                         <StyledSpan>followings</StyledSpan>
                     </FollowingWrapper>
                 </Wrapper>
-                <Modal 
-                    modal={modal} 
+                <Modal
+                    modal={modal}
                     setModal={setModal}
                     modalMenuList={modalMenuList}
                 />
-                <AlertModal 
+                <AlertModal
                     alertModal={alertModal}
                     setAlertModal={setAlertModal}
                     setModal={setModal}
