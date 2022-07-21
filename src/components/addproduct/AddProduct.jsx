@@ -192,8 +192,7 @@ const AddProduct = (props) => {
                 value: true,
                 message: "*필수 입력 값입니다.",
 
-              },
-          
+              },        
             })}
             errors={errors}
             WarningMessage={WarningMessage}

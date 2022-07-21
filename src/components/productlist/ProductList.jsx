@@ -1,8 +1,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Modal from "../components/modal/Modal";
-import AlertModal from "../components/modal/AlertModal";
+import Modal from "../modal/Modal";
+import AlertModal from "../modal/AlertModal";
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,11 +13,7 @@ const IMG = styled.img`
   height: 90px;
   border-radius: 8px;
 `;
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-right: 10px;
-`;
+
 const P = styled.p`
   color: #ffa200;
   font-size: 12px;

@@ -14,6 +14,7 @@ import { useInfo } from "../hooks/useInfo";
 import PostUploadPage from "../pages/PostUploadPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import AddProductListPage from "../pages/AddProductPage"
+import ProductListPage from "../pages/ProductListPage";
 const Router = () => {
     const { myinfo } = useInfo();
     useEffect(() => {
@@ -33,6 +34,7 @@ const Router = () => {
                     />
                     <Route path="/editpost" element={<PostUploadPage />} />
                     <Route path="/product" element={<AddProductListPage/>}/>
+                    <Route path="/productlist" element={<ProductListPage/>}/>
                 </Route>
                 <Route element={<WithNav />}>
                     <Route path="/home" element={<Home />} />
