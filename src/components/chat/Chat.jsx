@@ -93,6 +93,7 @@ function Chat() {
     };
 
     const getNow = () => {
+        return "12:41";
         let now = new Date();
         let hours = now.getHours();
         let minutes = now.getMinutes();
