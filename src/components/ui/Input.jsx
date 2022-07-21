@@ -46,12 +46,13 @@ function Input(props) {
         register,
         errors,
         WarningMessage,
+        onChange
     } = props;
 
     return (
         <Wrapper className={className} marginTop={marginTop}>
             <InputLabel>{label}</InputLabel>
-            <InputData type={type} placeholder={placeholder} {...register} />
+            <InputData type={type} placeholder={placeholder} {...register} onChange={onChange} />
             {errors[label] && errors[label].type && WarningMessage && (
                 <WarningMessage>{errors[label].message}</WarningMessage>
             )}

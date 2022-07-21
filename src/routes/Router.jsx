@@ -5,9 +5,9 @@ import Splash from "../pages/Splash";
 import SearchUserPage from "../pages/SearchUserPage";
 import LoginPage from "../pages/LoginPage";
 import JoinPage from "../pages/JoinPage";
+import AddProductPage from "../pages/AddProductPage";
 import WithoutNav from "./WithoutNav";
 import WithNav from "./WithNav";
-
 import ProfilePage from "../pages/ProfilePage";
 import ProfileModifyPage from "../pages/ProfileModifyPage";
 import { useInfo } from "../hooks/useInfo";
@@ -29,6 +29,8 @@ const Router = () => {
                         path="/profileModify"
                         element={<ProfileModifyPage />}
                     />
+                    
+                    <Route path="/addproduct" element={<AddProductPage/>}/>
                 </Route>
                 <Route element={<WithNav />}>
                     <Route path="/home" element={<Home />} />
