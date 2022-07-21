@@ -18,7 +18,7 @@ const Router = () => {
     const { myinfo } = useInfo();
     useEffect(() => {
         myinfo();
-    }, [myinfo]);
+    }, []);
 
     return (
         <BrowserRouter>
