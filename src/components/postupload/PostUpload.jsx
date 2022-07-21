@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-// import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { useAuthContext } from "../../hooks/useAuthContext";
 import TopAdd from "../ui/TopAdd";
 
 const Main = styled.main`
@@ -38,7 +38,6 @@ const Form = styled.form`
 
 const PostTextarea = styled.textarea`
     width: 100%;
-    height: 100vh;
     margin-bottom: 16px;
     font-size: 14px;
     padding: 0;
@@ -48,7 +47,7 @@ const PostTextarea = styled.textarea`
 `;
 
 const UploadImgSection = styled.section`
-    /* display: none; */
+    display: block;
 `;
 
 const UploadImgInput = styled.input`
@@ -106,20 +105,18 @@ const RemoveBtn = styled.button`
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    background-color: inherit;
 `;
 
 function PostUpload() {
     const [postContent, setPostContent] = useState("");
     const [postImg, setPostImg] = useState([]);
-    const [disabled, setDisabled] = useState(false);
-    // const {
-    //     register,
-    //     handleSubmit,
-    //     formState: { isValid },
-    // } = useForm({
-    //     mode: "onChange",
-    // });
-
+    const MAX_IMG_UPLOAD = 3;
+    const [disabled, setDisabled] = useState(true);
+    const { user } = useAuthContext();
     const url = "https://mandarin.api.weniv.co.kr";
 
     //이미지 업로드
@@ -135,12 +132,19 @@ function PostUpload() {
         console.log(json);
         return url + "/" + json.filename;
     }
+
     async function handleGetImageUrl(e) {
         console.log(e.target.files);
         const file = e.target.files[0];
         const imgSrc = await imageUpload(file);
-        document.querySelector("#aa").src = imgSrc;
-        setPostImg(imgSrc);
+        if (postImg.length <= MAX_IMG_UPLOAD - 1) {
+            const copyPostImg = [...postImg];
+            copyPostImg.push(imgSrc);
+            setPostImg(copyPostImg);
+            setDisabled(false);
+        } else {
+            alert("이미지는 최대 3개까지 업로드할 수 있습니다.");
+        }
     }
 
     async function uploadPost() {
@@ -165,16 +169,27 @@ function PostUpload() {
 
         const json = await res.json();
         console.log(json);
-        // return json;
+        return json;
     }
+    const onRemoveImg = (deleteUrl) => {
+        setPostImg(postImg.filter((photo) => photo != deleteUrl));
+    };
+
     return (
         <>
-            <TopAdd content="저장" onClick={uploadPost} disabled={disabled} />
+            <TopAdd content="업로드" onClick={uploadPost} disabled={disabled} />
             <Main>
                 <h2 className="visually_hidden">게시글 작성</h2>
-                <UserProfile
-                    src={process.env.PUBLIC_URL + "/images/초기프로필.png"}
-                />
+                {user ? (
+                    <UserProfile src={user.image} />
+                ) : (
+                    <UserProfile
+                        src={
+                            process.env.PUBLIC_URL +
+                            "/images/LegoDefaultImage.png"
+                        }
+                    />
+                )}
                 <Article>
                     <Form autocomplete="off">
                         <PostTextarea
@@ -197,18 +212,29 @@ function PostUpload() {
                             id="uploadImg"
                             onChange={handleGetImageUrl}
                         />
-                        <UploadImgSection>
-                            <h4 className="visually_hidden">업로드된 사진</h4>
-                            <UploadImgList>
-                                <ImgItem />
-                                <RemoveBtn type="button">
-                                    <span className="visually_hidden ">
-                                        이미지삭제버튼
-                                    </span>
-                                </RemoveBtn>
-                            </UploadImgList>
-                        </UploadImgSection>
                     </Form>
+                    <UploadImgSection>
+                        <h4 className="visually_hidden">업로드된 사진</h4>
+                        <UploadImgList>
+                            {postImg.map((imgArr, i) => {
+                                return (
+                                    <ImgItem key={i}>
+                                        <PostUploadImg src={imgArr} />
+                                        <RemoveBtn
+                                            type="button"
+                                            onClick={() => {
+                                                return onRemoveImg(imgArr);
+                                            }}
+                                        >
+                                            <span className="visually_hidden">
+                                                이미지삭제버튼
+                                            </span>
+                                        </RemoveBtn>
+                                    </ImgItem>
+                                );
+                            })}
+                        </UploadImgList>
+                    </UploadImgSection>
                 </Article>
             </Main>
         </>
