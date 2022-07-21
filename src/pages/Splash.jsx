@@ -11,7 +11,7 @@ const MainDiv = styled.div`
     overflow: hidden;
     box-sizing: content-box;
     background-color: ${(props) =>
-        props.loginState === false ? "#fff" : "orange"};
+        props.splashLoading === false ? "#fff" : "orange"};
     margin: auto;
     transition: all 600ms cubic-bezier(0.86, 0, 0.5, 1);
 `;
@@ -25,7 +25,7 @@ const MainHeader = styled.header`
         width: 200px;
         height: 200px;
     }
-    top: ${(props) => (props.loginState === false ? "50%" : "30%")};
+    top: ${(props) => (props.splashLoading === false ? "50%" : "30%")};
 `;
 
 function Splash() {
@@ -45,25 +45,20 @@ function Splash() {
     });
 
     return (
-        <>
-            {splashLoading && (
-                <MainDiv splashLoading={splashLoading}>
-                    <MainHeader splashLoading={splashLoading}>
-                        <img
-                            alt="레고마켓로고"
-                            src={
-                                splashLoading === false
-                                    ? process.env.PUBLIC_URL +
-                                      "/icons/full-logo.png"
-                                    : process.env.PUBLIC_URL +
-                                      "/icons/full-logo-white.png"
-                            }
-                        />
-                    </MainHeader>
-                    <LoginModal splashLoading={splashLoading} />
-                </MainDiv>
-            )}
-        </>
+        <MainDiv splashLoading={splashLoading}>
+            <MainHeader splashLoading={splashLoading}>
+                <img
+                    alt="레고마켓로고"
+                    src={
+                        splashLoading === false
+                            ? process.env.PUBLIC_URL + "/icons/full-logo.png"
+                            : process.env.PUBLIC_URL +
+                              "/icons/full-logo-white.png"
+                    }
+                />
+            </MainHeader>
+            <LoginModal splashLoading={splashLoading} />
+        </MainDiv>
     );
 }
 
