@@ -11,6 +11,7 @@ import ProfilePage from "../pages/ProfilePage";
 import ProfileModifyPage from "../pages/ProfileModifyPage";
 import { useInfo } from "../hooks/useInfo";
 import PostUploadPage from "../pages/PostUploadPage";
+import ChatPage from "../pages/ChatPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import { checkToken } from "../utils/CheckToken";
 
@@ -42,9 +43,12 @@ const Router = () => {
                                 path="/myprofile/:accountname"
                                 element={<ProfilePage />}
                             />
+                            <Route path="/editpost" element={<PostUploadPage />} />
+                            <Route path="/chat" element={<ChatPage />} />
                         </Route>
                     </>
                 )}
+
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>
