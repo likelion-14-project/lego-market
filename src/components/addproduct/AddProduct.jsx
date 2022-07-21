@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import Input from "../components/ui/Input";
-import WarningMessage from "../components/ui/WarningMessage";
+import Input from "../ui/Input";
+import WarningMessage from "../ui/WarningMessage";
 import styled from "styled-components";
-import TopNav from "../components/ui/TopNav";
+import TopNav from "../ui/TopNav";
+import Button from "../ui/Button";
+
+import BackButton from "../ui/BackButton";
 
 const Wrapper = styled.div`
     padding: 30px 34px;
@@ -13,10 +16,14 @@ const FileLabel = styled.label`
   position: relative;
   background-color: #dbdbdb;
   cursor: pointer;
-
   height: 204px;
   border-radius: 10px;
 `;
+const SaveButton = styled(Button)`
+    padding: 7px 0px;
+    width: 90px;
+`;
+
 const IMG = styled.img`
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
@@ -47,6 +54,7 @@ const LabelDiv = styled.div`
   display: block;
 `;
 
+
 const AddProduct = (props) => {
   const {
     watch,
@@ -58,6 +66,17 @@ const AddProduct = (props) => {
   const [itemimg, setItemImg] = useState("");
   const token = localStorage.getItem("token");
 
+  const inputPriceFormat = (str) => {
+    const comma = (str) => {
+      str = String(str);
+      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+    };
+    const uncomma = (str) => {
+      str = String(str);
+      return str.replace(/[^\d]+/g, "");
+    };
+    return comma(uncomma(str));
+  };
 
   //이미지 업로드
   const url = "https://mandarin.api.weniv.co.kr";
@@ -82,10 +101,13 @@ const AddProduct = (props) => {
   }
 //서버 등록
   async function add() {
+
+    const price = Commaprice.split(",").reduce((curr, acc) => curr + acc, "");
+
     const reqData = {
       product: {
         itemName: watch('상품명'),
-        price: parseInt(watch('가격')),
+        price: parseInt(price),
         link: watch('판매 링크'),
         itemImage: itemimg,
       },
@@ -101,11 +123,27 @@ const AddProduct = (props) => {
     });
     const json = await response.json();
     console.log(json);
+  
   }
 
+  const Commaprice = inputPriceFormat(watch("가격"))
+  console.log(Commaprice)
+  console.log(parseInt(Commaprice))
+
+
   return (
+    
     <>
-      <TopNav content="저장" onClick={add} disabled={!isValid} />
+                  <TopNav
+                leftChild={<BackButton />}
+                rightChild={
+                    <SaveButton
+                        content="저장"
+                        disabled={isValid}
+                        onClick={add}
+                    />
+                }
+            />
       <Wrapper>
         <section>
           <LabelDiv>이미지 등록</LabelDiv>
@@ -130,7 +168,13 @@ const AddProduct = (props) => {
               required: {
                 value: true,
                 message: "*필수 입력 값입니다.",
-              },
+              },minLength:{
+                value:2,
+                message: "*상품명은 2글자 이상 이어야 합니다."
+              },maxLength:{
+                value:15,
+                message: "*상품명은 15자까지 작성할 수 있습니다."
+              }
             })}
             errors={errors}
             WarningMessage={WarningMessage}
@@ -138,15 +182,18 @@ const AddProduct = (props) => {
         </form>
         <div>
           <Input
-            type="number"
+            type="text"
+            value={Commaprice}
             label="가격"
-            marginTop={16}
+            marginTop={16}  
             placeholder="숫자만 입력 가능합니다."
             register={register("가격", {
               required: {
                 value: true,
                 message: "*필수 입력 값입니다.",
+
               },
+          
             })}
             errors={errors}
             WarningMessage={WarningMessage}
@@ -162,14 +209,21 @@ const AddProduct = (props) => {
               required: {
                 value: true,
                 message: "*필수 입력 값입니다.",
-              },
+              }, 
+              pattern:{
+                value:/^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/,
+                message: "*URL을 입력하세요."
+              }
             })}
             errors={errors}
             WarningMessage={WarningMessage}
           />
         </div>
     </Wrapper>
+    
     </>
+    
+
   );
 };
 
