@@ -13,7 +13,7 @@ import ProfileModifyPage from "../pages/ProfileModifyPage";
 import { useInfo } from "../hooks/useInfo";
 import PostUploadPage from "../pages/PostUploadPage";
 import ChatPage from "../pages/ChatPage";
-
+import NotFoundPage from "../pages/NotFoundPage";
 const Router = () => {
     const { myinfo } = useInfo();
     useEffect(() => {
