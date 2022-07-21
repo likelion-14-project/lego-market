@@ -183,7 +183,7 @@ const AddProduct = (props) => {
         </form>
         <div>
           <Input
-            type="number"
+            type="text"
             value={Commaprice}
             label="가격"
             marginTop={16}  
@@ -193,7 +193,8 @@ const AddProduct = (props) => {
                 value: true,
                 message: "*필수 입력 값입니다.",
 
-              },             
+              },
+          
             })}
             errors={errors}
             WarningMessage={WarningMessage}

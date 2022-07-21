@@ -10,6 +10,7 @@ import WithoutNav from "./WithoutNav";
 import WithNav from "./WithNav";
 import ProfilePage from "../pages/ProfilePage";
 import ProfileModifyPage from "../pages/ProfileModifyPage";
+import ProductListPage from "../pages/ProductListPage";
 import { useInfo } from "../hooks/useInfo";
 
 const Router = () => {
@@ -31,6 +32,7 @@ const Router = () => {
                     />
                     
                     <Route path="/addproduct" element={<AddProductPage/>}/>
+                    <Route path="/productlist" element={<ProductListPage/>}/>
                 </Route>
                 <Route element={<WithNav />}>
                     <Route path="/home" element={<Home />} />
