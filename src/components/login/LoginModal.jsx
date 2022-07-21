@@ -24,8 +24,7 @@ const LoginArticle = styled.article`
         float: left;
         width: 24px;
         height: 24px;
-        background-image: url(${process.env.PUBLIC_URL +
-        `/icons/sprite-sns-2x.png`});
+        background-image: url(${process.env.PUBLIC_URL + "/icons/sprite-sns-2x.png"});
         background-repeat: no-repeat;
         background-size: 96px 34px;
         margin-left: 14px;
