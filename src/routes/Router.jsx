@@ -25,23 +25,25 @@ const Router = () => {
             <Routes>
                 <Route path="/" element={<Splash />} />
                 <Route path="/loginpage" element={<LoginPage />} />
-                <Route path="/joinpage" element={<JoinPage />} />
-                <Route path="/profileModify" element={<ProfileModifyPage />} />
-                <Route path="/editpost" element={<PostUploadPage />} />
 
                 {checkToken() || (
                     <Route path="/*" element={<Navigate replace to="/" />} />
-                )}
+                    )}
                 {checkToken() && (
-                    <Route element={<WithNav />}>
-                        <Route path="/home" element={<Home />} />
-                        <Route path="/search" element={<SearchUserPage />} />
-                        <Route path="/myprofile" element={<ProfilePage />} />
-                        <Route
-                            path="/myprofile/:accountname"
-                            element={<ProfilePage />}
-                        />
-                    </Route>
+                    <>
+                        <Route path="/joinpage" element={<JoinPage />} />
+                        <Route path="/profileModify" element={<ProfileModifyPage />} />
+                        <Route path="/editpost" element={<PostUploadPage />} />
+                        <Route element={<WithNav />}>
+                            <Route path="/home" element={<Home />} />
+                            <Route path="/search" element={<SearchUserPage />} />
+                            <Route path="/myprofile" element={<ProfilePage />} />
+                            <Route
+                                path="/myprofile/:accountname"
+                                element={<ProfilePage />}
+                            />
+                        </Route>
+                    </>
                 )}
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
