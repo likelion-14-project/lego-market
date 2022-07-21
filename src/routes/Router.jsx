@@ -28,22 +28,35 @@ const Router = () => {
                 <Route path="/loginpage" element={<LoginPage />} />
 
                 {checkToken() || (
-                    <Route path="/*" element={<Navigate replace to="/" />} />
-                    )}
-                {checkToken() && (
                     <>
                         <Route path="/joinpage" element={<JoinPage />} />
-                        <Route path="/profileModify" element={<ProfileModifyPage />} />
+                        <Route
+                            path="/profileModify"
+                            element={<ProfileModifyPage />}
+                        />
+                    </>
+                )}
+                {checkToken() && (
+                    <>
                         <Route path="/editpost" element={<PostUploadPage />} />
                         <Route element={<WithNav />}>
                             <Route path="/home" element={<Home />} />
-                            <Route path="/search" element={<SearchUserPage />} />
-                            <Route path="/myprofile" element={<ProfilePage />} />
+                            <Route
+                                path="/search"
+                                element={<SearchUserPage />}
+                            />
+                            <Route
+                                path="/myprofile"
+                                element={<ProfilePage />}
+                            />
                             <Route
                                 path="/myprofile/:accountname"
                                 element={<ProfilePage />}
                             />
-                            <Route path="/editpost" element={<PostUploadPage />} />
+                            <Route
+                                path="/editpost"
+                                element={<PostUploadPage />}
+                            />
                             <Route path="/chat" element={<ChatPage />} />
                         </Route>
                     </>
