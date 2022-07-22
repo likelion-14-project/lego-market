@@ -35,8 +35,11 @@ const SaveButton = styled(Button)`
 `;
 
 function ProfileModification() {
+    const defaultImgSrc =
+        process.env.PUBLIC_URL + "/images/LegoDefaultImage.png";
+
     const navigate = useNavigate();
-    const [imgSrc, setImgSrc] = useState(null);
+    const [imgSrc, setImgSrc] = useState(defaultImgSrc);
     const { user, dispatch } = useAuthContext();
 
     const {
