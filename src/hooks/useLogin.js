@@ -37,8 +37,10 @@ export const useLogin = () => {
                 dispatch({ type: "login", payload: json.user });
                 setError(null);
                 setIsPending(false);
-                return json.user.token;
+                return;
             } else if (json.message) {
+                setError(null);
+                setIsPending(false);
                 return json.message;
             }
         } catch (error) {

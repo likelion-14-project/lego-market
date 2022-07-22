@@ -43,11 +43,11 @@ const StyledButton = styled(Button)`
 function LoginPage() {
     const navigate = useNavigate();
     const {
-        watch,
         register,
         handleSubmit,
         formState: { errors, isValid },
         setError,
+        setFocus,
         resetField,
     } = useForm({
         mode: "onChange",
@@ -64,6 +64,7 @@ function LoginPage() {
                 message: "*이메일 또는 비밀번호가 일치하지 않습니다.",
             });
             resetField("비밀번호");
+            setFocus("비밀번호");
         } else {
             navigate("/");
         }
@@ -78,8 +79,8 @@ function LoginPage() {
             <H1 marginBottom={40}>로그인</H1>
             <form onSubmit={handleSubmit(onValid, onInvalid)}>
                 <Input
-                    type="email"
-                    label="이메일"
+                    type='email'
+                    label='이메일'
                     register={register("이메일", {
                         required: {
                             value: true,
@@ -94,8 +95,8 @@ function LoginPage() {
                     WarningMessage={WarningMessage}
                 />
                 <Input
-                    type="password"
-                    label="비밀번호"
+                    type='password'
+                    label='비밀번호'
                     marginTop={16}
                     register={register("비밀번호", {
                         required: {
@@ -106,9 +107,10 @@ function LoginPage() {
                     errors={errors}
                     WarningMessage={WarningMessage}
                 />
-                <StyledButton content="로그인" disabled={!isValid} />
+                <StyledButton content='로그인' disabled={!isValid} />
                 <StyledLink to={"/joinpage"}>이메일로 회원가입</StyledLink>
             </form>
+            {isPending ? <strong>로그인 진행중...</strong> : <></>}
         </Wrapper>
     );
 }

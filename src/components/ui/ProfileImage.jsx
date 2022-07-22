@@ -1,24 +1,22 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 const Image = styled.img`
     width: 110px;
     height: 110px;
     border-radius: 50%;
-    border: 1px solid #DBDBDB;
-`
+    border: 1px solid #dbdbdb;
+`;
+const defaultImgSrc = process.env.PUBLIC_URL + "/images/LegoDefaultImage.png";
 
 function ProfileImage(props) {
+    const { imgSrc, className } = props;
 
-    const {imgSrc, className} = props
-
-    const defaultImgSrc = process.env.PUBLIC_URL + "/images/LegoDefaultImage.png"
-
-    return <Image className={className} src={imgSrc === null ? defaultImgSrc : imgSrc}/>
+    return <Image className={className} src={imgSrc} />;
 }
 
 ProfileImage.defaultProps = {
-    imgSrc : null
-}
+    imgSrc: defaultImgSrc,
+};
 
-export default ProfileImage
+export default ProfileImage;

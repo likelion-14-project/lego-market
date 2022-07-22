@@ -54,7 +54,10 @@ function ProfileSetting(props) {
     const navigate = useNavigate();
     const { account } = props;
 
-    const [imgSrc, setImgSrc] = useState(null);
+    const defaultImgSrc =
+        process.env.PUBLIC_URL + "/images/LegoDefaultImage.png";
+
+    const [imgSrc, setImgSrc] = useState(defaultImgSrc);
     const { login } = useLogin();
 
     const {
@@ -62,34 +65,38 @@ function ProfileSetting(props) {
         register,
         handleSubmit,
         formState: { errors, isValid },
-        reset,
     } = useForm({
         mode: "onChange",
     });
 
     const accountValid = async () => {
-        const url = "https://mandarin.api.weniv.co.kr/user/accountnamevalid";
+        try {
+            const url =
+                "https://mandarin.api.weniv.co.kr/user/accountnamevalid";
+            const reqData = {
+                user: {
+                    accountname: watch("계정 ID"),
+                },
+            };
 
-        const reqData = {
-            user: {
-                accountname: watch("계정 ID"),
-            },
-        };
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify(reqData),
+            });
 
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify(reqData),
-        });
+            const json = await response.json();
+            const message = json.message;
 
-        const json = await response.json();
-        const message = json.message;
-        console.log(message);
-
-        if (message === "이미 가입된 계정ID 입니다.") {
-            return "*이미 가입된 계정ID 입니다.";
+            if (message === "사용 가능한 계정ID 입니다.") {
+                return;
+            } else {
+                return `*${message}`;
+            }
+        } catch (error) {
+            console.log(error);
         }
     };
 
@@ -116,10 +123,12 @@ function ProfileSetting(props) {
             });
 
             const json = await response.json();
-            console.log(json);
+
             if (json) {
                 login(account.email, account.password);
                 navigate("/");
+            } else {
+                throw Error("에러가 발생했습니다.");
             }
         } catch (err) {
             console.error(err);
@@ -136,9 +145,9 @@ function ProfileSetting(props) {
                     <StyledImageSelect width={30} setImgSrc={setImgSrc} />
                 </ImageWrapper>
                 <Input
-                    label="사용자 이름"
-                    type="text"
-                    placeholder="2~10자 이내여야 합니다."
+                    label='사용자 이름'
+                    type='text'
+                    placeholder='2~10자 이내여야 합니다.'
                     register={register("사용자 이름", {
                         required: {
                             value: true,
@@ -154,9 +163,9 @@ function ProfileSetting(props) {
                     WarningMessage={WarningMessage}
                 />
                 <Input
-                    label="계정 ID"
-                    type="text"
-                    placeholder="영문, 숫자, 특수문자(.),(_)만 사용 가능합니다."
+                    label='계정 ID'
+                    type='text'
+                    placeholder='영문, 숫자, 특수문자(.),(_)만 사용 가능합니다.'
                     register={register("계정 ID", {
                         required: {
                             value: true,
@@ -176,9 +185,9 @@ function ProfileSetting(props) {
                     marginTop={16}
                 />
                 <Input
-                    label="소개"
-                    type="text"
-                    placeholder="자신과 판매할 상품에 대해 소개해 주세요!"
+                    label='소개'
+                    type='text'
+                    placeholder='자신과 판매할 상품에 대해 소개해 주세요!'
                     register={register("소개", {
                         required: {
                             value: true,
@@ -189,7 +198,7 @@ function ProfileSetting(props) {
                     WarningMessage={WarningMessage}
                     marginTop={16}
                 />
-                <StyledButton content="레고마켓 시작하기" disabled={!isValid} />
+                <StyledButton content='레고마켓 시작하기' disabled={!isValid} />
             </form>
         </Wrapper>
     );

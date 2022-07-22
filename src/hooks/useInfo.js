@@ -5,7 +5,7 @@ export const useInfo = () => {
     const [error, setError] = useState(null);
     const [isPending, setIsPending] = useState(false);
 
-    const { dispatch, user } = useAuthContext();
+    const { dispatch } = useAuthContext();
 
     const myinfo = async () => {
         try {
@@ -23,12 +23,15 @@ export const useInfo = () => {
             });
 
             const json = await response.json();
-            console.log("json : ", json);
+            console.log("json : ", json.user);
             if (json.user) {
                 dispatch({ type: "login", payload: json.user });
                 setError(null);
                 setIsPending(false);
-                console.log("저장후 user : ", user);
+            } else {
+                setError(json.message);
+                setIsPending(false);
+                throw Error(json.message);
             }
         } catch (error) {
             setError(error);

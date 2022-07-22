@@ -16,60 +16,61 @@ import NotFoundPage from "../pages/NotFoundPage";
 import { checkToken } from "../utils/CheckToken";
 import FollowPage from "../pages/FollowPage";
 const Router = () => {
-  const { myinfo } = useInfo();
-  useEffect(() => {
-    myinfo();
-  }, []);
+    const { myinfo } = useInfo();
+    useEffect(() => {
+        myinfo();
+    }, []);
 
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Splash />} />
-        <Route path="/loginpage" element={<LoginPage />} />
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path='/' element={<Splash />} />
+                <Route path='/loginpage' element={<LoginPage />} />
 
                 {checkToken() || (
                     <>
-                        <Route path="/joinpage" element={<JoinPage />} />
+                        <Route path='/joinpage' element={<JoinPage />} />
                     </>
                 )}
                 {checkToken() && (
                     <>
                         <Route
-                            path="/profileModify"
+                            path='/profileModify'
                             element={<ProfileModifyPage />}
                         />
-                        <Route path="/editpost" element={<PostUploadPage />} />
+                        <Route path='/editpost' element={<PostUploadPage />} />
                         <Route element={<WithNav />}>
-                            <Route path="/home" element={<Home />} />
+                            <Route path='/home' element={<Home />} />
                             <Route
-                                path="/search"
+                                path='/search'
                                 element={<SearchUserPage />}
                             />
                             <Route
-                                path="/myprofile"
+                                path='/myprofile'
                                 element={<ProfilePage />}
                             />
                             <Route
-                                path="/myprofile/:accountname"
+                                path='/myprofile/:accountname'
                                 element={<ProfilePage />}
                             />
                             <Route
-                                path="/follow/:accountname/:type"
+                                path='/follow/:accountname/:type'
                                 element={<FollowPage />}
                             />
                             <Route
-                                path="/editpost"
+                                path='/editpost'
                                 element={<PostUploadPage />}
                             />
-                            <Route path="/chat" element={<ChatPage />} />
+                            <Route path='/chat' element={<ChatPage />} />
                         </Route>
                     </>
                 )}
 
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </BrowserRouter>
-  );
+                <Route path='*' element={<NotFoundPage />} />
+                <Route path='/notfound' element={<NotFoundPage />} />
+            </Routes>
+        </BrowserRouter>
+    );
 };
 
 export default Router;
