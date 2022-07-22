@@ -27,29 +27,6 @@ const Router = () => {
         <Route path="/" element={<Splash />} />
         <Route path="/loginpage" element={<LoginPage />} />
 
-<<<<<<< HEAD
-        {checkToken() || (
-          <>
-            <Route path="/joinpage" element={<JoinPage />} />
-            <Route path="/profileModify" element={<ProfileModifyPage />} />
-          </>
-        )}
-        {checkToken() && (
-          <>
-            <Route path="/editpost" element={<PostUploadPage />} />
-            <Route element={<WithNav />}>
-              <Route path="/home" element={<Home />} />
-              <Route path="/search" element={<SearchUserPage />} />
-              <Route path="/myprofile" element={<ProfilePage />} />
-              <Route path="/myprofile/:accountname" element={<ProfilePage />} />
-              <Route path="/editpost" element={<PostUploadPage />} />
-              <Route path="/chat" element={<ChatPage />} />
-              <Route path="/productlist" element={<ProductListPage/>}/>
-              <Route path="/product" element={<AddProductListPage />} />
-            </Route>
-          </>
-        )}
-=======
                 {checkToken() || (
                     <>
                         <Route path="/joinpage" element={<JoinPage />} />
@@ -88,7 +65,6 @@ const Router = () => {
                         </Route>
                     </>
                 )}
->>>>>>> Feat/follow
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
