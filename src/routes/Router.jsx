@@ -30,33 +30,18 @@ const Router = () => {
                 {checkToken() || (
                     <>
                         <Route path="/joinpage" element={<JoinPage />} />
-                        <Route
-                            path="/profileModify"
-                            element={<ProfileModifyPage />}
-                        />
                     </>
                 )}
                 {checkToken() && (
                     <>
+                        <Route path="/profileModify" element={<ProfileModifyPage />} />
                         <Route path="/editpost" element={<PostUploadPage />} />
                         <Route element={<WithNav />}>
                             <Route path="/home" element={<Home />} />
-                            <Route
-                                path="/search"
-                                element={<SearchUserPage />}
-                            />
-                            <Route
-                                path="/myprofile"
-                                element={<ProfilePage />}
-                            />
-                            <Route
-                                path="/myprofile/:accountname"
-                                element={<ProfilePage />}
-                            />
-                            <Route
-                                path="/editpost"
-                                element={<PostUploadPage />}
-                            />
+                            <Route path="/search" element={<SearchUserPage />} />
+                            <Route path="/myprofile" element={<ProfilePage />} />
+                            <Route path="/myprofile/:accountname" element={<ProfilePage />} />
+                            <Route path="/editpost" element={<PostUploadPage />} />
                             <Route path="/chat" element={<ChatPage />} />
                         </Route>
                     </>
