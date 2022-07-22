@@ -13,8 +13,13 @@ import { useInfo } from "../hooks/useInfo";
 import PostUploadPage from "../pages/PostUploadPage";
 import ChatPage from "../pages/ChatPage";
 import NotFoundPage from "../pages/NotFoundPage";
+<<<<<<< HEAD
 import { checkToken } from "../utils/CheckToken";
 
+=======
+import AddProductListPage from "../pages/AddProductPage"
+import ProductListPage from "../pages/ProductListPage";
+>>>>>>> JJaemo
 const Router = () => {
     const { myinfo } = useInfo();
     useEffect(() => {
@@ -24,6 +29,7 @@ const Router = () => {
     return (
         <BrowserRouter>
             <Routes>
+<<<<<<< HEAD
                 <Route path="/" element={<Splash />} />
                 <Route path="/loginpage" element={<LoginPage />} />
 
@@ -47,6 +53,29 @@ const Router = () => {
                     </>
                 )}
 
+=======
+                <Route element={<WithoutNav />}>
+                    <Route path="/" element={<Splash />} />
+                    <Route path="/loginpage" element={<LoginPage />} />
+                    <Route path="/joinpage" element={<JoinPage />} />
+                    <Route
+                        path="/profileModify"
+                        element={<ProfileModifyPage />}
+                    />
+                    <Route path="/editpost" element={<PostUploadPage />} />
+                    <Route path="/product" element={<AddProductListPage/>}/>
+                    <Route path="/productlist" element={<ProductListPage/>}/>
+                </Route>
+                <Route element={<WithNav />}>
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/search" element={<SearchUserPage />} />
+                    <Route path="/myprofile" element={<ProfilePage />} />
+                    <Route
+                        path="/myprofile/:accountname"
+                        element={<ProfilePage />}
+                    />
+                </Route>
+>>>>>>> JJaemo
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>
