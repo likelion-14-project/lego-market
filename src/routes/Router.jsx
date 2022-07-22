@@ -15,6 +15,9 @@ import ChatPage from "../pages/ChatPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import { checkToken } from "../utils/CheckToken";
 import FollowPage from "../pages/FollowPage";
+import AddProductListPage from "../pages/AddProductPage";
+import ProductListPage from "../pages/ProductListPage";
+
 const Router = () => {
     const { myinfo } = useInfo();
     useEffect(() => {
@@ -62,6 +65,8 @@ const Router = () => {
                                 element={<PostUploadPage />}
                             />
                             <Route path='/chat' element={<ChatPage />} />
+                            <Route path="/productlist" element={<ProductListPage/>}/>
+                            <Route path="/product" element={<AddProductListPage />} />
                         </Route>
                     </>
                 )}
