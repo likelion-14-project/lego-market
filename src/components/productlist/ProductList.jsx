@@ -40,29 +40,45 @@ const Button = styled.button`
 const ProductList = () => {
   const [modal, setModal] = useState(false);
   const [alertModal, setAlertModal] = useState(false);
-
+  const [targetProduct, setTargetProduct] = useState();
   const modalMenuList = [
     {
       content: "삭제",
       onClick: () => {
-        
         setAlertModal(true);
       },
     },
     {
       content: "수정",
-      onClick: () => {
-      },
+      onClick:  () => {},
     },
     {
       content: "웹사이트에서 상품 보기",
-      onClick: ()=>{}
-    }
+      onClick: () => {},
+    },
   ];
 
   const alertButton = {
     content: "삭제",
-    onClick: () => {},
+    onClick: async () => {
+      const url = "https://mandarin.api.weniv.co.kr";
+      const token = window.localStorage.getItem("token");
+      const productId = targetProduct;
+      try {
+        const res = await fetch(url + "/product/" + productId, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",
+          },
+        });
+        const json = await res.json();
+        console.log(json);
+        window.location.replace("/myprofile");
+      } catch (err) {
+        console.error(err);
+      }
+    },
   };
 
   const [products, setProducts] = useState([]);
@@ -87,8 +103,6 @@ const ProductList = () => {
     productLoad();
   }, []);
 
-  console.log(products);
-
   if (!products) {
     return <div></div>;
   }
@@ -100,7 +114,13 @@ const ProductList = () => {
           {products.map((product) => {
             return (
               <>
-                <Button onClick={()=> setModal(!modal)}>
+                <Button
+                  onClick={() => {
+                    setModal(!modal);
+                    setTargetProduct(product.id);
+                    console.log(targetProduct);
+                  }}
+                >
                   <IMG src={product.itemImage}></IMG>
                   <DIV>{product.itemName}</DIV>
                   <P>{product.price}원</P>
