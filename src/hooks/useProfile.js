@@ -6,24 +6,38 @@ export const useProfile = (accountname) => {
     const [profile, setProfile] = useState({});
 
     const getProfile = async (accountname) => {
-        const url = "https://mandarin.api.weniv.co.kr/profile/" + accountname;
-
-        const token = localStorage.getItem("token");
-
         if (accountname === undefined) {
             return;
         }
 
-        const response = await fetch(url, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-type": "application/json",
-            },
-        });
+        try {
+            setError(null);
+            setIsPending(true);
 
-        const json = await response.json();
-        setProfile(json.profile);
+            const url =
+                "https://mandarin.api.weniv.co.kr/profile/" + accountname;
+
+            const token = localStorage.getItem("token");
+
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-type": "application/json",
+                },
+            });
+
+            const json = await response.json();
+            if (json.profile) {
+                setError(null);
+                setIsPending(false);
+                setProfile(json.profile);
+            }
+        } catch (error) {
+            setError(error);
+            setIsPending(false);
+            console.log(error);
+        }
     };
 
     useEffect(() => {

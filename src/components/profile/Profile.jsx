@@ -11,6 +11,7 @@ import ModalButton from "../ui/ModalButton";
 import Modal from "../modal/Modal";
 import AlertModal from "../modal/AlertModal";
 import { Link } from "react-router-dom";
+import LoadingPage from "../../pages/LoadingPage";
 
 const Wrapper = styled.div`
     max-width: 390px;
@@ -139,56 +140,62 @@ function Profile(props) {
     if (profile) {
         return (
             <>
-                <TopNav
-                    leftChild={<BackButton />}
-                    rightChild={
-                        <ModalButton onClick={() => setModal(!modal)} />
-                    }
-                />
-                <Wrapper>
-                    <StyledProfileImg imgSrc={profile.image} />
-                    <Username>{profile.username}</Username>
-                    <UserId>@ {profile.accountname}</UserId>
-                    <StyledP>{profile.intro}</StyledP>
+                {isPending ? (
+                    <LoadingPage />
+                ) : (
+                    <>
+                        <TopNav
+                            leftChild={<BackButton />}
+                            rightChild={
+                                <ModalButton onClick={() => setModal(!modal)} />
+                            }
+                        />
+                        <Wrapper>
+                            <StyledProfileImg imgSrc={profile.image} />
+                            <Username>{profile.username}</Username>
+                            <UserId>@ {profile.accountname}</UserId>
+                            <StyledP>{profile.intro}</StyledP>
 
-                    {myAccountName === profileAccountName ? (
-                        <MyButton />
-                    ) : (
-                        <UserButton />
-                    )}
+                            {myAccountName === profileAccountName ? (
+                                <MyButton />
+                            ) : (
+                                <UserButton />
+                            )}
 
-                    <FollowerWrapper>
-                        <FollowLink
-                            to={`/follow/${profileAccountName}/follower`}
-                        >
-                            {profile.followerCount}
-                        </FollowLink>
-                        <StyledSpan>followers</StyledSpan>
-                    </FollowerWrapper>
-                    <FollowingWrapper>
-                        <FollowingLink
-                            to={`/follow/${profileAccountName}/following`}
-                        >
-                            {profile.followingCount}
-                        </FollowingLink>
-                        <StyledSpan>followings</StyledSpan>
-                    </FollowingWrapper>
-                </Wrapper>
-                <Modal
-                    modal={modal}
-                    setModal={setModal}
-                    modalMenuList={modalMenuList}
-                />
-                <AlertModal
-                    alertModal={alertModal}
-                    setAlertModal={setAlertModal}
-                    setModal={setModal}
-                    content={"로그아웃하시겠어요?"}
-                    alertButton={alertButton}
-                />
+                            <FollowerWrapper>
+                                <FollowLink
+                                    to={`/follow/${profileAccountName}/follower`}
+                                >
+                                    {profile.followerCount}
+                                </FollowLink>
+                                <StyledSpan>followers</StyledSpan>
+                            </FollowerWrapper>
+                            <FollowingWrapper>
+                                <FollowingLink
+                                    to={`/follow/${profileAccountName}/following`}
+                                >
+                                    {profile.followingCount}
+                                </FollowingLink>
+                                <StyledSpan>followings</StyledSpan>
+                            </FollowingWrapper>
+                        </Wrapper>
+                        <Modal
+                            modal={modal}
+                            setModal={setModal}
+                            modalMenuList={modalMenuList}
+                        />
+                        <AlertModal
+                            alertModal={alertModal}
+                            setAlertModal={setAlertModal}
+                            setModal={setModal}
+                            content={"로그아웃하시겠어요?"}
+                            alertButton={alertButton}
+                        />
+                    </>
+                )}
             </>
         );
-    }
+    } else return null;
 }
 
 export default Profile;
