@@ -99,25 +99,14 @@ const FollowingLink = styled(FollowLink)`
 `;
 
 function Profile(props) {
-    const { accountname } = props;
-
-    const { user } = useAuthContext();
-
-    let profileAccountName;
-    let myAccountName;
-    if (user) {
-        myAccountName = user.accountname;
-        console.log(myAccountName);
-
-        accountname === undefined
-            ? (profileAccountName = myAccountName)
-            : (profileAccountName = accountname);
-    }
+    const { profileAccountName, myAccountName } = props;
 
     const { error, profile, isPending } = useProfile(profileAccountName);
 
     const [modal, setModal] = useState(false);
     const [alertModal, setAlertModal] = useState(false);
+
+    console.log("profile : ", profile);
 
     const modalMenuList = [
         {
@@ -141,56 +130,63 @@ function Profile(props) {
         return (
             <>
                 {isPending ? (
-                    <LoadingPage />
+                    <strong>로딩중입니다...</strong>
                 ) : (
                     <>
-                        <TopNav
-                            leftChild={<BackButton />}
-                            rightChild={
-                                <ModalButton onClick={() => setModal(!modal)} />
-                            }
-                        />
-                        <Wrapper>
-                            <StyledProfileImg imgSrc={profile.image} />
-                            <Username>{profile.username}</Username>
-                            <UserId>@ {profile.accountname}</UserId>
-                            <StyledP>{profile.intro}</StyledP>
+                        {error ? (
+                            <strong>{error}</strong>
+                        ) : (
+                            <>
+                                <TopNav
+                                    leftChild={<BackButton />}
+                                    rightChild={
+                                        <ModalButton
+                                            onClick={() => setModal(!modal)}
+                                        />
+                                    }
+                                />
+                                <Wrapper>
+                                    <StyledProfileImg imgSrc={profile.image} />
+                                    <Username>{profile.username}</Username>
+                                    <UserId>@ {profile.accountname}</UserId>
+                                    <StyledP>{profile.intro}</StyledP>
+                                    {myAccountName === profileAccountName ? (
+                                        <MyButton />
+                                    ) : (
+                                        <UserButton />
+                                    )}
 
-                            {myAccountName === profileAccountName ? (
-                                <MyButton />
-                            ) : (
-                                <UserButton />
-                            )}
-
-                            <FollowerWrapper>
-                                <FollowLink
-                                    to={`/follow/${profileAccountName}/follower`}
-                                >
-                                    {profile.followerCount}
-                                </FollowLink>
-                                <StyledSpan>followers</StyledSpan>
-                            </FollowerWrapper>
-                            <FollowingWrapper>
-                                <FollowingLink
-                                    to={`/follow/${profileAccountName}/following`}
-                                >
-                                    {profile.followingCount}
-                                </FollowingLink>
-                                <StyledSpan>followings</StyledSpan>
-                            </FollowingWrapper>
-                        </Wrapper>
-                        <Modal
-                            modal={modal}
-                            setModal={setModal}
-                            modalMenuList={modalMenuList}
-                        />
-                        <AlertModal
-                            alertModal={alertModal}
-                            setAlertModal={setAlertModal}
-                            setModal={setModal}
-                            content={"로그아웃하시겠어요?"}
-                            alertButton={alertButton}
-                        />
+                                    <FollowerWrapper>
+                                        <FollowLink
+                                            to={`/follow/${profileAccountName}/follower`}
+                                        >
+                                            {profile.followerCount}
+                                        </FollowLink>
+                                        <StyledSpan>followers</StyledSpan>
+                                    </FollowerWrapper>
+                                    <FollowingWrapper>
+                                        <FollowingLink
+                                            to={`/follow/${profileAccountName}/following`}
+                                        >
+                                            {profile.followingCount}
+                                        </FollowingLink>
+                                        <StyledSpan>followings</StyledSpan>
+                                    </FollowingWrapper>
+                                </Wrapper>
+                                <Modal
+                                    modal={modal}
+                                    setModal={setModal}
+                                    modalMenuList={modalMenuList}
+                                />
+                                <AlertModal
+                                    alertModal={alertModal}
+                                    setAlertModal={setAlertModal}
+                                    setModal={setModal}
+                                    content={"로그아웃하시겠어요?"}
+                                    alertButton={alertButton}
+                                />
+                            </>
+                        )}
                     </>
                 )}
             </>

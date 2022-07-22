@@ -32,7 +32,8 @@ function EmailJoin(props) {
         handleSubmit,
         formState: { errors, isValid },
         setError,
-        reset,
+        resetField,
+        setFocus,
     } = useForm({
         mode: "onChange",
     });
@@ -55,22 +56,22 @@ function EmailJoin(props) {
             const json = await res.json();
             const reqMsg = json.message;
 
-            if (reqMsg == "이미 가입된 이메일 주소 입니다.") {
+            if (reqMsg == "사용 가능한 이메일 입니다.") {
+                setAccount({
+                    email: data?.이메일,
+                    password: data?.비밀번호,
+                });
+                setNextPage(true);
+            } else {
+                resetField("이메일");
                 setError("이메일", {
                     type: "custom",
-                    message: "*이미 가입된 이메일 주소입니다.",
+                    message: `*${reqMsg}`,
                 });
-            } else {
-                console.log(reqMsg);
-                console.log(data);
-                setAccount({
-                    email : data?.이메일,
-                    password : data?.비밀번호
-                })
-                setNextPage(true);
+                setFocus("이메일");
             }
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
     };
 
@@ -79,9 +80,9 @@ function EmailJoin(props) {
             <H1>이메일로 회원가입</H1>
             <form onSubmit={handleSubmit(onValid)}>
                 <Input
-                    label="이메일"
-                    type="email"
-                    placeholder="이메일 주소를 입력해 주세요."
+                    label='이메일'
+                    type='email'
+                    placeholder='이메일 주소를 입력해 주세요.'
                     register={register("이메일", {
                         required: {
                             value: true,
@@ -96,20 +97,24 @@ function EmailJoin(props) {
                     WarningMessage={WarningMessage}
                 />
                 <Input
-                    label="비밀번호"
-                    type="password"
-                    placeholder="비밀번호를 설정해 주세요."
+                    label='비밀번호'
+                    type='password'
+                    placeholder='비밀번호를 설정해 주세요.'
                     marginTop={16}
                     register={register("비밀번호", {
                         required: {
                             value: true,
                             message: "*필수 입력 값입니다.",
                         },
+                        minLength: {
+                            value: 6,
+                            message: "*비밀번호는 6자 이상이어야 합니다.",
+                        },
                     })}
                     errors={errors}
                     WarningMessage={WarningMessage}
                 />
-                <StyledButton content="다음" disabled={!isValid} />
+                <StyledButton content='다음' disabled={!isValid} />
             </form>
         </Wrapper>
     );

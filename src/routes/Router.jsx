@@ -24,45 +24,46 @@ const Router = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Splash />} />
-                <Route path="/loginpage" element={<LoginPage />} />
+                <Route path='/' element={<Splash />} />
+                <Route path='/loginpage' element={<LoginPage />} />
 
                 {checkToken() || (
                     <>
-                        <Route path="/joinpage" element={<JoinPage />} />
+                        <Route path='/joinpage' element={<JoinPage />} />
                         <Route
-                            path="/profileModify"
+                            path='/profileModify'
                             element={<ProfileModifyPage />}
                         />
                     </>
                 )}
                 {checkToken() && (
                     <>
-                        <Route path="/editpost" element={<PostUploadPage />} />
+                        <Route path='/editpost' element={<PostUploadPage />} />
                         <Route element={<WithNav />}>
-                            <Route path="/home" element={<Home />} />
+                            <Route path='/home' element={<Home />} />
                             <Route
-                                path="/search"
+                                path='/search'
                                 element={<SearchUserPage />}
                             />
                             <Route
-                                path="/myprofile"
+                                path='/myprofile'
                                 element={<ProfilePage />}
                             />
                             <Route
-                                path="/myprofile/:accountname"
+                                path='/myprofile/:accountname'
                                 element={<ProfilePage />}
                             />
                             <Route
-                                path="/editpost"
+                                path='/editpost'
                                 element={<PostUploadPage />}
                             />
-                            <Route path="/chat" element={<ChatPage />} />
+                            <Route path='/chat' element={<ChatPage />} />
                         </Route>
                     </>
                 )}
 
-                <Route path="*" element={<NotFoundPage />} />
+                <Route path='*' element={<NotFoundPage />} />
+                <Route path='/notfound' element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>
     );

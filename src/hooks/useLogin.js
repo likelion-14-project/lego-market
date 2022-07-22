@@ -39,6 +39,8 @@ export const useLogin = () => {
                 setIsPending(false);
                 return;
             } else if (json.message) {
+                setError(null);
+                setIsPending(false);
                 return json.message;
             }
         } catch (error) {
