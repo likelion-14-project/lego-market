@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://146.56.183.55:5050";
-// axios.defaults.baseURL = "https://mandarin.api.weniv.co.kr";
+// axios.defaults.baseURL = "http://146.56.183.55:5050";
+axios.defaults.baseURL = "https://mandarin.api.weniv.co.kr";
 axios.defaults.headers["content-Type"] = "application/json";
 
 axios.interceptors.request.use(
