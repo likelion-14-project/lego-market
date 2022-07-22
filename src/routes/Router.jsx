@@ -14,7 +14,7 @@ import PostUploadPage from "../pages/PostUploadPage";
 import ChatPage from "../pages/ChatPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import { checkToken } from "../utils/CheckToken";
-
+import FollowPage from "../pages/FollowPage";
 const Router = () => {
     const { myinfo } = useInfo();
     useEffect(() => {
@@ -34,14 +34,33 @@ const Router = () => {
                 )}
                 {checkToken() && (
                     <>
-                        <Route path="/profileModify" element={<ProfileModifyPage />} />
+                        <Route
+                            path="/profileModify"
+                            element={<ProfileModifyPage />}
+                        />
                         <Route path="/editpost" element={<PostUploadPage />} />
                         <Route element={<WithNav />}>
                             <Route path="/home" element={<Home />} />
-                            <Route path="/search" element={<SearchUserPage />} />
-                            <Route path="/myprofile" element={<ProfilePage />} />
-                            <Route path="/myprofile/:accountname" element={<ProfilePage />} />
-                            <Route path="/editpost" element={<PostUploadPage />} />
+                            <Route
+                                path="/search"
+                                element={<SearchUserPage />}
+                            />
+                            <Route
+                                path="/myprofile"
+                                element={<ProfilePage />}
+                            />
+                            <Route
+                                path="/myprofile/:accountname"
+                                element={<ProfilePage />}
+                            />
+                            <Route
+                                path="/follow/:accountname/:type"
+                                element={<FollowPage />}
+                            />
+                            <Route
+                                path="/editpost"
+                                element={<PostUploadPage />}
+                            />
                             <Route path="/chat" element={<ChatPage />} />
                         </Route>
                     </>
