@@ -2,7 +2,7 @@ import React from "react";
 import HomeHeader from "./HomeHeader";
 import HomeMain from "./HomeMain";
 import { useAxios } from "../../hooks/useAxios";
-import Feed from "./Post";
+import Post from "./Post";
 import { MainWrap } from "../../styles/GlobalStyle";
 
 const Home = () => {
@@ -16,7 +16,7 @@ const Home = () => {
         <>
             <HomeHeader />
             <MainWrap>
-                {response?.data.posts ? <Feed datas={response.data.posts} /> : <HomeMain />}
+                {response?.data.posts ? <Post datas={response.data.posts} /> : <HomeMain />}
             </MainWrap>
         </>
     );
