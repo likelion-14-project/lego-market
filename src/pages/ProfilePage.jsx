@@ -1,16 +1,23 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Profile from "../components/profile/Profile";
 import { Link, useParams } from "react-router-dom";
 import { useInfo } from "../hooks/useInfo";
 import { useAuthContext } from "../hooks/useAuthContext";
-
+import ProfilePost from "../components/profile/ProfilePost";
+import styled from "styled-components";
+const ProfileMainWrap = styled.div`
+    min-width: 390px;
+    width: 100%;
+    height: calc(100% - 61px);
+    overflow-y: auto;
+    overflow-x: hidden;
+`;
 function ProfilePage() {
     // 쿼리로 넘어오는거
     // 자기프로필이면 accountname이 undefined임
 
     console.log("프로필페이지 렌더링");
     const { accountname } = useParams();
-
     const { user } = useAuthContext();
     console.log("user : ", user);
 
@@ -27,7 +34,7 @@ function ProfilePage() {
     }
 
     return (
-        <>
+        <ProfileMainWrap>
             <Profile
                 // 프로필에서 띄워줄 accountname
                 profileAccountName={profileAccountName}
@@ -35,8 +42,8 @@ function ProfilePage() {
                 myAccountName={myAccountName}
             />
             {/* 재모님 : 상품리스트 // accountname만 필요함 */}
-            {/* 원형님 :  */}
-        </>
+            <ProfilePost />
+        </ProfileMainWrap>
     );
 }
 

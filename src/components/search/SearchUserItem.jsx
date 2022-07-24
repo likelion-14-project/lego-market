@@ -47,7 +47,7 @@ function SearchUserItem({ profileImg, userName, userId, imgSize }) {
     const defaultImgSrc =
         process.env.PUBLIC_URL + "/images/LegoDefaultImage.png";
     return (
-        <UserAnchor to={`/profile/${userId}`}>
+        <UserAnchor to={`/myprofile/${userId}`} state={userId}>
             <UserProfileImg
                 src={profileImg === null ? defaultImgSrc : profileImg}
                 imgSize={imgSize}
