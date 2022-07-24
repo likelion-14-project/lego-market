@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Modal from "../modal/Modal";
 import AlertModal from "../modal/AlertModal";
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
   display: flex;
@@ -37,7 +38,14 @@ const Section = styled.section`
 const Button = styled.button`
   background-color: white;
 `;
-const ProductList = () => {
+const ProductList = (props) => {
+
+  const {profileAccountName, myAccountName} = props
+
+  console.log('profileAccountName : ', profileAccountName)
+  console.log(profileAccountName)
+  console.log('myAccountName : ', myAccountName)
+
   const [modal, setModal] = useState(false);
   const [alertModal, setAlertModal] = useState(false);
   const [targetProduct, setTargetProduct] = useState();
@@ -87,7 +95,7 @@ const ProductList = () => {
   useEffect(() => {
     const productLoad = async () => {
       const token = window.localStorage.getItem("token");
-      const res = await fetch(url + "/product/test13", {
+      const res = await fetch(url + `/product/${profileAccountName}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -101,11 +109,20 @@ const ProductList = () => {
 
     // 함수 실행
     productLoad();
-  }, []);
+  }, [profileAccountName]);
+
+  const navigate = useNavigate()
 
   if (!products) {
     return <div></div>;
   }
+
+  // useEffect(() => {
+  //   console.log('products : ', products)
+  // },[products])
+
+  
+
   return (
     <>
       <Section>
@@ -116,9 +133,15 @@ const ProductList = () => {
               <>
                 <Button
                   onClick={() => {
-                    setModal(!modal);
-                    setTargetProduct(product.id);
-                    console.log(targetProduct);
+                    if(profileAccountName === myAccountName) {
+                      setModal(!modal);
+                      setTargetProduct(product.id);
+                      console.log(targetProduct);
+                    } else {
+                      console.log(product.link)
+                      window.open(product.link)
+                    }
+
                   }}
                 >
                   <IMG src={product.itemImage}></IMG>

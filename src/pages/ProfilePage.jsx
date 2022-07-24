@@ -3,6 +3,7 @@ import Profile from "../components/profile/Profile";
 import { Link, useParams } from "react-router-dom";
 import { useInfo } from "../hooks/useInfo";
 import { useAuthContext } from "../hooks/useAuthContext";
+import ProductList from '../components/productlist/ProductList';
 
 function ProfilePage() {
     // 쿼리로 넘어오는거
@@ -35,6 +36,7 @@ function ProfilePage() {
                 myAccountName={myAccountName}
             />
             {/* 재모님 : 상품리스트 // accountname만 필요함 */}
+            <ProductList profileAccountName={profileAccountName} myAccountName={myAccountName}/>
             {/* 원형님 :  */}
         </>
     );
