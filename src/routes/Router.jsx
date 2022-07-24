@@ -17,6 +17,7 @@ import { checkToken } from "../utils/CheckToken";
 import FollowPage from "../pages/FollowPage";
 import AddProductListPage from "../pages/AddProductPage";
 import ProductListPage from "../pages/ProductListPage";
+import PostDetailPage from "../pages/PostDetailPage";
 
 const Router = () => {
     const { myinfo } = useInfo();
@@ -27,52 +28,62 @@ const Router = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/' element={<Splash />} />
-                <Route path='/loginpage' element={<LoginPage />} />
+                <Route path="/" element={<Splash />} />
+                <Route path="/loginpage" element={<LoginPage />} />
 
                 {checkToken() || (
                     <>
-                        <Route path='/joinpage' element={<JoinPage />} />
+                        <Route path="/joinpage" element={<JoinPage />} />
                     </>
                 )}
                 {checkToken() && (
                     <>
                         <Route
-                            path='/profileModify'
+                            path="/profileModify"
                             element={<ProfileModifyPage />}
                         />
-                        <Route path='/editpost' element={<PostUploadPage />} />
+                        <Route path="/editpost" element={<PostUploadPage />} />
+                        <Route
+                            path="/postdetail/:post_id"
+                            element={<PostDetailPage />}
+                        />
                         <Route element={<WithNav />}>
-                            <Route path='/home' element={<Home />} />
+                            <Route path="/home" element={<Home />} />
                             <Route
-                                path='/search'
+                                path="/search"
                                 element={<SearchUserPage />}
                             />
                             <Route
-                                path='/myprofile'
+                                path="/myprofile"
                                 element={<ProfilePage />}
                             />
                             <Route
-                                path='/myprofile/:accountname'
+                                path="/myprofile/:accountname"
                                 element={<ProfilePage />}
                             />
                             <Route
-                                path='/follow/:accountname/:type'
+                                path="/follow/:accountname/:type"
                                 element={<FollowPage />}
                             />
                             <Route
-                                path='/editpost'
+                                path="/editpost"
                                 element={<PostUploadPage />}
                             />
-                            <Route path='/chat' element={<ChatPage />} />
-                            <Route path="/productlist" element={<ProductListPage/>}/>
-                            <Route path="/product" element={<AddProductListPage />} />
+                            <Route path="/chat" element={<ChatPage />} />
+                            <Route
+                                path="/productlist"
+                                element={<ProductListPage />}
+                            />
+                            <Route
+                                path="/product"
+                                element={<AddProductListPage />}
+                            />
                         </Route>
                     </>
                 )}
 
-                <Route path='*' element={<NotFoundPage />} />
-                <Route path='/notfound' element={<NotFoundPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+                <Route path="/notfound" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>
     );
