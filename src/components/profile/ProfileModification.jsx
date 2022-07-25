@@ -46,10 +46,18 @@ function ProfileModification() {
         watch,
         register,
         handleSubmit,
+        setValue,
         formState: { errors, isValid },
     } = useForm({
         mode: "onChange",
     });
+
+    useEffect(() => {
+        setValue("사용자 이름", user.username)
+        setValue("계정 ID", user.accountname)
+        setValue("소개", user.intro)
+        setImgSrc(user.image)
+    },[])
 
     const accountValid = async () => {
         try {
