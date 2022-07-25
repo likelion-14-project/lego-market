@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
+import LikeComment from "../post/LikeComment";
 import SearchUserItem from "../search/SearchUserItem";
 
 const FeedArticle = styled.article`
@@ -47,36 +47,6 @@ const PostImg = styled.img`
     object-fit: cover;
 `;
 
-const LikeCommentDiv = styled.div`
-    display: flex;
-    margin-bottom: 16px;
-`;
-const LIkeCommentIcon = styled.img`
-    display: block;
-    width: 20px;
-    height: 20px;
-    margin-right: 6px;
-    margin-top: 1px;
-`;
-const LikeButton = styled.button`
-    display: flex;
-    margin-right: 18px;
-    background-color: inherit;
-    padding: 0;
-`;
-const LikeCommentCounter = styled.span`
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 22px;
-`;
-
-const LinkToPost = styled(Link)`
-    display: flex;
-    margin-right: 18px;
-    background-color: inherit;
-    padding: 0;
-`;
-
 const PostDate = styled.strong`
     font-weight: 400;
     font-size: 10px;
@@ -117,30 +87,7 @@ const Post = ({ datas }) => {
                                     </PostImgList>
                                 </PostImgDiv>
                             )}
-                            <LikeCommentDiv>
-                                <LikeButton>
-                                    <LIkeCommentIcon
-                                        src={
-                                            process.env.PUBLIC_URL +
-                                            "/icons/icon-heart.png"
-                                        }
-                                    />
-                                    <LikeCommentCounter>
-                                        {v.heartCount}
-                                    </LikeCommentCounter>
-                                </LikeButton>
-                                <LinkToPost to={`/postdetail/${v.id}`}>
-                                    <LIkeCommentIcon
-                                        src={
-                                            process.env.PUBLIC_URL +
-                                            "/icons/icon-message-circle.png"
-                                        }
-                                    />
-                                    <LikeCommentCounter>
-                                        {v.commentCount}
-                                    </LikeCommentCounter>
-                                </LinkToPost>
-                            </LikeCommentDiv>
+                            <LikeComment heartState={v.hearted} heartCount={v.heartCount} commentCount={v.commentCount} postId={v.id}/>
                             <PostDate>
                                 {v.createdAt
                                     .slice(0, 10)
