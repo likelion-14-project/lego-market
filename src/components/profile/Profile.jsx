@@ -14,10 +14,8 @@ import { Link } from "react-router-dom";
 import LoadingPage from "../../pages/LoadingPage";
 
 const Wrapper = styled.div`
-    max-width: 390px;
     padding: 30px 16px 26px;
     position: relative;
-    box-sizing: border-box;
     margin: 0 auto;
 `;
 
@@ -100,9 +98,7 @@ const FollowingLink = styled(FollowLink)`
 
 function Profile(props) {
     const { profileAccountName, myAccountName } = props;
-
     const { error, profile, isPending } = useProfile(profileAccountName);
-
     const [modal, setModal] = useState(false);
     const [alertModal, setAlertModal] = useState(false);
 
@@ -139,11 +135,7 @@ function Profile(props) {
                             <>
                                 <TopNav
                                     leftChild={<BackButton />}
-                                    rightChild={
-                                        <ModalButton
-                                            onClick={() => setModal(!modal)}
-                                        />
-                                    }
+                                    rightChild={<ModalButton onClick={() => setModal(!modal)} />}
                                 />
                                 <Wrapper>
                                     <StyledProfileImg imgSrc={profile.image} />
@@ -157,9 +149,7 @@ function Profile(props) {
                                     )}
 
                                     <FollowerWrapper>
-                                        <FollowLink
-                                            to={`/follow/${profileAccountName}/follower`}
-                                        >
+                                        <FollowLink to={`/follow/${profileAccountName}/follower`}>
                                             {profile.followerCount}
                                         </FollowLink>
                                         <StyledSpan>followers</StyledSpan>

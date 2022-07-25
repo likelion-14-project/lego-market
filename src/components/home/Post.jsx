@@ -93,7 +93,7 @@ const Post = ({ datas }) => {
 
     return (
         <>
-            {datas.map((v, i) => {
+            {datas?.map((v, i) => {
                 const PostImgSrc = v.image.split(",");
                 console.log(PostImgSrc);
                 return (
@@ -122,7 +122,7 @@ const Post = ({ datas }) => {
                                     <LIkeCommentIcon
                                         src={
                                             process.env.PUBLIC_URL +
-                                            "./icons/icon-heart.png"
+                                            "/icons/icon-heart.png"
                                         }
                                     />
                                     <LikeCommentCounter>
@@ -133,7 +133,7 @@ const Post = ({ datas }) => {
                                     <LIkeCommentIcon
                                         src={
                                             process.env.PUBLIC_URL +
-                                            "./icons/icon-message-circle.png"
+                                            "/icons/icon-message-circle.png"
                                         }
                                     />
                                     <LikeCommentCounter>
