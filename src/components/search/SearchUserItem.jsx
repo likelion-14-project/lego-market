@@ -41,6 +41,7 @@ const UserId = styled.strong`
     }
 `;
 
+
 //
 
 function SearchUserItem({ profileImg, userName, userId, imgSize }) {
