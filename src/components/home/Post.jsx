@@ -7,8 +7,7 @@ const FeedArticle = styled.article`
     position: relative;
     max-width: 358px;
     width: 100%;
-    margin-bottom: 20px;
-    margin-left : -16px;
+    margin: 0px auto 20px;
 `;
 const AuthorSection = styled.section`
     display: flex;

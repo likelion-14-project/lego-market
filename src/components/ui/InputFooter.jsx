@@ -65,7 +65,7 @@ function InputFooter(props) {
         <FooterWap>
             <Section>
                 <img src={img} />
-                <label className="ir">{ir}</label>
+                <label className="visually_hidden">{ir}</label>
                 <Input
                     type="text"
                     placeholder={placeholder}

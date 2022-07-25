@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import ModalButton from "../ui/ModalButton";
+import Modal from "../modal/Modal";
+import AlertModal from "../modal/AlertModal";
+import { timeForToday } from "../../utils/DateUtil";
 
 const CommentItem = styled.li`
     position: relative;
     font-size: 14px;
-    margin-bottom: 16px;
+    margin-bottom: 25px;
+    width: 358px;
 `;
 
 const CommentUserWap = styled.div`
     display: flex;
+    align-items: center;
 `;
 
 const CommentUserImg = styled.img`
@@ -21,6 +27,7 @@ const CommentUserImg = styled.img`
 const UserIdLink = styled(Link)`
     margin: 13px 10px;
     font-size: 14px;
+    font-weight: 500;
 `;
 
 const CommentDate = styled.span`
@@ -34,33 +41,58 @@ const CommentTxt = styled.p`
     margin-left: 50px;
     font-size: 14px;
 `;
-
-const MoreBtn = styled.button`
-    content: "";
-    position: absolute;
-    top: 8px;
-    right: 0;
-    width: 20px;
-    height: 20px;
-    background-image: url(${process.env.PUBLIC_URL + `/icons/more.png`});
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
+const MoreRight = styled.div`
+    margin-left: auto;
 `;
 
 function CommentCard(props) {
+    const [modal, setModal] = useState(false);
+    const [alertModal, setAlertModal] = useState(false);
+
+    const modalMenuList = [
+        {
+            content: "삭제",
+            onClick: () => {
+                setAlertModal(true);
+            },
+        },
+    ];
+    const alertButton = {
+        content: "삭제",
+        onClick: () => {},
+    };
+
     return (
-        <CommentItem>
-            <CommentUserWap>
-                <Link to="#none">
-                    <CommentUserImg src={props.userProfile} />
-                </Link>
-                <UserIdLink to="#none">{props.userName}</UserIdLink>
-                <CommentDate>방금전</CommentDate>
-            </CommentUserWap>
-            <CommentTxt>{props.userCommet}</CommentTxt>
-            <MoreBtn></MoreBtn>
-        </CommentItem>
+        <>
+            <CommentItem>
+                <CommentUserWap>
+                    <Link to="#none">
+                        <CommentUserImg src={props.userProfile} />
+                    </Link>
+                    <UserIdLink to="#none">{props.userName}</UserIdLink>
+                    <CommentDate>{timeForToday(props.createdAt)}</CommentDate>
+                    <MoreRight>
+                        <ModalButton
+                            type="button"
+                            onClick={() => setModal(!modal)}
+                        />
+                    </MoreRight>
+                </CommentUserWap>
+                <CommentTxt>{props.userCommet}</CommentTxt>
+            </CommentItem>
+            <Modal
+                modal={modal}
+                setModal={setModal}
+                modalMenuList={modalMenuList}
+            />
+            <AlertModal
+                alertModal={alertModal}
+                setAlertModal={setAlertModal}
+                setModal={setModal}
+                content={"삭제하시겠어요?"}
+                alertButton={alertButton}
+            />
+        </>
     );
 }
 
