@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect} from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import Post from "../home/Post";
@@ -20,6 +20,7 @@ const DetailMain = styled.main`
     align-items: center;
     height: calc(100% - 148px);
     overflow-y: scroll;
+    overflow-x: hidden;
 `;
 
 const DetailWrap = styled.div`
