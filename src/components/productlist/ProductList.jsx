@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Wrapper = styled.div`
   display: flex;
   margin-top: 16px;
-    white-space: nowrap;
+  white-space: nowrap;
   overflow: auto;
 `;
 const IMG = styled.img`
@@ -45,9 +45,6 @@ const ProductList = (props) => {
 
   const {profileAccountName, myAccountName} = props
 
-  console.log('profileAccountName : ', profileAccountName)
-  console.log(profileAccountName)
-  console.log('myAccountName : ', myAccountName)
 
   const [modal, setModal] = useState(false);
   const [alertModal, setAlertModal] = useState(false);
@@ -85,7 +82,24 @@ const ProductList = (props) => {
         });
         const json = await res.json();
         console.log(json);
-        window.location.replace("/myprofile");
+        const productLoad = async () => {
+          const token = window.localStorage.getItem("token");
+          const res = await fetch(url + `/product/${profileAccountName}`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-type": "application/json",
+            },
+          });
+          const json = await res.json();
+          console.log(json);
+          setProducts(json.product);
+          setModal(false);
+          setAlertModal(false);
+        };
+    
+        // 함수 실행
+        productLoad();
       } catch (err) {
         console.error(err);
       }
@@ -120,12 +134,7 @@ const ProductList = (props) => {
     return <div></div>;
   }
 
-  // useEffect(() => {
-  //   console.log('products : ', products)
-  // },[products])
-
   
-
   return (
     <>
       <Section>
@@ -139,9 +148,8 @@ const ProductList = (props) => {
                     if(profileAccountName === myAccountName) {
                       setModal(!modal);
                       setTargetProduct(product.id);
-                      console.log(targetProduct);
+
                     } else {
-                      console.log(product.link)
                       window.open(product.link)
                     }
 
@@ -168,5 +176,3 @@ const ProductList = (props) => {
   );
 };
 export default ProductList;
-
-//판매 중인 상품을 클릭하면 하단에 상품 삭제, 수정, 웹사이트에서 상품 보기 버튼이 포함된 메뉴가 나타납니다. (단, 나의 프로필 페이지가 아닐 경우 상품을 클릭하면 바로 상품 판매 사이트로 이동됩니다.)
