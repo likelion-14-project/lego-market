@@ -38,14 +38,14 @@ const LikeComment = ({ postId }) => {
     const [_heartState, setHeartState] = useState();
     const [_heartCount, setHeartCount] = useState();
     const [_commentCount, setCommentCount] = useState();
-    
+
     const { addLikeCall, cancelLikeCall, getPostInfo } = useAxios();
 
     async function controlHeart() {
         if (_heartState) {
             const res = await cancelLikeCall(postId);
             console.log("controlHeart -  true");
-            setHeartState(res?.post.hearted);
+            setHeartState(res.post.hearted);
         } else {
             console.log("controlHeart -  false");
             const res = await addLikeCall(postId);
