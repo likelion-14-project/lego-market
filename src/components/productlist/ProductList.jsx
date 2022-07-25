@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 const Wrapper = styled.div`
   display: flex;
   margin-top: 16px;
+    white-space: nowrap;
+  overflow: auto;
 `;
 const IMG = styled.img`
   width: 140px;
@@ -37,6 +39,7 @@ const Section = styled.section`
 `;
 const Button = styled.button`
   background-color: white;
+  cursor:pointer;
 `;
 const ProductList = (props) => {
 
