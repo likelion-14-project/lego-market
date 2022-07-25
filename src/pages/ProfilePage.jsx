@@ -5,6 +5,8 @@ import { useInfo } from "../hooks/useInfo";
 import { useAuthContext } from "../hooks/useAuthContext";
 import ProfilePost from "../components/profile/ProfilePost";
 import styled from "styled-components";
+
+import ProductList from '../components/productlist/ProductList';
 const ProfileMainWrap = styled.div`
     min-width: 390px;
     width: 100%;
@@ -41,7 +43,7 @@ function ProfilePage() {
                 // 저희가 로그인한 유저의 accountanme
                 myAccountName={myAccountName}
             />
-            {/* 재모님 : 상품리스트 // accountname만 필요함 */}
+             <ProductList profileAccountName={profileAccountName} myAccountName={myAccountName}/>
             <ProfilePost />
         </ProfileMainWrap>
     );
