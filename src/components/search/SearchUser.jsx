@@ -2,13 +2,12 @@ import React from "react";
 import { useState } from "react";
 import { useAxios } from "../../hooks/useAxios";
 import styled, { keyframes } from "styled-components";
-import TopUtilBar from "../ui/TopUtilBar";
 import { useLocation } from "react-router-dom";
-import { MainWrap } from "../../styles/GlobalStyle";
+import { MainContentsWrap } from "../../styles/GlobalStyle";
 import SearchUserItem from "./SearchUserItem";
-// 1.  검색한 키워드에 해당하는 유저 정보를 받아온다.
-//     화면에는 username , accountname , profileimage를 표시해줘야한다
-// 2.  ProfileImage는 유저정보가 나오면서 해당유저의 accountname 을 이용해서 profile 사진을 받고 같이 출력해준다
+import TopNav from "../ui/TopNav";
+import BackButton from "../ui/BackButton";
+
 const fadeOut = keyframes`
   0%{
     opacity : 0;
@@ -30,6 +29,22 @@ const ListWrap = styled.li`
     margin-bottom: 16px;
     animation: ${fadeOut} 0.5s linear both;
 `;
+const SearchInput = styled.input`
+    width: calc(100% - 38px);
+    height: 32px;
+    padding: 4px 16px;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 400;
+    color: #000;
+    border: none;
+    background-color: #f2f2f2;
+    border-radius: 32px;
+    outline: none;
+    ::-webkit-input-placeholder {
+        color: #b5b0b0;
+    }
+`;
 
 const SearchUseHook = () => {
     const [keyword, setKeyword] = useState("");
@@ -41,8 +56,7 @@ const SearchUseHook = () => {
             keyword: keyword === "" ? false : keyword,
         },
     };
-    const { error, isPending, response, callRefetch } =
-        useAxios(searchUserConfig);
+    const { isPending, response, callRefetch } = useAxios(searchUserConfig);
 
     const onChange = (e) => {
         setKeyword(e.target.value);
@@ -52,15 +66,19 @@ const SearchUseHook = () => {
 
     return (
         <>
-            <TopUtilBar onChange={onChange} pathname={pathname} />
-            <MainWrap>
+            <TopNav
+                leftChild={<BackButton />}
+                centerChild=
+                {<SearchInput placeholder="계정검색" onChange={onChange}>
+                </SearchInput>}
+            />
+            <MainContentsWrap>
                 {isPending ? (
                     <SearchDivWrap>
                         {response?.data.map((v, i) => {
                             return (
-                                <ListWrap>
+                                <ListWrap key={i}>
                                     <SearchUserItem
-                                        key={i}
                                         profileImg={v.image}
                                         userName={v.username}
                                         userId={v.accountname}
@@ -72,7 +90,7 @@ const SearchUseHook = () => {
                 ) : (
                     <div> loading ....</div>
                 )}
-            </MainWrap>
+            </MainContentsWrap>
         </>
     );
 };

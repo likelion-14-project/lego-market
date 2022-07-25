@@ -15,10 +15,10 @@ const PostTypeControlDiv = styled.div`
     justify-content: center;
 `;
 const PostTypeControlWrap = styled.div`
-    max-width: 390px;
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    margin-right: 16px;
 `;
 const PostTypeControlIcon = styled.img`
     width: 26px;

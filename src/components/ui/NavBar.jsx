@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import NavFooterItem from "./NavFooterItem";
-import { useAuthContext } from "../../hooks/useAuthContext";
 
 const NavBarWrap = styled.nav`
     position: fixed;
@@ -13,8 +12,9 @@ const NavBarWrap = styled.nav`
     padding: 0 6px;
     display: flex;
     justify-content: space-between;
-    border-top: 1px solid black;
+    border-top: 0.5px solid #dbdbdb;
     z-index: 10;
+    background-color: #fff;
 `;
 function NavBar() {
     return (
