@@ -10,6 +10,7 @@ const CommentItem = styled.li`
     position: relative;
     font-size: 14px;
     margin-bottom: 25px;
+    width: 358px;
 `;
 
 const CommentUserWap = styled.div`
@@ -26,6 +27,7 @@ const CommentUserImg = styled.img`
 const UserIdLink = styled(Link)`
     margin: 13px 10px;
     font-size: 14px;
+    font-weight: 500;
 `;
 
 const CommentDate = styled.span`
@@ -44,7 +46,6 @@ const MoreRight = styled.div`
 `;
 
 function CommentCard(props) {
-    console.log(props);
     const [modal, setModal] = useState(false);
     const [alertModal, setAlertModal] = useState(false);
 
