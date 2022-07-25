@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import Post from "../home/Post";
@@ -8,17 +8,45 @@ import BackButton from "../ui/BackButton";
 import ModalButton from "../ui/ModalButton";
 import Modal from "../modal/Modal";
 import AlertModal from "../modal/AlertModal";
-import { MainWrap } from "../../styles/GlobalStyle";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import InputFooter from "../ui/InputFooter";
+
+const DetailMain = styled.main`
+    width: 100%;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    height: calc(100% - 148px);
+    overflow-y: scroll;
+`;
 
 const DetailWrap = styled.div`
-    border-top: 0.5px solid #dbdbdb;
+    width: 100%;
+    padding: 20px 16px;
+    border-bottom: 1px solid #dbdbdb;
 `;
 
 function PostDetail() {
+    const { user } = useAuthContext();
     const [post, setPost] = useState([]);
     const { post_id } = useParams();
     const [modal, setModal] = useState(false);
     const [alertModal, setAlertModal] = useState(false);
+    const [disabled, setDisabled] = useState(true);
+
+    // 사용자가 입력하고 있는 댓글
+    let [comment, setComment] = useState("");
+
+    // 댓글리스트를 담기
+    let [feedComments, setFeedComments] = useState([]);
+
+    // 게시 클릭시 할생하는 post 함수
+    let addComment = (e) => {
+        createComment(comment);
+        setComment("");
+    };
 
     const modalMenuList = [
         {
@@ -36,6 +64,57 @@ function PostDetail() {
         content: "로그아웃",
         onClick: () => {},
     };
+    async function createComment(comment) {
+        const token = localStorage.getItem("token");
+
+        const reqData = {
+            comment: {
+                content: comment,
+            },
+        };
+
+        const res = await fetch(
+            `https://mandarin.api.weniv.co.kr/post/${post_id}/comments/`,
+            {
+                method: "POST",
+
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify(reqData),
+            }
+        );
+
+        const json = await res.json();
+        console.log(json);
+        getComments();
+    }
+
+    async function getComments() {
+        const token = localStorage.getItem("token");
+
+        const res = await fetch(
+            `https://mandarin.api.weniv.co.kr/post/${post_id}/comments/`,
+            {
+                method: "GET",
+
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-type": "application/json",
+                },
+            }
+        );
+
+        const json = await res.json();
+        console.log(json.comments);
+        setFeedComments(json.comments);
+        return json;
+    }
+
+    useEffect(() => {
+        getComments();
+    }, []);
 
     async function getPostDetail() {
         const token = localStorage.getItem("token");
@@ -70,13 +149,25 @@ function PostDetail() {
                 leftChild={<BackButton />}
                 rightChild={<ModalButton onClick={() => setModal(!modal)} />}
             />
-            <MainWrap>
-                {post ? <Post datas={post} /> : null}
-                <DetailWrap>
-                    <PostComment post_id={post_id} />
-                </DetailWrap>
-            </MainWrap>
-
+            <DetailMain>
+                <DetailWrap>{post ? <Post datas={post} /> : null}</DetailWrap>
+                <PostComment post_id={post_id} feedComments={feedComments} />
+            </DetailMain>
+            <InputFooter
+                img={user.image}
+                ir="댓글입력하기"
+                placeholder="댓글 입력하기"
+                value={comment}
+                onChange={(e) => {
+                    setComment(e.target.value);
+                    e.target.value.length > 0
+                        ? setDisabled(false)
+                        : setDisabled(true);
+                }}
+                onClick={addComment}
+                disabled={disabled}
+                btnTxt="게시"
+            />
             <Modal
                 modal={modal}
                 setModal={setModal}
