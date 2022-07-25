@@ -8,6 +8,7 @@ import ModalButton from "../ui/ModalButton";
 import Modal from "../modal/Modal";
 import AlertModal from "../modal/AlertModal";
 import InputFooter from "../ui/InputFooter";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.main`
     background-color: #f2f2f2;
@@ -68,6 +69,8 @@ function Chat() {
     const [modal, setModal] = useState(false);
     const [alertModal, setAlertModal] = useState(false);
 
+    const navigate = useNavigate();
+
     const modalMenuList = [
         {
             content: "설정 및 개인정보",
@@ -82,7 +85,10 @@ function Chat() {
     ];
     const alertButton = {
         content: "로그아웃",
-        onClick: () => {},
+        onClick: () => {
+            localStorage.removeItem("token");
+            navigate("/");
+        },
     };
 
     let sendChat = (e) => {

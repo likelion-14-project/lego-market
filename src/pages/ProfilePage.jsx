@@ -1,7 +1,6 @@
 import React from "react";
 import Profile from "../components/profile/Profile";
-import { Link, useParams } from "react-router-dom";
-import { useInfo } from "../hooks/useInfo";
+import { useParams } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 import ProfilePost from "../components/profile/ProfilePost";
 import styled from "styled-components";
@@ -22,7 +21,6 @@ function ProfilePage() {
     let myAccountName;
     if (user) {
         myAccountName = user.accountname;
-        console.log(myAccountName);
 
         accountname === undefined
             ? (profileAccountName = myAccountName)
