@@ -27,6 +27,9 @@ const GlobalStyle = createGlobalStyle`
     a{
         color: #000;
     }
+    button {
+        background-color: #fff;
+    }
     .visually_hidden { 
         position: absolute; 
         clip: rect(0 0 0 0); 
