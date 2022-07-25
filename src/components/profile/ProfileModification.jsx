@@ -53,11 +53,13 @@ function ProfileModification() {
     });
 
     useEffect(() => {
-        setValue("사용자 이름", user.username)
-        setValue("계정 ID", user.accountname)
-        setValue("소개", user.intro)
-        setImgSrc(user.image)
-    },[])
+        if (user) {
+            setValue("사용자 이름", user.username);
+            setValue("계정 ID", user.accountname);
+            setValue("소개", user.intro);
+            setImgSrc(user.image);
+        }
+    }, [user]);
 
     const accountValid = async () => {
         try {
@@ -127,7 +129,7 @@ function ProfileModification() {
                 leftChild={<BackButton />}
                 rightChild={
                     <SaveButton
-                        content="저장"
+                        content='저장'
                         disabled={!isValid}
                         onClick={save}
                     />
@@ -140,9 +142,9 @@ function ProfileModification() {
                         <StyledImageSelect width={30} setImgSrc={setImgSrc} />
                     </ImageWrapper>
                     <Input
-                        label="사용자 이름"
-                        type="text"
-                        placeholder="2~10자 이내여야 합니다."
+                        label='사용자 이름'
+                        type='text'
+                        placeholder='2~10자 이내여야 합니다.'
                         register={register("사용자 이름", {
                             required: {
                                 value: true,
@@ -158,9 +160,9 @@ function ProfileModification() {
                         WarningMessage={WarningMessage}
                     />
                     <Input
-                        label="계정 ID"
-                        type="text"
-                        placeholder="영문, 숫자, 특수문자(.),(_)만 사용 가능합니다."
+                        label='계정 ID'
+                        type='text'
+                        placeholder='영문, 숫자, 특수문자(.),(_)만 사용 가능합니다.'
                         register={register("계정 ID", {
                             required: {
                                 value: true,
@@ -180,9 +182,9 @@ function ProfileModification() {
                         marginTop={16}
                     />
                     <Input
-                        label="소개"
-                        type="text"
-                        placeholder="자신과 판매할 상품에 대해 소개해 주세요!"
+                        label='소개'
+                        type='text'
+                        placeholder='자신과 판매할 상품에 대해 소개해 주세요!'
                         register={register("소개", {
                             required: {
                                 value: true,
