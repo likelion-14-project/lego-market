@@ -126,7 +126,12 @@ const ProductList = (props) => {
   return (
     <>
       <Section>
-        <Head>판매중인 상품</Head>
+      {
+          products.length < 1
+          ? 
+          null
+          :<Head>판매중인 상품</Head>
+        }
         <Wrapper>
           {products.map((product) => {
             return (
