@@ -141,6 +141,9 @@ const ProductList = (props) => {
         <Head>판매중인 상품</Head>
         <Wrapper>
           {products.map((product) => {
+                product.price = product.price
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             return (
               <>
                 <Button
