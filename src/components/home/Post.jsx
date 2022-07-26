@@ -93,7 +93,6 @@ const Post = ({ datas }) => {
 
     return (
         <>
-            <button></button>
             {datas?.map((v, i) => {
                 const PostImgSrc = v.image.split(",");
                 console.log(PostImgSrc);
