@@ -73,7 +73,7 @@ const SliderButton = styled.button`
 
 const Post = ({ datas }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
-    const imgRef = useRef(null);
+    const imgRef = useRef();
     const buttonRef = useRef();
     useEffect(() => {
         console.log(datas);
@@ -81,8 +81,10 @@ const Post = ({ datas }) => {
 
     useEffect(() => {
         console.log("currentSlide log");
-        imgRef.current.style.transition = `all 0,4s ease-in-out`;
-        imgRef.current.style.transition = `translateX(-${currentSlide}00%)`;
+        if (imgRef.current) {
+            imgRef.current.style.transition = `all 0,4s ease-in-out`;
+            imgRef.current.style.transition = `translateX(-${currentSlide}00%)`;
+        }
     }, [currentSlide]);
 
     const buttonClicked = () => {
