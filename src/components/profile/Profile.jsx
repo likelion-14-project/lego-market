@@ -3,7 +3,6 @@ import styled from "styled-components";
 import ProfileImage from "../ui/ProfileImage";
 import UserButton from "./UserButton";
 import MyButton from "./MyButton";
-import { useAuthContext } from "../../hooks/useAuthContext";
 import { useProfile } from "../../hooks/useProfile";
 import TopNav from "../ui/TopNav";
 import BackButton from "../ui/BackButton";
@@ -11,7 +10,7 @@ import ModalButton from "../ui/ModalButton";
 import Modal from "../modal/Modal";
 import AlertModal from "../modal/AlertModal";
 import { Link } from "react-router-dom";
-import LoadingPage from "../../pages/LoadingPage";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
     padding: 30px 16px 26px;
@@ -60,8 +59,6 @@ const FollowerWrapper = styled.div`
 `;
 
 const FollowingWrapper = styled.div`
-    /* display: inline-block; */
-    /* text-align: center; */
     position: absolute;
     text-align: center;
     top: 65px;
@@ -102,7 +99,7 @@ function Profile(props) {
     const [modal, setModal] = useState(false);
     const [alertModal, setAlertModal] = useState(false);
 
-    console.log("profile : ", profile);
+    const navigate = useNavigate();
 
     const modalMenuList = [
         {
@@ -119,7 +116,10 @@ function Profile(props) {
 
     const alertButton = {
         content: "로그아웃",
-        onClick: () => {},
+        onClick: () => {
+            localStorage.removeItem("token");
+            navigate("/");
+        },
     };
 
     if (profile) {
@@ -135,7 +135,11 @@ function Profile(props) {
                             <>
                                 <TopNav
                                     leftChild={<BackButton />}
-                                    rightChild={<ModalButton onClick={() => setModal(!modal)} />}
+                                    rightChild={
+                                        <ModalButton
+                                            onClick={() => setModal(!modal)}
+                                        />
+                                    }
                                 />
                                 <Wrapper>
                                     <StyledProfileImg imgSrc={profile.image} />
@@ -149,7 +153,9 @@ function Profile(props) {
                                     )}
 
                                     <FollowerWrapper>
-                                        <FollowLink to={`/follow/${profileAccountName}/follower`}>
+                                        <FollowLink
+                                            to={`/follow/${profileAccountName}/follower`}
+                                        >
                                             {profile.followerCount}
                                         </FollowLink>
                                         <StyledSpan>followers</StyledSpan>

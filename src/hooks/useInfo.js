@@ -23,7 +23,6 @@ export const useInfo = () => {
             });
 
             const json = await response.json();
-            console.log("json : ", json.user);
             if (json.user) {
                 dispatch({ type: "login", payload: json.user });
                 setError(null);
