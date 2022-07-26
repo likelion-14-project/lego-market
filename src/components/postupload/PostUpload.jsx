@@ -173,7 +173,7 @@ function PostUpload() {
         return json;
     }
     const onRemoveImg = (deleteUrl) => {
-        if (postImg.length === 1) {
+        if (postImg.length === 1 && postContent.length === 0) {
             setDisabled(true);
         }
         setPostImg(postImg.filter((photo) => photo != deleteUrl));
