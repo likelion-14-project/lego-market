@@ -123,7 +123,7 @@ const AddProduct = (props) => {
     });
     const json = await response.json();
     console.log(json);
-  
+  window.location.href = "./myprofile"
   }
 
   const Commaprice = inputPriceFormat(watch("가격"))
@@ -139,7 +139,7 @@ const AddProduct = (props) => {
                 rightChild={
                     <SaveButton
                         content="저장"
-                        disabled={isValid}
+                        disabled={!isValid}
                         onClick={add}
                     />
                 }
