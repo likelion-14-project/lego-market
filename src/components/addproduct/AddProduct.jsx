@@ -123,7 +123,7 @@ const AddProduct = (props) => {
     });
     const json = await response.json();
     console.log(json);
-  
+  window.location.href = "./myprofile"
   }
 
   const Commaprice = inputPriceFormat(watch("가격"))
