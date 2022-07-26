@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import LikeComment from "../post/LikeComment";
 import SearchUserItem from "../search/SearchUserItem";
@@ -54,15 +54,46 @@ const PostDate = styled.strong`
     color: #767676;
 `;
 
+const SliderButtonWrap = styled.ul`
+    position: absolute;
+    display: flex;
+    gap: 20px;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+`;
+const SliderButton = styled.button`
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    bottom: 0;
+    background-color: #fff;
+`;
+
 const Post = ({ datas }) => {
-    const [imgNum, setImgNum] = useState("0");
-    // 이미지가 여러개일 경우 추가하려고 작성(미완성)
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const imgRef = useRef(null);
+    const buttonRef = useRef();
     useEffect(() => {
         console.log(datas);
     }, [datas]);
 
+    useEffect(() => {
+        console.log("currentSlide log");
+        imgRef.current.style.transition = `all 0,4s ease-in-out`;
+        imgRef.current.style.transition = `translateX(-${currentSlide}00%)`;
+    }, [currentSlide]);
+
+    const buttonClicked = () => {
+        console.log("buttonClicked");
+        console.log(buttonRef.current.id);
+        setCurrentSlide(buttonRef.current.id);
+    };
+
     return (
         <>
+            <button></button>
             {datas?.map((v, i) => {
                 const PostImgSrc = v.image.split(",");
                 console.log(PostImgSrc);
@@ -78,21 +109,43 @@ const Post = ({ datas }) => {
                         </AuthorSection>
                         <PostSection>
                             <PostTxt>{v.content}</PostTxt>
-                            {PostImgSrc[imgNum] && (
-                                <PostImgDiv>
-                                    <PostImgList>
-                                        <li key={i}>
-                                            <PostImg src={PostImgSrc[imgNum]} />
-                                        </li>
-                                    </PostImgList>
-                                </PostImgDiv>
-                            )}
-                            <LikeComment heartState={v.hearted} heartCount={v.heartCount} commentCount={v.commentCount} postId={v.id}/>
+                            <PostImgDiv ref={imgRef}>
+                                <PostImgList>
+                                    {PostImgSrc[i] &&
+                                        PostImgSrc.map((v) => {
+                                            console.log(v);
+                                            return (
+                                                <>
+                                                    <li key={i}>
+                                                        <PostImg src={v} />
+                                                    </li>
+                                                </>
+                                            );
+                                        })}
+                                    <SliderButtonWrap>
+                                        {PostImgSrc.map((v, i) => {
+                                            return (
+                                                <li>
+                                                    <SliderButton
+                                                        id={i}
+                                                        onClick={buttonClicked}
+                                                        ref={buttonRef}
+                                                    ></SliderButton>
+                                                </li>
+                                            );
+                                        })}
+                                    </SliderButtonWrap>
+                                </PostImgList>
+                            </PostImgDiv>
+                            <LikeComment
+                                heartState={v.hearted}
+                                heartCount={v.heartCount}
+                                commentCount={v.commentCount}
+                                postId={v.id}
+                            />
                             <PostDate>
-                                {v.createdAt
-                                    .slice(0, 10)
-                                    .replace("-", "년 ")
-                                    .replace("-", "월 ") + "일 "}
+                                {v.createdAt.slice(0, 10).replace("-", "년 ").replace("-", "월 ") +
+                                    "일 "}
                             </PostDate>
                         </PostSection>
                     </FeedArticle>
