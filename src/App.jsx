@@ -38,14 +38,11 @@ const GlobalStyle = createGlobalStyle`
         margin: -1px; 
         overflow: hidden;
     }
-    .wrapper-account {
+    /* .wrapper-account {
         width: 322px;
         padding: 0 34px;
-    }
-    .mainWrapper {
-        width : 390px;
-        margin : auto;
-    }
+    } */
+
 `;
 
 function App() {

@@ -6,6 +6,7 @@ import { MainContentsWrap } from "../../styles/GlobalStyle";
 import TopNav from "../ui/TopNav";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import SocialLoginItem from "../login/SocialLoginItem";
 
 const HeaderStrong = styled.strong`
     font-size: 18px;
