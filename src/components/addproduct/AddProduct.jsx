@@ -139,7 +139,7 @@ const AddProduct = (props) => {
                 rightChild={
                     <SaveButton
                         content="저장"
-                        disabled={isValid}
+                        disabled={!isValid}
                         onClick={add}
                     />
                 }
