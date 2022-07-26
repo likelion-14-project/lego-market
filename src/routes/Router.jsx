@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../components/home/Home";
 import Splash from "../pages/Splash";
 import SearchUserPage from "../pages/SearchUserPage";
@@ -20,10 +20,14 @@ import ProductListPage from "../pages/ProductListPage";
 import PostDetailPage from "../pages/PostDetailPage";
 
 const Router = () => {
+    const token = localStorage.getItem("token");
     const { myinfo } = useInfo();
+
     useEffect(() => {
-        myinfo();
-    }, []);
+        if (token) {
+            myinfo();
+        }
+    }, [token]);
 
     return (
         <BrowserRouter>
