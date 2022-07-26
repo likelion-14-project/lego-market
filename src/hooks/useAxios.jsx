@@ -44,7 +44,7 @@ export const useAxios = (axiosParams) => {
     };
 
     const addLikeCall = async (postId) => {
-        console.log('addLikeCall');
+        console.log("addLikeCall");
         const config = {
             method: "POST",
             url: `/post/${postId}/heart`,
@@ -58,7 +58,7 @@ export const useAxios = (axiosParams) => {
     };
 
     const cancelLikeCall = async (postId) => {
-        console.log('cancelLikeCall');
+        console.log("cancelLikeCall");
         const config = {
             method: "DELETE",
             url: `/post/${postId}/unheart`,
@@ -83,6 +83,18 @@ export const useAxios = (axiosParams) => {
             console.log(error);
         }
     };
+    const deletePost = async (postId) => {
+        const config = {
+            method: "DELETE",
+            url: `/post/${postId}/`,
+        };
+        try {
+            const response = await axios.request(config);
+            return response.data;
+        } catch (error) {
+            return error;
+        }
+    };
 
     useEffect(() => {
         getData(axiosParams);
@@ -97,5 +109,6 @@ export const useAxios = (axiosParams) => {
         addLikeCall,
         cancelLikeCall,
         getPostInfo,
+        deletePost,
     };
 };

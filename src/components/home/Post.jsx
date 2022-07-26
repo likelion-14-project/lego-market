@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { useAxios } from "../../hooks/useAxios";
+import AlertModal from "../modal/AlertModal";
+import Modal from "../modal/Modal";
 import LikeComment from "../post/LikeComment";
 import SearchUserItem from "../search/SearchUserItem";
+import ModalButton from "../ui/ModalButton";
 
 const FeedArticle = styled.article`
     position: relative;
@@ -70,14 +74,49 @@ const SliderButton = styled.button`
     bottom: 0;
     background-color: #fff;
 `;
+const ModalButtonWrap = styled.div`
+    position: absolute;
+    top: 4px;
+    right: 0;
+`;
 
 const Post = ({ datas }) => {
+    const [modal, setModal] = useState(false);
+    const [alertModal, setAlertModal] = useState(false);
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [selectedPostId,setSelectedPostId] = useState();
     const imgRef = useRef();
     const buttonRef = useRef();
-    useEffect(() => {
-        console.log(datas);
-    }, [datas]);
+    const {deletePost} = useAxios();
+    const modalMenuList = [
+        {
+            content: "삭제",
+            onClick: () => {
+                setAlertModal(true);
+            },
+        },
+        {
+            content: "수정",
+            onClick: () => {
+                setAlertModal(true);
+            },
+        },
+    ];
+
+    const modifyButton = {
+        content: "수정",
+        onClick: () => {
+            console.log('modify');
+            
+        },
+    };
+    const deleteButton = {
+        content: "삭제",
+        onClick: () => {
+            console.log('delete');
+            deletePost(selectedPostId);
+        },
+    };
 
     useEffect(() => {
         console.log("currentSlide log");
@@ -108,6 +147,13 @@ const Post = ({ datas }) => {
                                 imgSize="small"
                             />
                         </AuthorSection>
+                        <ModalButtonWrap>
+                            <ModalButton onClick={() => {
+                                setModal(!modal)
+                                setSelectedPostId(v.id);
+                                
+                                }} />
+                        </ModalButtonWrap>
                         <PostSection>
                             <PostTxt>{v.content}</PostTxt>
                             <PostImgDiv ref={imgRef}>
@@ -152,6 +198,21 @@ const Post = ({ datas }) => {
                     </FeedArticle>
                 );
             })}
+            <Modal modal={modal} setModal={setModal} modalMenuList={modalMenuList} />
+            {/* <AlertModal
+                alertModal={alertModal}
+                setAlertModal={setAlertModal}
+                setModal={setModal}
+                content={"게시글을 수정하시겠어요?"}
+                alertButton={modifyButton}
+            /> */}
+            <AlertModal
+                alertModal={alertModal}
+                setAlertModal={setAlertModal}
+                setModal={setModal}
+                content={"게시글을 삭제하시겠어요?"}
+                alertButton={deleteButton}
+            />
         </>
     );
 };
