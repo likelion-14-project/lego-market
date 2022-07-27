@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAxios } from "../../hooks/useAxios";
 import AlertModal from "../modal/AlertModal";
@@ -83,6 +84,8 @@ const Post = ({ datas }) => {
     const [modal, setModal] = useState(false);
     const [alertModal, setAlertModal] = useState(false);
     const [selectedPostId, setSelectedPostId] = useState();
+    const [prevPostData, setPrevPostData] = useState();
+    const navigate = useNavigate();
     const imgRef = useRef([]);
     const { deletePost } = useAxios();
     const modalMenuList = [
@@ -104,16 +107,17 @@ const Post = ({ datas }) => {
         content: "수정",
         onClick: () => {
             console.log("modify");
+            navigate(`/post/${selectedPostId}/edit` , {state: prevPostData});
         },
     };
-    const deleteButton = {
-        content: "삭제",
-        onClick: () => {
-            console.log("delete");
-            deletePost(selectedPostId);
-            window.location.reload();
-        },
-    };
+    // const deleteButton = {
+    //     content: "삭제",
+    //     onClick: () => {
+    //         console.log("delete");
+    //         deletePost(selectedPostId);
+    //         window.location.reload();
+    //     },
+    // };
     return (
         <>
             {datas?.map((v, i) => {
@@ -133,6 +137,12 @@ const Post = ({ datas }) => {
                                 onClick={() => {
                                     setModal(!modal);
                                     setSelectedPostId(v.id);
+                                    setPrevPostData({
+                                        "post": {
+                                            "content" : v.content,
+                                            "image" : v.image,
+                                        }
+                                    })
                                 }}
                             />
                         </ModalButtonWrap>
@@ -187,13 +197,13 @@ const Post = ({ datas }) => {
                 content={"게시글을 수정하시겠어요?"}
                 alertButton={modifyButton}
             />
-            <AlertModal
+            {/* <AlertModal
                 alertModal={alertModal}
                 setAlertModal={setAlertModal}
                 setModal={setModal}
                 content={"게시글을 삭제하시겠어요?"}
                 alertButton={deleteButton}
-            />
+            /> */}
         </>
     );
 };

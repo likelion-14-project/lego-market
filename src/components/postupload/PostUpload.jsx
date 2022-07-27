@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import TopAdd from "../ui/TopAdd";
@@ -111,7 +111,7 @@ const RemoveBtn = styled.button`
     background-color: inherit;
 `;
 
-function PostUpload() {
+function PostUpload({prevData}) {
     const [postContent, setPostContent] = useState("");
     const [postImg, setPostImg] = useState([]);
     const MAX_IMG_UPLOAD = 3;
@@ -179,6 +179,13 @@ function PostUpload() {
         setPostImg(postImg.filter((photo) => photo != deleteUrl));
     };
 
+    useEffect(()=>{
+        if(prevData){
+            setPostContent(prevData.post.content);
+            setPostImg([prevData.post.image]);
+        }
+    },[setPostContent, setPostImg, prevData])
+
     return (
         <>
             <TopAdd content="업로드" onClick={uploadPost} disabled={disabled} />
@@ -206,7 +213,7 @@ function PostUpload() {
                                     ? setDisabled(false)
                                     : setDisabled(true);
                             }}
-                        ></PostTextarea>
+                        >{prevData?.post.content}</PostTextarea>
                         <UploadImgIcon
                             htmlFor="uploadImg"
                             onChange={handleGetImageUrl}
