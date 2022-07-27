@@ -42,7 +42,7 @@ const ArrowButton = styled.button`
 
 function TopAdd(props) {
     const navigate = useNavigate();
-    const { onClick, content, disabled } = props;
+    const { onClick, content, disabled, upLoadButtonClicked } = props;
     return (
         <Header>
             <Section>
@@ -53,17 +53,13 @@ function TopAdd(props) {
                     }}
                 >
                     <img
-                        src={
-                            process.env.PUBLIC_URL + "icons/icon-arrow-left.png"
-                        }
+                        src={process.env.PUBLIC_URL + "icons/icon-arrow-left.png"}
                         alt="뒤로가기"
                     />
                 </ArrowButton>
-                <StyledButton
-                    onClick={onClick}
-                    content={content}
-                    disabled={disabled}
-                />
+                <StyledButton onClick={()=>{onClick()
+                upLoadButtonClicked()
+                }} content={content} disabled={disabled} />
             </Section>
         </Header>
     );

@@ -4,6 +4,7 @@ import PostAlbum from "./PostAlbum";
 import { useAxios } from "../../hooks/useAxios";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const PostTypeControlDiv = styled.div`
     width: 100%;
@@ -32,9 +33,9 @@ const ProfilePostWrap = styled.div`
     align-items: center;
 `;
 
-const ProfilePost = () => {
+const ProfilePost = ({profileAccountName}) => {
     const [btnState, setBtnState] = useState("list");
-    const [accountName, setAccountName] = useState("");
+    const [accountName, setAccountName] = useState();
     const location = useLocation();
 
     function toggleBtnState() {
@@ -54,11 +55,10 @@ const ProfilePost = () => {
         callRefetch();
         if (data) {
             setAccountName(data);
-        } else {
-            setAccountName(localStorage.getItem("accountname"));
+        } else if(profileAccountName){
+            setAccountName(profileAccountName);
         }
-        console.log(response?.data.post);
-    }, [location]);
+    }, [location,profileAccountName]);
     return (
         <>
             <PostTypeControlDiv>
@@ -83,13 +83,15 @@ const ProfilePost = () => {
                     </button>
                 </PostTypeControlWrap>
             </PostTypeControlDiv>
-            <ProfilePostWrap>
-                {btnState === "list" ? (
-                    <Post datas={response?.data.post} />
-                ) : (
-                    <PostAlbum datas={response?.data.post} />
-                )}
-            </ProfilePostWrap>
+            {response && (
+                <ProfilePostWrap>
+                    {btnState === "list" ? (
+                        <Post datas={response?.data.post} />
+                    ) : (
+                        <PostAlbum datas={response?.data.post} />
+                    )}
+                </ProfilePostWrap>
+            )}
         </>
     );
 };

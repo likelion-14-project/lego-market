@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useAxios } from "../../hooks/useAxios";
+import AlertModal from "../modal/AlertModal";
+import Modal from "../modal/Modal";
 import LikeComment from "../post/LikeComment";
 import SearchUserItem from "../search/SearchUserItem";
+import ModalButton from "../ui/ModalButton";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const FeedArticle = styled.article`
     position: relative;
@@ -35,7 +41,6 @@ const PostImgDiv = styled.div`
 `;
 const PostImgList = styled.ul`
     display: flex;
-    transition: all 0.4s;
 `;
 const PostImg = styled.img`
     min-width: 304px;
@@ -54,18 +59,91 @@ const PostDate = styled.strong`
     color: #767676;
 `;
 
-const Post = ({ datas }) => {
-    const [imgNum, setImgNum] = useState("0");
-    // 이미지가 여러개일 경우 추가하려고 작성(미완성)
-    useEffect(() => {
-        console.log(datas);
-    }, [datas]);
+const SliderButtonWrap = styled.ul`
+    position: absolute;
+    display: flex;
+    gap: 20px;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+`;
+const SliderButton = styled.button`
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    bottom: 0;
+    background-color: #fff;
+`;
+const ModalButtonWrap = styled.div`
+    position: absolute;
+    top: 4px;
+    right: 0;
+`;
 
+const Post = ({ datas }) => {
+    // Post 좀 분리해야함...
+    const location = useLocation();
+    const [modal, setModal] = useState(false);
+    const [alertModal, setAlertModal] = useState(false);
+    const [selectedPostId, setSelectedPostId] = useState();
+    const [prevPostData, setPrevPostData] = useState();
+    const navigate = useNavigate();
+    const imgRef = useRef([]);
+    const { deletePost } = useAxios();
+
+    const [alertButton, setAlertButton] = useState({});
+    const [content, setContent] = useState();
+    const [author, setAuthor] = useState();
+    const { user } = useAuthContext();
+
+    let modalMenuList;
+    author === user.accountname
+        ? (modalMenuList = [
+            {
+                content: "삭제",
+                onClick: () => {
+                    setContent("게시글을 삭제하시겠어요?");
+                    setAlertButton(deleteButton);
+                    setAlertModal(true);
+                },
+            },
+            {
+                content: "수정",
+                onClick: () => {
+                    setContent("게시글을 수정하시겠어요?");
+                    setAlertButton(modifyButton);
+                    setAlertModal(true);
+                },
+            },
+            ])
+        : (modalMenuList = [
+                {
+                    content: "신고",
+                    onClick: () => {
+                        // 신고할 함수를 작성해주세요
+                    },
+                },
+            ]);
+    const modifyButton = {
+        content: "수정",
+        onClick: () => {
+            console.log("modify");
+            navigate(`/post/${selectedPostId}/edit`, { state: prevPostData });
+        },
+    };
+    const deleteButton = {
+        content: "삭제",
+        onClick: () => {
+            console.log("delete");
+            deletePost(selectedPostId);
+            window.location.reload();
+        },
+    };
     return (
         <>
             {datas?.map((v, i) => {
                 const PostImgSrc = v.image.split(",");
-                console.log(PostImgSrc);
                 return (
                     <FeedArticle>
                         <AuthorSection>
@@ -76,28 +154,75 @@ const Post = ({ datas }) => {
                                 imgSize="small"
                             />
                         </AuthorSection>
+                        <ModalButtonWrap>
+                            <ModalButton
+                                onClick={() => {
+                                    setModal(!modal);
+                                    setSelectedPostId(v.id);
+                                    setPrevPostData({
+                                        post: {
+                                            content: v.content,
+                                            image: v.image,
+                                        },
+                                    });
+                                    setAuthor(v.author.accountname);
+                                }}
+                            />
+                        </ModalButtonWrap>
                         <PostSection>
                             <PostTxt>{v.content}</PostTxt>
-                            {PostImgSrc[imgNum] && (
-                                <PostImgDiv>
-                                    <PostImgList>
-                                        <li key={i}>
-                                            <PostImg src={PostImgSrc[imgNum]} />
-                                        </li>
-                                    </PostImgList>
-                                </PostImgDiv>
-                            )}
-                            <LikeComment heartState={v.hearted} heartCount={v.heartCount} commentCount={v.commentCount} postId={v.id}/>
+                            <PostImgDiv>
+                                <PostImgList
+                                    id={i}
+                                    ref={(el) => {
+                                        imgRef.current[i] = el;
+                                    }}
+                                >
+                                    {PostImgSrc &&
+                                        PostImgSrc.map((v) => {
+                                            if (v) {
+                                                return (
+                                                    <li key={i}>
+                                                        <PostImg src={v} />
+                                                    </li>
+                                                );
+                                            }
+                                        })}
+                                </PostImgList>
+                                <SliderButtonWrap id={i}>
+                                    {PostImgSrc.map((v, i) => {
+                                        if (v) {
+                                            return (
+                                                <li>
+                                                    <SliderButton id={i}></SliderButton>
+                                                </li>
+                                            );
+                                        }
+                                    })}
+                                </SliderButtonWrap>
+                            </PostImgDiv>
+                            <LikeComment
+                                heartState={v.hearted}
+                                heartCount={v.heartCount}
+                                commentCount={v.commentCount}
+                                postId={v.id}
+                            />
                             <PostDate>
-                                {v.createdAt
-                                    .slice(0, 10)
-                                    .replace("-", "년 ")
-                                    .replace("-", "월 ") + "일 "}
+                                {v.createdAt.slice(0, 10).replace("-", "년 ").replace("-", "월 ") +
+                                    "일 "}
                             </PostDate>
                         </PostSection>
                     </FeedArticle>
                 );
             })}
+            <Modal modal={modal} setModal={setModal} modalMenuList={modalMenuList} />
+            <AlertModal
+                alertModal={alertModal}
+                setAlertModal={setAlertModal}
+                setModal={setModal}
+                content={content}
+                alertButton={alertButton}
+            />
         </>
     );
 };

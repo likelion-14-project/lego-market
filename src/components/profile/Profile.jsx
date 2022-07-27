@@ -9,7 +9,7 @@ import BackButton from "../ui/BackButton";
 import ModalButton from "../ui/ModalButton";
 import Modal from "../modal/Modal";
 import AlertModal from "../modal/AlertModal";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
@@ -119,6 +119,7 @@ function Profile(props) {
         onClick: () => {
             localStorage.removeItem("token");
             navigate("/");
+            window.location.reload();
         },
     };
 

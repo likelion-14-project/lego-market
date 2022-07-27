@@ -18,6 +18,7 @@ import FollowPage from "../pages/FollowPage";
 import AddProductListPage from "../pages/AddProductPage";
 import ProductListPage from "../pages/ProductListPage";
 import PostDetailPage from "../pages/PostDetailPage";
+import PostModify from "../components/postModify/PostModify";
 
 const Router = () => {
     const token = localStorage.getItem("token");
@@ -47,6 +48,9 @@ const Router = () => {
                             element={<ProfileModifyPage />}
                         />
                         <Route path="/editpost" element={<PostUploadPage />} />
+                        <Route
+                                path="/post/:postid/edit"
+                                element={<PostModify />} />
                         <Route
                             path="/postdetail/:post_id"
                             element={<PostDetailPage />}
@@ -82,6 +86,7 @@ const Router = () => {
                                 path="/product"
                                 element={<AddProductListPage />}
                             />
+
                         </Route>
                     </>
                 )}
