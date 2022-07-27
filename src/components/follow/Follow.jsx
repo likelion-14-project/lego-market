@@ -51,7 +51,7 @@ function Follow({ accountname, type }) {
 
     return (
         <>
-            <TopNav leftChild={<BackButton />} centerChild="Followings" />
+            <TopNav leftChild={<BackButton />} centerChild={type} />
             <Main>
                 <FollowList>
                     {userlist.map((userArr, i) => {
@@ -61,6 +61,7 @@ function Follow({ accountname, type }) {
                                 image={userArr.image}
                                 username={userArr.username}
                                 intro={userArr.intro}
+                                isfollow={userArr.isfollow}
                                 key={i}
                             />
                         );
