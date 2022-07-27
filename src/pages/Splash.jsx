@@ -38,7 +38,7 @@ function Splash() {
                 navigate("/home");
             }
             setsplashLoading(true);
-        }, 1500);
+        }, 1000);
         return () => {
             clearTimeout(splash);
         };

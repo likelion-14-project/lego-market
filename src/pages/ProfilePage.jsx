@@ -37,7 +37,7 @@ function ProfilePage() {
                 profileAccountName={profileAccountName}
                 myAccountName={myAccountName}
             />
-            <ProfilePost />
+            <ProfilePost profileAccountName={profileAccountName}/>
         </ProfileMainWrap>
     );
 }
