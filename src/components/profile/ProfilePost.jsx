@@ -35,7 +35,7 @@ const ProfilePostWrap = styled.div`
 
 const ProfilePost = ({profileAccountName}) => {
     const [btnState, setBtnState] = useState("list");
-    const [accountName, setAccountName] = useState(profileAccountName);
+    const [accountName, setAccountName] = useState();
     const location = useLocation();
 
     function toggleBtnState() {
@@ -58,7 +58,7 @@ const ProfilePost = ({profileAccountName}) => {
         } else if(profileAccountName){
             setAccountName(profileAccountName);
         }
-    }, [location]);
+    }, [location,profileAccountName]);
     return (
         <>
             <PostTypeControlDiv>

@@ -39,7 +39,6 @@ const PostImgDiv = styled.div`
 `;
 const PostImgList = styled.ul`
     display: flex;
-    transition: all 0.4s;
 `;
 const PostImg = styled.img`
     min-width: 304px;
@@ -83,11 +82,9 @@ const ModalButtonWrap = styled.div`
 const Post = ({ datas }) => {
     const [modal, setModal] = useState(false);
     const [alertModal, setAlertModal] = useState(false);
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const [selectedPostId,setSelectedPostId] = useState();
-    const imgRef = useRef();
-    const buttonRef = useRef();
-    const {deletePost} = useAxios();
+    const [selectedPostId, setSelectedPostId] = useState();
+    const imgRef = useRef([]);
+    const { deletePost } = useAxios();
     const modalMenuList = [
         {
             content: "삭제",
@@ -106,37 +103,21 @@ const Post = ({ datas }) => {
     const modifyButton = {
         content: "수정",
         onClick: () => {
-            console.log('modify');
-            
+            console.log("modify");
         },
     };
     const deleteButton = {
         content: "삭제",
         onClick: () => {
-            console.log('delete');
+            console.log("delete");
             deletePost(selectedPostId);
         },
     };
-
-    useEffect(() => {
-        console.log("currentSlide log");
-        if (imgRef.current) {
-            imgRef.current.style.transition = `all 0,4s ease-in-out`;
-            imgRef.current.style.transition = `translateX(-${currentSlide}00%)`;
-        }
-    }, [currentSlide]);
-
-    const buttonClicked = () => {
-        console.log("buttonClicked");
-        console.log(buttonRef.current.id);
-        setCurrentSlide(buttonRef.current.id);
-    };
-
     return (
         <>
             {datas?.map((v, i) => {
                 const PostImgSrc = v.image.split(",");
-                console.log(PostImgSrc);
+                console.log(PostImgSrc.length);
                 return (
                     <FeedArticle>
                         <AuthorSection>
@@ -148,41 +129,41 @@ const Post = ({ datas }) => {
                             />
                         </AuthorSection>
                         <ModalButtonWrap>
-                            <ModalButton onClick={() => {
-                                setModal(!modal)
-                                setSelectedPostId(v.id);
-                                
-                                }} />
+                            <ModalButton
+                                onClick={() => {
+                                    setModal(!modal);
+                                    setSelectedPostId(v.id);
+                                }}
+                            />
                         </ModalButtonWrap>
                         <PostSection>
                             <PostTxt>{v.content}</PostTxt>
-                            <PostImgDiv ref={imgRef}>
-                                <PostImgList>
-                                    {PostImgSrc[i] &&
+                            <PostImgDiv>
+                                <PostImgList
+                                    id={i}
+                                    ref={(el) => {
+                                        imgRef.current[i] = el;
+                                    }}
+                                >
+                                    {PostImgSrc &&
                                         PostImgSrc.map((v) => {
                                             console.log(v);
                                             return (
-                                                <>
-                                                    <li key={i}>
-                                                        <PostImg src={v} />
-                                                    </li>
-                                                </>
-                                            );
-                                        })}
-                                    <SliderButtonWrap>
-                                        {PostImgSrc.map((v, i) => {
-                                            return (
-                                                <li>
-                                                    <SliderButton
-                                                        id={i}
-                                                        onClick={buttonClicked}
-                                                        ref={buttonRef}
-                                                    ></SliderButton>
+                                                <li key={i}>
+                                                    <PostImg src={v} />
                                                 </li>
                                             );
                                         })}
-                                    </SliderButtonWrap>
                                 </PostImgList>
+                                <SliderButtonWrap id={i}>
+                                    {PostImgSrc.map((v, i) => {
+                                        return (
+                                            <li>
+                                                <SliderButton id={i}></SliderButton>
+                                            </li>
+                                        );
+                                    })}
+                                </SliderButtonWrap>
                             </PostImgDiv>
                             <LikeComment
                                 heartState={v.hearted}
