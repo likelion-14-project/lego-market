@@ -12,11 +12,11 @@ const FollowItem = styled.li`
 `;
 
 const BtnFollow = styled.button`
-    width: 56px;
+    width: 58px;
     height: 28px;
     background: ${(props) => props.bg};
     color: ${(props) => (props.bg == "#fff" ? "#767676" : "#fff")};
-    border: 1px solid #dbdbdb;
+    border: 1px solid ${(props) => (props.bg == "#fff" ? "#dbdbdb" : "none")};
     font-size: 12px;
     border-radius: 26px;
     cursor: pointer;
@@ -28,6 +28,7 @@ const UserLink = styled(Link)`
     border: 0.5px solid #dbdbdb;
     font-size: 10px;
     overflow: hidden;
+    text-align: center;
 `;
 
 const UserImg = styled.img`
@@ -49,14 +50,18 @@ const UserName = styled.strong`
     font-size: 14px;
     font-weight: 500;
 `;
-const UserIntro = styled.strong`
+const UserIntro = styled.p`
     color: #767676;
     font-size: 12px;
     line-height: 15px;
+    width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `;
 
 function FollowCard(props) {
-    let [follow, isFollow] = useState(false);
+    let [follow, isFollow] = useState(props.isfollow);
 
     function following() {
         isFollow(true);
@@ -82,12 +87,14 @@ function FollowCard(props) {
                     )}
                 </UserLink>
                 <UserIdWap>
-                    <UserName>{props.username}</UserName>
+                    <Link to={`/myprofile/${props.accountname}`}>
+                        <UserName>{props.username}</UserName>
+                    </Link>
                     <UserIntro>{props.intro}</UserIntro>
                 </UserIdWap>
                 {follow ? (
                     <BtnFollow bg="#fff" onClick={unfollow}>
-                        언팔로우
+                        팔로잉
                     </BtnFollow>
                 ) : (
                     <BtnFollow bg="#EA4335" onClick={following}>
