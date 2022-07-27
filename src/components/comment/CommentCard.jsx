@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ModalButton from "../ui/ModalButton";
 import Modal from "../modal/Modal";
 import AlertModal from "../modal/AlertModal";
 import { timeForToday } from "../../utils/DateUtil";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const CommentItem = styled.li`
     position: relative;
@@ -46,20 +47,37 @@ const MoreRight = styled.div`
 `;
 
 function CommentCard(props) {
+    const { remove, comment_id, commentAuthor } = props;
     const [modal, setModal] = useState(false);
     const [alertModal, setAlertModal] = useState(false);
+    const { post_id } = useParams();
+    const { user } = useAuthContext();
 
-    const modalMenuList = [
-        {
-            content: "삭제",
-            onClick: () => {
-                setAlertModal(true);
-            },
-        },
-    ];
+    let modalMenuList;
+
+    user.accountname === commentAuthor
+        ? (modalMenuList = [
+              {
+                  content: "삭제",
+                  onClick: () => {
+                      setAlertModal(true);
+                  },
+              },
+          ])
+        : (modalMenuList = [
+              {
+                  content: "신고",
+                  onClick: () => {},
+              },
+          ]);
+
     const alertButton = {
         content: "삭제",
-        onClick: () => {},
+        onClick: () => {
+            remove(`/post/${post_id}/comments/${comment_id}`);
+            setModal(false);
+            setAlertModal(false);
+        },
     };
 
     return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import CommentCard from "./CommentCard";
 
@@ -18,11 +18,16 @@ function PostComment(props) {
                         .map((commentsArr, i) => {
                             return (
                                 <CommentCard
+                                    key={i}
                                     userProfile={commentsArr.author.image}
                                     userName={commentsArr.author.username}
                                     userCommet={commentsArr.content}
                                     createdAt={commentsArr.createdAt}
-                                    key={i}
+                                    comment_id={commentsArr.id}
+                                    remove={props.remove}
+                                    commentAuthor={
+                                        commentsArr.author.accountname
+                                    }
                                 />
                             );
                         })
