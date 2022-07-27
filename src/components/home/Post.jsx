@@ -88,36 +88,43 @@ const Post = ({ datas }) => {
     const navigate = useNavigate();
     const imgRef = useRef([]);
     const { deletePost } = useAxios();
+
+    const [alertButton, setAlertButton] = useState({});
+    const [content, setContent] = useState();
+
     const modalMenuList = [
         {
             content: "삭제",
             onClick: () => {
+                setContent("게시글을 삭제하시겠어요?");
+                setAlertButton(deleteButton);
                 setAlertModal(true);
             },
         },
         {
             content: "수정",
             onClick: () => {
+                setContent("게시글을 수정하시겠어요?");
+                setAlertButton(modifyButton);
                 setAlertModal(true);
             },
         },
     ];
-
     const modifyButton = {
         content: "수정",
         onClick: () => {
             console.log("modify");
-            navigate(`/post/${selectedPostId}/edit` , {state: prevPostData});
+            navigate(`/post/${selectedPostId}/edit`, { state: prevPostData });
         },
     };
-    // const deleteButton = {
-    //     content: "삭제",
-    //     onClick: () => {
-    //         console.log("delete");
-    //         deletePost(selectedPostId);
-    //         window.location.reload();
-    //     },
-    // };
+    const deleteButton = {
+        content: "삭제",
+        onClick: () => {
+            console.log("delete");
+            deletePost(selectedPostId);
+            window.location.reload();
+        },
+    };
     return (
         <>
             {datas?.map((v, i) => {
@@ -138,11 +145,11 @@ const Post = ({ datas }) => {
                                     setModal(!modal);
                                     setSelectedPostId(v.id);
                                     setPrevPostData({
-                                        "post": {
-                                            "content" : v.content,
-                                            "image" : v.image,
-                                        }
-                                    })
+                                        post: {
+                                            content: v.content,
+                                            image: v.image,
+                                        },
+                                    });
                                 }}
                             />
                         </ModalButtonWrap>
@@ -157,21 +164,24 @@ const Post = ({ datas }) => {
                                 >
                                     {PostImgSrc &&
                                         PostImgSrc.map((v) => {
-                                            console.log(v);
-                                            return (
-                                                <li key={i}>
-                                                    <PostImg src={v} />
-                                                </li>
-                                            );
+                                            if (v) {
+                                                return (
+                                                    <li key={i}>
+                                                        <PostImg src={v} />
+                                                    </li>
+                                                );
+                                            }
                                         })}
                                 </PostImgList>
                                 <SliderButtonWrap id={i}>
                                     {PostImgSrc.map((v, i) => {
-                                        return (
-                                            <li>
-                                                <SliderButton id={i}></SliderButton>
-                                            </li>
-                                        );
+                                        if (v) {
+                                            return (
+                                                <li>
+                                                    <SliderButton id={i}></SliderButton>
+                                                </li>
+                                            );
+                                        }
                                     })}
                                 </SliderButtonWrap>
                             </PostImgDiv>
@@ -194,16 +204,9 @@ const Post = ({ datas }) => {
                 alertModal={alertModal}
                 setAlertModal={setAlertModal}
                 setModal={setModal}
-                content={"게시글을 수정하시겠어요?"}
-                alertButton={modifyButton}
+                content={content}
+                alertButton={alertButton}
             />
-            {/* <AlertModal
-                alertModal={alertModal}
-                setAlertModal={setAlertModal}
-                setModal={setModal}
-                content={"게시글을 삭제하시겠어요?"}
-                alertButton={deleteButton}
-            /> */}
         </>
     );
 };

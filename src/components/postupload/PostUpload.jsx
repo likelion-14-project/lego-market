@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import TopAdd from "../ui/TopAdd";
@@ -111,12 +112,13 @@ const RemoveBtn = styled.button`
     background-color: inherit;
 `;
 
-function PostUpload({prevData}) {
+function PostUpload({ prevData }) {
     const [postContent, setPostContent] = useState("");
     const [postImg, setPostImg] = useState([]);
     const MAX_IMG_UPLOAD = 3;
     const [disabled, setDisabled] = useState(true);
     const { user } = useAuthContext();
+    const navigate = useNavigate();
     const url = "https://mandarin.api.weniv.co.kr";
 
     //이미지 업로드
@@ -178,28 +180,26 @@ function PostUpload({prevData}) {
         }
         setPostImg(postImg.filter((photo) => photo != deleteUrl));
     };
+    function upLoadButtonClicked() {
+        navigate("/myprofile", {replace: true});
+    }
 
-    useEffect(()=>{
-        if(prevData){
+    useEffect(() => {
+        if (prevData) {
             setPostContent(prevData.post.content);
             setPostImg([prevData.post.image]);
         }
-    },[setPostContent, setPostImg, prevData])
+    }, [setPostContent, setPostImg, prevData]);
 
     return (
         <>
-            <TopAdd content="업로드" onClick={uploadPost} disabled={disabled} />
+            <TopAdd content="업로드" onClick={uploadPost} disabled={disabled} upLoadButtonClicked={upLoadButtonClicked} />
             <Main>
                 <h2 className="visually_hidden">게시글 작성</h2>
                 {user ? (
                     <UserProfile src={user.image} />
                 ) : (
-                    <UserProfile
-                        src={
-                            process.env.PUBLIC_URL +
-                            "/images/LegoDefaultImage.png"
-                        }
-                    />
+                    <UserProfile src={process.env.PUBLIC_URL + "/images/LegoDefaultImage.png"} />
                 )}
                 <Article>
                     <Form autocomplete="off">
@@ -209,15 +209,12 @@ function PostUpload({prevData}) {
                             maxLength="200"
                             onChange={(e) => {
                                 setPostContent(e.target.value);
-                                e.target.value.length > 0
-                                    ? setDisabled(false)
-                                    : setDisabled(true);
+                                e.target.value.length > 0 ? setDisabled(false) : setDisabled(true);
                             }}
-                        >{prevData?.post.content}</PostTextarea>
-                        <UploadImgIcon
-                            htmlFor="uploadImg"
-                            onChange={handleGetImageUrl}
-                        />
+                        >
+                            {prevData?.post.content}
+                        </PostTextarea>
+                        <UploadImgIcon htmlFor="uploadImg" onChange={handleGetImageUrl} />
                         <UploadImgInput
                             type="file"
                             accept="image/*"
@@ -238,9 +235,7 @@ function PostUpload({prevData}) {
                                                 return onRemoveImg(imgArr);
                                             }}
                                         >
-                                            <span className="visually_hidden">
-                                                이미지삭제버튼
-                                            </span>
+                                            <span className="visually_hidden">이미지삭제버튼</span>
                                         </RemoveBtn>
                                     </ImgItem>
                                 );
