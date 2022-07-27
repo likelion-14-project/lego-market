@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAxios } from "../../hooks/useAxios";
 import AlertModal from "../modal/AlertModal";
@@ -7,6 +7,7 @@ import Modal from "../modal/Modal";
 import LikeComment from "../post/LikeComment";
 import SearchUserItem from "../search/SearchUserItem";
 import ModalButton from "../ui/ModalButton";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const FeedArticle = styled.article`
     position: relative;
@@ -81,6 +82,8 @@ const ModalButtonWrap = styled.div`
 `;
 
 const Post = ({ datas }) => {
+    // Post 좀 분리해야함...
+    const location = useLocation();
     const [modal, setModal] = useState(false);
     const [alertModal, setAlertModal] = useState(false);
     const [selectedPostId, setSelectedPostId] = useState();
@@ -91,25 +94,37 @@ const Post = ({ datas }) => {
 
     const [alertButton, setAlertButton] = useState({});
     const [content, setContent] = useState();
+    const [author, setAuthor] = useState();
+    const { user } = useAuthContext();
 
-    const modalMenuList = [
-        {
-            content: "삭제",
-            onClick: () => {
-                setContent("게시글을 삭제하시겠어요?");
-                setAlertButton(deleteButton);
-                setAlertModal(true);
+    let modalMenuList;
+    author === user.accountname
+        ? (modalMenuList = [
+            {
+                content: "삭제",
+                onClick: () => {
+                    setContent("게시글을 삭제하시겠어요?");
+                    setAlertButton(deleteButton);
+                    setAlertModal(true);
+                },
             },
-        },
-        {
-            content: "수정",
-            onClick: () => {
-                setContent("게시글을 수정하시겠어요?");
-                setAlertButton(modifyButton);
-                setAlertModal(true);
+            {
+                content: "수정",
+                onClick: () => {
+                    setContent("게시글을 수정하시겠어요?");
+                    setAlertButton(modifyButton);
+                    setAlertModal(true);
+                },
             },
-        },
-    ];
+            ])
+        : (modalMenuList = [
+                {
+                    content: "신고",
+                    onClick: () => {
+                        // 신고할 함수를 작성해주세요
+                    },
+                },
+            ]);
     const modifyButton = {
         content: "수정",
         onClick: () => {
@@ -150,6 +165,7 @@ const Post = ({ datas }) => {
                                             image: v.image,
                                         },
                                     });
+                                    setAuthor(v.author.accountname);
                                 }}
                             />
                         </ModalButtonWrap>
