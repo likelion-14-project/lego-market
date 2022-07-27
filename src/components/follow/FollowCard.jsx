@@ -62,12 +62,36 @@ const UserIntro = styled.p`
 
 function FollowCard(props) {
     let [follow, isFollow] = useState(props.isfollow);
+    
+    const {profileAccountName} = props
 
-    function following() {
+    async function following() {
+        const url = "https://mandarin.api.weniv.co.kr";
+        const token = window.localStorage.getItem("token");
+        const response = await fetch(url + `/profile/${profileAccountName}/follow`, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-type": "application/json",
+            },
+          });
+          const json = await response.json();
+          console.log(json);
         isFollow(true);
     }
 
-    function unfollow() {
+    async function unfollow() {
+        const url = "https://mandarin.api.weniv.co.kr";
+        const token = window.localStorage.getItem("token");
+        const response = await fetch(url + `/profile/${profileAccountName}/unfollow`, {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-type": "application/json",
+            },
+          });
+          const json = await response.json();
+          console.log(json);
         isFollow(false);
     }
 

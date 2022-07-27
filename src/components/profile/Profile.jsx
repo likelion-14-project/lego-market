@@ -149,7 +149,10 @@ function Profile(props) {
                                     {myAccountName === profileAccountName ? (
                                         <MyButton />
                                     ) : (
-                                        <UserButton />
+                                        <UserButton
+                                        profileAccountName={
+                                            profileAccountName
+                                        } />
                                     )}
 
                                     <FollowerWrapper>
