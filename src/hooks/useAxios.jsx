@@ -15,6 +15,20 @@ axios.interceptors.request.use(
     }
 );
 
+export const getFeedPost = async() => {
+    console.log("getFeedPost-Called");
+    const config = {
+        method: "GET",
+        url: `/post/feed`,
+    };
+    try {
+        const response = await axios.request(config);
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const useAxios = (axiosParams) => {
     console.log(axiosParams);
 
@@ -42,6 +56,20 @@ export const useAxios = (axiosParams) => {
             console.log(err.message);
         }
     };
+
+    const getFeedPost = async() => {
+        console.log("getFeedPost-Called");
+        const config = {
+            method: "GET",
+            url: `/post/feed`,
+        };
+        try {
+            const response = await axios.request(config);
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const addLikeCall = async (postId) => {
         console.log("addLikeCall");
@@ -110,5 +138,6 @@ export const useAxios = (axiosParams) => {
         cancelLikeCall,
         getPostInfo,
         deletePost,
+        getFeedPost,
     };
 };

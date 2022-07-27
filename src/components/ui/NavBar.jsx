@@ -17,6 +17,7 @@ const NavBarWrap = styled.nav`
     background-color: #fff;
 `;
 function NavBar() {
+    console.log("NavBar");
     return (
         <NavBarWrap>
             <NavFooterItem
@@ -56,4 +57,4 @@ function NavBar() {
     );
 }
 
-export default NavBar;
+export default React.memo(NavBar);
