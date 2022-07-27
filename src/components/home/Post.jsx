@@ -67,9 +67,9 @@ const SliderButtonWrap = styled.ul`
 `;
 const SliderButton = styled.button`
     position: absolute;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
     bottom: 0;
     background-color: #fff;
 `;
@@ -111,13 +111,13 @@ const Post = ({ datas }) => {
         onClick: () => {
             console.log("delete");
             deletePost(selectedPostId);
+            window.location.reload();
         },
     };
     return (
         <>
             {datas?.map((v, i) => {
                 const PostImgSrc = v.image.split(",");
-                console.log(PostImgSrc.length);
                 return (
                     <FeedArticle>
                         <AuthorSection>
@@ -180,13 +180,13 @@ const Post = ({ datas }) => {
                 );
             })}
             <Modal modal={modal} setModal={setModal} modalMenuList={modalMenuList} />
-            {/* <AlertModal
+            <AlertModal
                 alertModal={alertModal}
                 setAlertModal={setAlertModal}
                 setModal={setModal}
                 content={"게시글을 수정하시겠어요?"}
                 alertButton={modifyButton}
-            /> */}
+            />
             <AlertModal
                 alertModal={alertModal}
                 setAlertModal={setAlertModal}
