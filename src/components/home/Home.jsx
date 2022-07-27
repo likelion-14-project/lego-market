@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HomeMain from "./HomeMain";
-import { useAxios } from "../../hooks/useAxios";
 import Post from "./Post";
 import { MainContentsWrap } from "../../styles/GlobalStyle";
 import TopNav from "../ui/TopNav";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import SocialLoginItem from "../login/SocialLoginItem";
-
+import {getFeedPost} from "../../hooks/useAxios"
 const HeaderStrong = styled.strong`
     font-size: 18px;
     font-weight: 500;
@@ -17,14 +15,17 @@ const HeaderStrong = styled.strong`
 const HomeHeaderImg = styled.img`
     width: 24px;
     height: 24px;
-`;
+    `;
 const Home = () => {
+    const [postData, setPostData] = useState();
     const navigate = useNavigate();
-    const getFollowersPost = {
-        url: `/post/feed`,
-        method: "GET",
-    };
-    const { isPending, response } = useAxios(getFollowersPost);
+    
+    useEffect(() => {
+        (async()=>{
+            const res = await getFeedPost();
+            setPostData(res);
+        })();
+    }, []);
 
     return (
         <>
@@ -40,7 +41,7 @@ const Home = () => {
             />
 
             <MainContentsWrap>
-                {response?.data.posts ? <Post datas={response.data.posts} /> : <HomeMain />}
+                {postData?.data.posts ? <Post datas={postData.data.posts} /> : <HomeMain />}
             </MainContentsWrap>
         </>
     );

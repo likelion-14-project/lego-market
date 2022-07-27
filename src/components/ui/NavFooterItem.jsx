@@ -25,6 +25,7 @@ const NavStrong = styled.strong`
     cursor: pointer;
 `;
 const NavFooterItem = ({ link, content, activeIcon, inActiveIcon }) => {
+    console.log('NavFooter');
     const { pathname } = useLocation();
 
     return (
