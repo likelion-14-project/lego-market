@@ -68,7 +68,7 @@ function FollowCard(props) {
     async function following() {
         const url = "https://mandarin.api.weniv.co.kr";
         const token = window.localStorage.getItem("token");
-        const response = await fetch(url + `/profile/${profileAccountName}/follow`, {
+        const response = await fetch(url + `/profile/${props.accountname}/follow`, {
             method: "POST",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -83,7 +83,7 @@ function FollowCard(props) {
     async function unfollow() {
         const url = "https://mandarin.api.weniv.co.kr";
         const token = window.localStorage.getItem("token");
-        const response = await fetch(url + `/profile/${profileAccountName}/unfollow`, {
+        const response = await fetch(url + `/profile/${props.accountname}/unfollow`, {
             method: "DELETE",
             headers: {
               Authorization: `Bearer ${token}`,
