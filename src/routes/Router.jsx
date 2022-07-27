@@ -64,10 +64,10 @@ const Router = () => {
             <Routes>
                 <Route path="/" element={<Splash />} />
                 <Route path="/loginpage" element={<LoginPage />} />
-
+                <Route path="/joinpage" element={<JoinPage />} />
                 {valid || (
                     <>
-                        <Route path="/joinpage" element={<JoinPage />} />
+                        <></>
                     </>
                 )}
                 {valid && (
@@ -117,11 +117,10 @@ const Router = () => {
                                 element={<AddProductListPage />}
                             />
                         </Route>
+                        <Route path="*" element={<NotFoundPage />} />
+                        <Route path="/notfound" element={<NotFoundPage />} />
                     </>
                 )}
-
-                <Route path="*" element={<NotFoundPage />} />
-                <Route path="/notfound" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>
     );
