@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../components/home/Home";
 import Splash from "../pages/Splash";
@@ -24,11 +24,7 @@ const Router = () => {
     const { myinfo } = useInfo();
     const [valid, setValid] = useState(false);
 
-    useEffect(() => {
-        if (token) {
-            myinfo();
-        }
-    }, [token]);
+
 
     const tokenValid = async () => {
         if (token) {
@@ -56,8 +52,16 @@ const Router = () => {
     };
 
     useEffect(() => {
-        tokenValid();
-    }, [token]);
+        if (token) {
+            tokenValid()
+            if(valid === false) {
+                return;
+            } else {
+                myinfo()
+            }
+        }
+    }, [token, valid]);
+
 
     return (
         <BrowserRouter>
