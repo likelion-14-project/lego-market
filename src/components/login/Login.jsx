@@ -41,7 +41,7 @@ const StyledButton = styled(Button)`
     margin-top: 30px;
 `;
 
-function LoginPage() {
+function Login() {
     const navigate = useNavigate();
     const {
         register,
@@ -123,4 +123,4 @@ function LoginPage() {
     );
 }
 
-export default LoginPage;
+export default React.memo(Login);
