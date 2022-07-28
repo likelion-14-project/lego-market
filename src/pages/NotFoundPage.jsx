@@ -25,6 +25,7 @@ const Span = styled.span`
 const StyledButton = styled(Button)`
     width: 120px;
     padding: 13px 0;
+    background-color: #ea4335;
 `;
 
 function NotFoundPage() {

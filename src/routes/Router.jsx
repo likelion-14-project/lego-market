@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useInfo } from "../hooks/useInfo";
 import Home from "../components/home/Home";
 import Splash from "../pages/Splash";
 import SearchUserPage from "../pages/SearchUserPage";
@@ -9,7 +10,6 @@ import WithNav from "./WithNav";
 
 import ProfilePage from "../pages/ProfilePage";
 import ProfileModifyPage from "../pages/ProfileModifyPage";
-import { useInfo } from "../hooks/useInfo";
 import PostUploadPage from "../pages/PostUploadPage";
 import ChatPage from "../pages/ChatPage";
 import NotFoundPage from "../pages/NotFoundPage";
@@ -23,12 +23,6 @@ const Router = () => {
     const token = localStorage.getItem("token");
     const { myinfo } = useInfo();
     const [valid, setValid] = useState(false);
-
-    useEffect(() => {
-        if (token) {
-            myinfo();
-        }
-    }, [token]);
 
     const tokenValid = async () => {
         if (token) {
@@ -56,8 +50,15 @@ const Router = () => {
     };
 
     useEffect(() => {
-        tokenValid();
-    }, [token]);
+        if (token) {
+            tokenValid();
+            if (valid === false) {
+                return;
+            } else {
+                myinfo();
+            }
+        }
+    }, [token, valid]);
 
     return (
         <BrowserRouter>
