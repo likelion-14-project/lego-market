@@ -117,7 +117,6 @@ function LoginPage() {
                             이메일로 회원가입
                         </StyledLink>
                     </form>
-                    {/* {isPending ? <strong>로그인 진행중...</strong> : <></>} */}
                 </Wrapper>
             )}
         </>
