@@ -6,6 +6,7 @@ import Modal from "../modal/Modal";
 import AlertModal from "../modal/AlertModal";
 import { timeForToday } from "../../utils/DateUtil";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { useReport } from "../../hooks/useReport";
 
 const CommentItem = styled.li`
     position: relative;
@@ -49,9 +50,11 @@ const MoreRight = styled.div`
 function CommentCard(props) {
     const { remove, comment_id, commentAuthor } = props;
     const [modal, setModal] = useState(false);
-    const [alertModal, setAlertModal] = useState(false);
+    const [deleteAlertModal, setDeleteAlertModal] = useState(false);
+    const [reportAlertModal, setReportAlertModal] = useState(false);
     const { post_id } = useParams();
     const { user } = useAuthContext();
+    const { report } = useReport();
 
     let modalMenuList;
 
@@ -60,23 +63,35 @@ function CommentCard(props) {
               {
                   content: "삭제",
                   onClick: () => {
-                      setAlertModal(true);
+                      setDeleteAlertModal(true);
                   },
               },
           ])
         : (modalMenuList = [
               {
                   content: "신고",
-                  onClick: () => {},
+                  onClick: () => {
+                      setReportAlertModal(true);
+                  },
               },
           ]);
 
-    const alertButton = {
+    const deleteAlertButton = {
         content: "삭제",
         onClick: () => {
             remove(`/post/${post_id}/comments/${comment_id}`);
             setModal(false);
-            setAlertModal(false);
+            setDeleteAlertModal(false);
+        },
+    };
+
+    const reportAlertButton = {
+        content: "신고",
+        onClick: () => {
+            report(`/post/${post_id}/comments/${comment_id}/report`);
+            alert("신고가 접수되었습니다.");
+            setModal(false);
+            setReportAlertModal(false);
         },
     };
 
@@ -104,11 +119,18 @@ function CommentCard(props) {
                 modalMenuList={modalMenuList}
             />
             <AlertModal
-                alertModal={alertModal}
-                setAlertModal={setAlertModal}
+                alertModal={deleteAlertModal}
+                setAlertModal={setDeleteAlertModal}
                 setModal={setModal}
                 content={"삭제하시겠어요?"}
-                alertButton={alertButton}
+                alertButton={deleteAlertButton}
+            />
+            <AlertModal
+                alertModal={reportAlertModal}
+                setAlertModal={setReportAlertModal}
+                setModal={setModal}
+                content={"신고하시겠어요?"}
+                alertButton={reportAlertButton}
             />
         </>
     );
