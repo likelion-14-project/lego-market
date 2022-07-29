@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
 export const LoginArticle = styled.article`
-    position: absolute;
+    position: fixed;
+    bottom: 0;
     width: 100%;
+    min-width: 390px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 462px;
     background-color: #fff;
     border-radius: 20px 20px 0px 0px;
     top: ${(props) => (props.splashLoading === false ? "140%" : "64%")};

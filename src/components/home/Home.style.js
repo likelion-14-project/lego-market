@@ -7,7 +7,7 @@ export const MainContentsWrap = styled.main`
     flex-direction: column;
     align-items: center;
     padding: 20px 16px 0;
-    height: calc(100% - 61px);
+    height: calc(100% - 121px);
     overflow-y: scroll;
 `;
 export const HeaderStrong = styled.strong`

@@ -22,7 +22,6 @@ import {
 } from "./Post.style";
 
 const Post = ({ datas, callRefetch }) => {
-    // Post 좀 분리해야함...
     const [modal, setModal] = useState(false);
     const [alertModal, setAlertModal] = useState(false);
     const [alertButton, setAlertButton] = useState({});
@@ -70,14 +69,12 @@ const Post = ({ datas, callRefetch }) => {
     const modifyButton = {
         content: "수정",
         onClick: () => {
-            console.log("modify");
             navigate(`/post/${selectedPostId}/edit`, { state: prevPostData });
         },
     };
     const deleteButton = {
         content: "삭제",
         onClick: () => {
-            console.log("delete");
             deletePost(selectedPostId);
             getRefetch();
             setModal(false);

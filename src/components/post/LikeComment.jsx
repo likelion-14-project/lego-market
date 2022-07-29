@@ -44,22 +44,19 @@ const LikeComment = ({ postId }) => {
     async function controlHeart() {
         if (_heartState) {
             const res = await cancelLikeCall(postId);
-            console.log("controlHeart -  true");
             setHeartState(res.post.hearted);
         } else {
-            console.log("controlHeart -  false");
             const res = await addLikeCall(postId);
             setHeartState(res.post.hearted);
         }
     }
 
     useEffect(() => {
-        console.log(_heartState);
         async function initHeart() {
             const res = await getPostInfo(postId);
-            setHeartState(res.post.hearted);
-            setHeartCount(res.post.heartCount);
-            setCommentCount(res.post.commentCount);
+            setHeartState(res?.post.hearted);
+            setHeartCount(res?.post.heartCount);
+            setCommentCount(res?.post.commentCount);
         }
         initHeart();
     }, [_heartState, postId, getPostInfo]);
