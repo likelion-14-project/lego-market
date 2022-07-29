@@ -9,6 +9,7 @@ const fadeOut = keyframes`
     opacity : 1;
   }
   `;
+  
 export const SearchDivWrap = styled.ul`
     max-width: 390px;
     width: 100%;

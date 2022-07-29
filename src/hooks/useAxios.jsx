@@ -96,7 +96,7 @@ export const useAxios = (axiosParams) => {
             const response = await axios.request(config);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     };
 
