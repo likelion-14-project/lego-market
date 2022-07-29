@@ -4,7 +4,6 @@ import PostAlbum from "./PostAlbum";
 import { useAxios } from "../../hooks/useAxios";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
-import { useAuthContext } from "../../hooks/useAuthContext";
 
 const PostTypeControlDiv = styled.div`
     width: 100%;
@@ -50,7 +49,6 @@ const ProfilePost = ({profileAccountName}) => {
     const { response, callRefetch } = useAxios(getUserPost);
 
     useEffect(() => {
-        console.log(location);
         let data = location?.state;
         callRefetch();
         if (data) {
@@ -86,7 +84,7 @@ const ProfilePost = ({profileAccountName}) => {
             {response && (
                 <ProfilePostWrap>
                     {btnState === "list" ? (
-                        <Post datas={response?.data.post} />
+                        <Post datas={response?.data.post} callRefetch={callRefetch}/>
                     ) : (
                         <PostAlbum datas={response?.data.post} />
                     )}

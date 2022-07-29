@@ -5,7 +5,7 @@ import { MainContentsWrap } from "../../styles/GlobalStyle";
 import TopNav from "../ui/TopNav";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import {getFeedPost} from "../../hooks/useAxios"
+import { getFeedPost } from "../../hooks/useAxios";
 const HeaderStrong = styled.strong`
     font-size: 18px;
     font-weight: 500;
@@ -15,17 +15,23 @@ const HeaderStrong = styled.strong`
 const HomeHeaderImg = styled.img`
     width: 24px;
     height: 24px;
-    `;
+`;
 const Home = () => {
     const [postData, setPostData] = useState();
+    const [refetch, setRefetch] = useState(0);
     const navigate = useNavigate();
-    
+
+    function reqRefetch(data){
+        setRefetch(data)
+    }
+
     useEffect(() => {
-        (async()=>{
+        console.log(reqRefetch);
+        (async () => {
             const res = await getFeedPost();
             setPostData(res);
         })();
-    }, []);
+    }, [refetch]);
 
     return (
         <>
@@ -41,7 +47,11 @@ const Home = () => {
             />
 
             <MainContentsWrap>
-                {postData?.data.posts ? <Post datas={postData.data.posts} /> : <HomeMain />}
+                {postData?.data.posts ? (
+                <Post datas={postData.data.posts} reqRefetch={reqRefetch} />
+                ) : (
+                    <HomeMain />
+                )}
             </MainContentsWrap>
         </>
     );
