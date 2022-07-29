@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const useProfile = (accountname) => {
+export const useProfile = () => {
     const [error, setError] = useState(null);
     const [isPending, setIsPending] = useState(false);
-    const [profile, setProfile] = useState({});
+    const [profile, setProfile] = useState();
     const navigate = useNavigate();
 
     const getProfile = async (accountname) => {
@@ -45,16 +45,16 @@ export const useProfile = (accountname) => {
                 throw Error(json.message);
             }
         } catch (error) {
-            console.log("에러지롱");
+            console.log("프로필정보를 받아오는 과정에서 에러가 발생했습니다.");
             setError(error);
             setIsPending(false);
             console.log(error);
         }
     };
 
-    useEffect(() => {
-        getProfile(accountname);
-    }, [accountname]);
+    // useEffect(() => {
+    //     getProfile(accountname);
+    // }, [accountname]);
 
     return { error, isPending, getProfile, profile };
 };

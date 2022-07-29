@@ -62,6 +62,9 @@ function ProfileModification() {
     }, [user]);
 
     const accountValid = async () => {
+        if (watch("계정 ID") === user.accountname) {
+            return;
+        }
         try {
             const url =
                 "https://mandarin.api.weniv.co.kr/user/accountnamevalid";
@@ -82,7 +85,6 @@ function ProfileModification() {
 
             const json = await response.json();
             const message = json.message;
-            console.log(message);
 
             if (message === "이미 가입된 계정ID 입니다.") {
                 return "*이미 가입된 계정ID 입니다.";
@@ -138,7 +140,11 @@ function ProfileModification() {
             <Wrapper>
                 <form onSubmit={handleSubmit()}>
                     <ImageWrapper>
-                        <ProfileImage imgSrc={imgSrc} />
+                        <ProfileImage
+                            label='프로필 사진'
+                            imgSrc={imgSrc}
+                            register={register("프로필 사진")}
+                        />
                         <StyledImageSelect width={30} setImgSrc={setImgSrc} />
                     </ImageWrapper>
                     <Input
@@ -174,7 +180,7 @@ function ProfileModification() {
                                     "*영문, 숫자, 특수문자(.),(_)만 사용 가능합니다.",
                             },
                             validate: {
-                                values: accountValid,
+                                always: accountValid,
                             },
                         })}
                         errors={errors}
