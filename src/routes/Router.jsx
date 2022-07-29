@@ -12,6 +12,7 @@ import ProfilePage from "../pages/ProfilePage";
 import ProfileModifyPage from "../pages/ProfileModifyPage";
 import PostUploadPage from "../pages/PostUploadPage";
 import ChatPage from "../pages/ChatPage";
+import Chat from "../components/chat/Chat";
 import NotFoundPage from "../pages/NotFoundPage";
 import FollowPage from "../pages/FollowPage";
 import AddProductListPage from "../pages/AddProductPage";
@@ -63,7 +64,7 @@ const Router = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Splash tokenState={valid}/>} />
+                <Route path="/" element={<Splash tokenState={valid} />} />
                 <Route path="/loginpage" element={<LoginPage />} />
                 <Route path="/joinpage" element={<JoinPage />} />
                 {valid || (
@@ -108,7 +109,8 @@ const Router = () => {
                                 path="/editpost"
                                 element={<PostUploadPage />}
                             />
-                            <Route path="/chat" element={<ChatPage />} />
+                            <Route path="/chat/list" element={<ChatPage />} />
+                            <Route path="/chat/:id" element={<Chat />} />
                             <Route
                                 path="/productlist"
                                 element={<ProductListPage />}
