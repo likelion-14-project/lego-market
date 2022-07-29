@@ -1,51 +1,12 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { Wrapper, IMG, P, DIV, Head, Section, Button } from "./ProductList.style";
 import Modal from "../modal/Modal";
 import AlertModal from "../modal/AlertModal";
-import { useNavigate } from 'react-router-dom';
 
-const Wrapper = styled.div`
-  display: flex;
-  margin-top: 16px;
-  white-space: nowrap;
-  overflow: auto;
-`;
-const IMG = styled.img`
-  width: 140px;
-  height: 90px;
-  border-radius: 8px;
-`;
-
-const P = styled.p`
-  color: #ffa200;
-  font-size: 12px;
-  font-weight: 700;
-  margin-top: 4px;
-  text-align: left;
-`;
-const DIV = styled.div`
-  font-size: 14px;
-  font-weight: 400;
-  margin-top: 6px;
-  text-align: left;
-`;
-const Head = styled.div`
-  font-size: 16px;
-  font-weight: 700;
-`;
-const Section = styled.section`
-  margin: 20px 21px;
-`;
-const Button = styled.button`
-  background-color: white;
-  cursor:pointer;
-`;
 const ProductList = (props) => {
-
-  const {profileAccountName, myAccountName} = props
-
-
+  const { profileAccountName, myAccountName } = props;
   const [modal, setModal] = useState(false);
   const [alertModal, setAlertModal] = useState(false);
   const [targetProduct, setTargetProduct] = useState();
@@ -58,7 +19,7 @@ const ProductList = (props) => {
     },
     {
       content: "수정",
-      onClick:  () => {},
+      onClick: () => {},
     },
     {
       content: "웹사이트에서 상품 보기",
@@ -97,7 +58,7 @@ const ProductList = (props) => {
           setModal(false);
           setAlertModal(false);
         };
-    
+
         // 함수 실행
         productLoad();
       } catch (err) {
@@ -128,39 +89,31 @@ const ProductList = (props) => {
     productLoad();
   }, [profileAccountName]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   if (!products) {
     return <div></div>;
   }
 
-  
   return (
     <>
       <Section>
-      {
-          products.length < 1
-          ? 
-          null
-          :<Head>판매중인 상품</Head>
-        }
+        {products.length < 1 ? null : <Head>판매중인 상품</Head>}
         <Wrapper>
           {products.map((product) => {
-                product.price = product.price
+            product.price = product.price
               .toString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             return (
               <>
                 <Button
                   onClick={() => {
-                    if(profileAccountName === myAccountName) {
+                    if (profileAccountName === myAccountName) {
                       setModal(!modal);
                       setTargetProduct(product.id);
-
                     } else {
-                      window.open(product.link)
+                      window.open(product.link);
                     }
-
                   }}
                 >
                   <IMG src={product.itemImage}></IMG>
