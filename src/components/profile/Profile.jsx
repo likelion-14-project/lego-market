@@ -11,6 +11,7 @@ import Modal from "../modal/Modal";
 import AlertModal from "../modal/AlertModal";
 import { Link, Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import LoadingPage from "../../pages/LoadingPage";
 
 const Wrapper = styled.div`
     padding: 30px 16px 26px;
@@ -95,7 +96,7 @@ const FollowingLink = styled(FollowLink)`
 
 function Profile(props) {
     const { profileAccountName, myAccountName } = props;
-    const { error, profile, isPending } = useProfile(profileAccountName);
+    const { error, profile, isPending, getProfile } = useProfile();
     const [modal, setModal] = useState(false);
     const [alertModal, setAlertModal] = useState(false);
 
@@ -123,75 +124,76 @@ function Profile(props) {
         },
     };
 
-    if (profile) {
-        return (
-            <>
-                {isPending ? (
-                    <strong>로딩중입니다...</strong>
-                ) : (
-                    <>
-                        {error ? (
-                            <strong>{error}</strong>
-                        ) : (
-                            <>
-                                <TopNav
-                                    leftChild={<BackButton />}
-                                    rightChild={
-                                        <ModalButton
-                                            onClick={() => setModal(!modal)}
-                                        />
-                                    }
-                                />
-                                <Wrapper>
-                                    <StyledProfileImg imgSrc={profile.image} />
-                                    <Username>{profile.username}</Username>
-                                    <UserId>@ {profile.accountname}</UserId>
-                                    <StyledP>{profile.intro}</StyledP>
-                                    {myAccountName === profileAccountName ? (
-                                        <MyButton />
-                                    ) : (
-                                        <UserButton
-                                        profileAccountName={
-                                            profileAccountName
-                                        } />
-                                    )}
+    useEffect(() => {
+        getProfile(profileAccountName);
+    }, [profileAccountName]);
 
-                                    <FollowerWrapper>
-                                        <FollowLink
-                                            to={`/follow/${profileAccountName}/follower`}
-                                        >
-                                            {profile.followerCount}
-                                        </FollowLink>
-                                        <StyledSpan>followers</StyledSpan>
-                                    </FollowerWrapper>
-                                    <FollowingWrapper>
-                                        <FollowingLink
-                                            to={`/follow/${profileAccountName}/following`}
-                                        >
-                                            {profile.followingCount}
-                                        </FollowingLink>
-                                        <StyledSpan>followings</StyledSpan>
-                                    </FollowingWrapper>
-                                </Wrapper>
-                                <Modal
-                                    modal={modal}
-                                    setModal={setModal}
-                                    modalMenuList={modalMenuList}
-                                />
-                                <AlertModal
-                                    alertModal={alertModal}
-                                    setAlertModal={setAlertModal}
-                                    setModal={setModal}
-                                    content={"로그아웃하시겠어요?"}
-                                    alertButton={alertButton}
-                                />
-                            </>
-                        )}
-                    </>
-                )}
-            </>
-        );
-    } else return null;
+    return (
+        <>
+            {isPending ? (
+                <LoadingPage />
+            ) : (
+                <>
+                    {profile ? (
+                        <>
+                            <TopNav
+                                leftChild={<BackButton />}
+                                rightChild={
+                                    <ModalButton
+                                        onClick={() => setModal(!modal)}
+                                    />
+                                }
+                            />
+                            <Wrapper>
+                                <StyledProfileImg imgSrc={profile.image} />
+                                <Username>{profile.username}</Username>
+                                <UserId>@ {profile.accountname}</UserId>
+                                <StyledP>{profile.intro}</StyledP>
+                                {myAccountName === profileAccountName ? (
+                                    <MyButton />
+                                ) : (
+                                    <UserButton
+                                        profileAccountName={profileAccountName}
+                                    />
+                                )}
+
+                                <FollowerWrapper>
+                                    <FollowLink
+                                        to={`/follow/${profileAccountName}/follower`}
+                                    >
+                                        {profile.followerCount}
+                                    </FollowLink>
+                                    <StyledSpan>followers</StyledSpan>
+                                </FollowerWrapper>
+                                <FollowingWrapper>
+                                    <FollowingLink
+                                        to={`/follow/${profileAccountName}/following`}
+                                    >
+                                        {profile.followingCount}
+                                    </FollowingLink>
+                                    <StyledSpan>followings</StyledSpan>
+                                </FollowingWrapper>
+                            </Wrapper>
+                            <Modal
+                                modal={modal}
+                                setModal={setModal}
+                                modalMenuList={modalMenuList}
+                            />
+                            <AlertModal
+                                alertModal={alertModal}
+                                setAlertModal={setAlertModal}
+                                setModal={setModal}
+                                content={"로그아웃하시겠어요?"}
+                                alertButton={alertButton}
+                            />
+                        </>
+                    ) : (
+                        <></>
+                    )}
+                </>
+            )}
+        </>
+    );
 }
 
 export default Profile;
