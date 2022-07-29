@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAxios } from "../../hooks/useAxios";
 import AlertModal from "../modal/AlertModal";
 import Modal from "../modal/Modal";
@@ -37,7 +36,7 @@ const Post = ({ datas, callRefetch }) => {
     const { user } = useAuthContext();
 
     let modalMenuList;
-    author === user.accountname
+    author === user?.accountname
         ? (modalMenuList = [
               {
                   content: "삭제",
@@ -172,4 +171,4 @@ const Post = ({ datas, callRefetch }) => {
     );
 };
 
-export default Post;
+export default React.memo(Post);

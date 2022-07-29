@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-// axios.defaults.baseURL = "http://146.56.183.55:5050";
 axios.defaults.baseURL = "https://mandarin.api.weniv.co.kr";
 axios.defaults.headers["content-Type"] = "application/json";
-
 axios.interceptors.request.use(
     function (config) {
         config.headers["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
@@ -26,6 +24,23 @@ export const getFeedPost = async() => {
         return response;
     } catch (error) {
         console.log(error);
+    }
+}
+
+export const searchUser = async(keyword) => {
+    const config = {
+        method: "GET",
+        url: `/user/searchuser/`,
+        params: {
+            keyword : keyword === "" ? false : keyword,
+        },
+    };
+    try {
+        const response = await axios.request(config);
+        return response;
+    } catch (error) {
+        console.log(error);
+        throw error;
     }
 }
 
