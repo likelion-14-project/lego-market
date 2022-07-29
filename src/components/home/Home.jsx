@@ -1,28 +1,18 @@
 import React, { useEffect, useState } from "react";
-import HomeMain from "./HomeMain";
-import Post from "./Post";
-import { MainContentsWrap } from "../../styles/GlobalStyle";
-import TopNav from "../ui/TopNav";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { getFeedPost } from "../../hooks/useAxios";
-const HeaderStrong = styled.strong`
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 22px;
-    flex: 1;
-`;
-const HomeHeaderImg = styled.img`
-    width: 24px;
-    height: 24px;
-`;
+import HomeMain from "./HomeMain";
+import Post from "../post/Post";
+import TopNav from "../ui/TopNav";
+import { HeaderStrong, HomeHeaderImg, MainContentsWrap } from "./Home.style";
+
 const Home = () => {
     const [postData, setPostData] = useState();
     const [refetch, setRefetch] = useState(0);
     const navigate = useNavigate();
 
-    function reqRefetch(data){
-        setRefetch(data)
+    function reqRefetch(data) {
+        setRefetch(data);
     }
 
     useEffect(() => {
@@ -48,7 +38,7 @@ const Home = () => {
 
             <MainContentsWrap>
                 {postData?.data.posts ? (
-                <Post datas={postData.data.posts} reqRefetch={reqRefetch} />
+                    <Post datas={postData.data.posts} reqRefetch={reqRefetch} />
                 ) : (
                     <HomeMain />
                 )}

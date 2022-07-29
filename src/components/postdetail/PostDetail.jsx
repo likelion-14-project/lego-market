@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import Post from "../home/Post";
+import { useDelete } from "../../hooks/useDelete";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import styled from "styled-components";
+import Post from "../post/Post";
 import PostComment from "../comment/PostComment";
 import TopNav from "../ui/TopNav";
 import BackButton from "../ui/BackButton";
 import ModalButton from "../ui/ModalButton";
 import Modal from "../modal/Modal";
 import AlertModal from "../modal/AlertModal";
-import { useAuthContext } from "../../hooks/useAuthContext";
 import InputFooter from "../ui/InputFooter";
-import { useDelete } from "../../hooks/useDelete";
 
 const DetailMain = styled.main`
     width: 100%;

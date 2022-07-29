@@ -1,38 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Post from "../home/Post";
+import Post from "../post/Post";
 import PostAlbum from "./PostAlbum";
 import { useAxios } from "../../hooks/useAxios";
-import styled from "styled-components";
 import { useLocation } from "react-router-dom";
+import {
+    PostTypeControlDiv,
+    PostTypeControlWrap,
+    PostTypeControlIcon,
+    ProfilePostWrap,
+} from "./ProfilePost.style";
 
-const PostTypeControlDiv = styled.div`
-    width: 100%;
-    border-top: 1px solid #727272;
-    border-bottom: 0.5px solid #727272;
-    padding: 10px 16px;
-    margin-bottom: 16px;
-    display: flex;
-    justify-content: center;
-`;
-const PostTypeControlWrap = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 16px;
-`;
-const PostTypeControlIcon = styled.img`
-    width: 26px;
-    height: 26px;
-    cursor: pointer;
-`;
-
-const ProfilePostWrap = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`;
-
-const ProfilePost = ({profileAccountName}) => {
+const ProfilePost = ({ profileAccountName }) => {
     const [btnState, setBtnState] = useState("list");
     const [accountName, setAccountName] = useState();
     const location = useLocation();
@@ -53,10 +31,10 @@ const ProfilePost = ({profileAccountName}) => {
         callRefetch();
         if (data) {
             setAccountName(data);
-        } else if(profileAccountName){
+        } else if (profileAccountName) {
             setAccountName(profileAccountName);
         }
-    }, [location,profileAccountName]);
+    }, [location, profileAccountName]);
     return (
         <>
             <PostTypeControlDiv>
@@ -84,7 +62,7 @@ const ProfilePost = ({profileAccountName}) => {
             {response && (
                 <ProfilePostWrap>
                     {btnState === "list" ? (
-                        <Post datas={response?.data.post} callRefetch={callRefetch}/>
+                        <Post datas={response?.data.post} callRefetch={callRefetch} />
                     ) : (
                         <PostAlbum datas={response?.data.post} />
                     )}
