@@ -16,7 +16,6 @@ const Home = () => {
     }
 
     useEffect(() => {
-        console.log(reqRefetch);
         (async () => {
             const res = await getFeedPost();
             setPostData(res);

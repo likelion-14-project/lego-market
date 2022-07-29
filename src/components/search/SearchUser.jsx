@@ -1,27 +1,25 @@
-import React from "react";
+import React, { useCallback, useEffect} from "react";
 import { useState } from "react";
-import { useAxios } from "../../hooks/useAxios";
+import { searchUser} from "../../hooks/useAxios";
 import SearchUserItem from "./SearchUserItem";
 import TopNav from "../ui/TopNav";
 import BackButton from "../ui/BackButton";
 import { SearchInput, SearchDivWrap, ListWrap, MainContentsWrap } from "./SearchUser.style";
 
 const SearchUseHook = () => {
+    const [userList, setUserList] = useState();
     const [keyword, setKeyword] = useState("");
-    const searchUserConfig = {
-        url: `/user/searchuser/`,
-        method: "GET",
-        params: {
-            keyword: keyword === "" ? false : keyword,
-        },
-    };
-    const { isPending, response, callRefetch } = useAxios(searchUserConfig);
 
-    const onChange = (e) => {
+    const onChange = useCallback((e) => {
         setKeyword(e.target.value);
-        callRefetch();
-        console.log(response);
-    };
+    },[]);
+
+    useEffect(()=>{
+        (async () => {
+            const res = await searchUser(keyword);
+            setUserList(res);
+        })()
+    },[keyword])
 
     return (
         <>
@@ -30,9 +28,9 @@ const SearchUseHook = () => {
                 centerChild={<SearchInput placeholder="계정검색" onChange={onChange}></SearchInput>}
             />
             <MainContentsWrap>
-                {isPending ? (
+                {userList ? (
                     <SearchDivWrap>
-                        {response?.data.map((v, i) => {
+                        {userList?.data.map((v, i) => {
                             return (
                                 <ListWrap key={i}>
                                     <SearchUserItem
