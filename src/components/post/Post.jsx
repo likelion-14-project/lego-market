@@ -1,84 +1,26 @@
-import React, {useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAxios } from "../../hooks/useAxios";
 import AlertModal from "../modal/AlertModal";
 import Modal from "../modal/Modal";
-import LikeComment from "../post/LikeComment";
+import LikeComment from "./LikeComment";
 import SearchUserItem from "../search/SearchUserItem";
 import ModalButton from "../ui/ModalButton";
 import { useAuthContext } from "../../hooks/useAuthContext";
-
-const FeedArticle = styled.article`
-    position: relative;
-    max-width: 358px;
-    width: 100%;
-    margin: 0px auto 20px;
-`;
-const AuthorSection = styled.section`
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-    cursor: pointer;
-`;
-const PostSection = styled.section`
-    padding-left: 54px;
-`;
-const PostTxt = styled.p`
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 18px;
-    margin-bottom: 16px;
-    word-break: break-all;
-`;
-const PostImgDiv = styled.div`
-    position: relative;
-    margin-bottom: 16px;
-    max-height: 228px;
-    border-radius: 10px;
-    overflow: hidden;
-`;
-const PostImgList = styled.ul`
-    display: flex;
-`;
-const PostImg = styled.img`
-    min-width: 304px;
-    width: 100%;
-    height: 100%;
-    max-height: 228px;
-    min-height: 228px;
-    overflow: hidden;
-    object-fit: cover;
-`;
-
-const PostDate = styled.strong`
-    font-weight: 400;
-    font-size: 10px;
-    line-height: 12px;
-    color: #767676;
-`;
-
-const SliderButtonWrap = styled.ul`
-    position: absolute;
-    display: flex;
-    gap: 20px;
-    left: 50%;
-    bottom: 16px;
-    transform: translateX(-50%);
-`;
-const SliderButton = styled.button`
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border-radius: 8px;
-    bottom: 0;
-    background-color: #fff;
-`;
-const ModalButtonWrap = styled.div`
-    position: absolute;
-    top: 4px;
-    right: 0;
-`;
+import {
+    FeedArticle,
+    AuthorSection,
+    PostSection,
+    PostTxt,
+    PostImgDiv,
+    PostImgList,
+    PostImg,
+    PostDate,
+    SliderButton,
+    SliderButtonWrap,
+    ModalButtonWrap,
+} from "./Post.style";
 
 const Post = ({ datas, callRefetch }) => {
     // Post 좀 분리해야함...
@@ -97,35 +39,35 @@ const Post = ({ datas, callRefetch }) => {
     let modalMenuList;
     author === user.accountname
         ? (modalMenuList = [
-            {
-                content: "삭제",
-                onClick: () => {
-                    setContent("게시글을 삭제하시겠어요?");
-                    setAlertButton(deleteButton);
-                    setAlertModal(true);
-                },
-            },
-            {
-                content: "수정",
-                onClick: () => {
-                    setContent("게시글을 수정하시겠어요?");
-                    setAlertButton(modifyButton);
-                    setAlertModal(true);
-                },
-            },
-            ])
+              {
+                  content: "삭제",
+                  onClick: () => {
+                      setContent("게시글을 삭제하시겠어요?");
+                      setAlertButton(deleteButton);
+                      setAlertModal(true);
+                  },
+              },
+              {
+                  content: "수정",
+                  onClick: () => {
+                      setContent("게시글을 수정하시겠어요?");
+                      setAlertButton(modifyButton);
+                      setAlertModal(true);
+                  },
+              },
+          ])
         : (modalMenuList = [
-                {
-                    content: "신고",
-                    onClick: () => {
-                        // 신고할 함수를 작성해주세요
-                    },
-                },
-            ]);
+              {
+                  content: "신고",
+                  onClick: () => {
+                      // 신고할 함수를 작성해주세요
+                  },
+              },
+          ]);
 
     const getRefetch = () => {
         callRefetch();
-    }
+    };
     const modifyButton = {
         content: "수정",
         onClick: () => {

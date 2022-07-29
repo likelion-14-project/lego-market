@@ -17,7 +17,6 @@ const NavBarWrap = styled.nav`
     background-color: #fff;
 `;
 function NavBar() {
-    console.log("NavBar");
     return (
         <NavBarWrap>
             <NavFooterItem

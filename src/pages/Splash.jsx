@@ -1,39 +1,14 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import LoginModal from "../components/login/LoginModal";
 import { useNavigate } from "react-router-dom";
-import { checkToken } from "../utils/CheckToken";
+import { MainDiv, MainHeader } from "./Splash.style";
 
-const MainDiv = styled.div`
-    width: 100%;
-    height: 100vh;
-    text-align: center;
-    overflow: hidden;
-    box-sizing: content-box;
-    background-color: ${(props) =>
-        props.splashLoading === false ? "#fff" : "#FBD793"};
-    margin: auto;
-    transition: all 600ms cubic-bezier(0.86, 0, 0.5, 1);
-`;
-const MainHeader = styled.header`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transition: all 600ms cubic-bezier(0.86, 0, 0.5, 1);
-    img {
-        width: 168px;
-        height: 195px;
-    }
-    top: ${(props) => (props.splashLoading === false ? "50%" : "30%")};
-`;
-
-function Splash() {
+function Splash({tokenState}) {
     const [splashLoading, setsplashLoading] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
         let splash = setTimeout(() => {
-            if (checkToken()) {
+            if (tokenState) {
                 setsplashLoading(false);
                 navigate("/home");
             }
@@ -52,8 +27,7 @@ function Splash() {
                     src={
                         splashLoading === false
                             ? process.env.PUBLIC_URL + "/icons/full-logo.png"
-                            : process.env.PUBLIC_URL +
-                              "/icons/full-logo-white.png"
+                            : process.env.PUBLIC_URL + "/icons/full-logo-white.png"
                     }
                 />
             </MainHeader>

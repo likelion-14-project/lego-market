@@ -63,7 +63,7 @@ const Router = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Splash />} />
+                <Route path="/" element={<Splash tokenState={valid}/>} />
                 <Route path="/loginpage" element={<LoginPage />} />
                 <Route path="/joinpage" element={<JoinPage />} />
                 {valid || (
