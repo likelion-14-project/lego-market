@@ -11,7 +11,7 @@ const MainDiv = styled.div`
     overflow: hidden;
     box-sizing: content-box;
     background-color: ${(props) =>
-        props.splashLoading === false ? "#fff" : "orange"};
+        props.splashLoading === false ? "#fff" : "#FBD793"};
     margin: auto;
     transition: all 600ms cubic-bezier(0.86, 0, 0.5, 1);
 `;
@@ -22,8 +22,8 @@ const MainHeader = styled.header`
     transform: translate(-50%, -50%);
     transition: all 600ms cubic-bezier(0.86, 0, 0.5, 1);
     img {
-        width: 200px;
-        height: 200px;
+        width: 168px;
+        height: 195px;
     }
     top: ${(props) => (props.splashLoading === false ? "50%" : "30%")};
 `;

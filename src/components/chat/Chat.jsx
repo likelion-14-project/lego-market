@@ -138,7 +138,7 @@ function Chat() {
                 </ChatRoomUl>
             </Container>
             <InputFooter
-                img={user.image}
+                img={user ? user.image : ""}
                 placeholder="메세지 입력하기..."
                 value={chat}
                 onChange={(e) => {

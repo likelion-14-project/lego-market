@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useInfo } from "../hooks/useInfo";
 import Home from "../components/home/Home";
 import Splash from "../pages/Splash";
 import SearchUserPage from "../pages/SearchUserPage";
@@ -9,11 +10,9 @@ import WithNav from "./WithNav";
 
 import ProfilePage from "../pages/ProfilePage";
 import ProfileModifyPage from "../pages/ProfileModifyPage";
-import { useInfo } from "../hooks/useInfo";
 import PostUploadPage from "../pages/PostUploadPage";
 import ChatPage from "../pages/ChatPage";
 import NotFoundPage from "../pages/NotFoundPage";
-import { checkToken } from "../utils/CheckToken";
 import FollowPage from "../pages/FollowPage";
 import AddProductListPage from "../pages/AddProductPage";
 import ProductListPage from "../pages/ProductListPage";
@@ -23,25 +22,56 @@ import PostModify from "../components/postModify/PostModify";
 const Router = () => {
     const token = localStorage.getItem("token");
     const { myinfo } = useInfo();
+    const [valid, setValid] = useState(false);
+
+    const tokenValid = async () => {
+        if (token) {
+            try {
+                const url = "https://mandarin.api.weniv.co.kr/user/checktoken";
+                const response = await fetch(url, {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-type": "application/json",
+                    },
+                });
+                const json = await response.json();
+
+                if (json.isValid === true) {
+                    setValid(true);
+                } else {
+                    setValid(false);
+                    throw Error("유효하지 않은 토큰입니다.");
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    };
 
     useEffect(() => {
         if (token) {
-            myinfo();
+            tokenValid();
+            if (valid === false) {
+                return;
+            } else {
+                myinfo();
+            }
         }
-    }, [token]);
+    }, [token, valid]);
 
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Splash />} />
                 <Route path="/loginpage" element={<LoginPage />} />
-
-                {checkToken() || (
+                <Route path="/joinpage" element={<JoinPage />} />
+                {valid || (
                     <>
-                        <Route path="/joinpage" element={<JoinPage />} />
+                        <></>
                     </>
                 )}
-                {checkToken() && (
+                {valid && (
                     <>
                         <Route
                             path="/profileModify"
@@ -49,8 +79,9 @@ const Router = () => {
                         />
                         <Route path="/editpost" element={<PostUploadPage />} />
                         <Route
-                                path="/post/:postid/edit"
-                                element={<PostModify />} />
+                            path="/post/:postid/edit"
+                            element={<PostModify />}
+                        />
                         <Route
                             path="/postdetail/:post_id"
                             element={<PostDetailPage />}
@@ -86,13 +117,11 @@ const Router = () => {
                                 path="/product"
                                 element={<AddProductListPage />}
                             />
-
                         </Route>
+                        <Route path="*" element={<NotFoundPage />} />
+                        <Route path="/notfound" element={<NotFoundPage />} />
                     </>
                 )}
-
-                <Route path="*" element={<NotFoundPage />} />
-                <Route path="/notfound" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>
     );

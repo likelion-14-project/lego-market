@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import Post from "../home/Post";
@@ -10,6 +10,7 @@ import Modal from "../modal/Modal";
 import AlertModal from "../modal/AlertModal";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import InputFooter from "../ui/InputFooter";
+import { useDelete } from "../../hooks/useDelete";
 
 const DetailMain = styled.main`
     width: 100%;
@@ -36,6 +37,7 @@ function PostDetail() {
     const [modal, setModal] = useState(false);
     const [alertModal, setAlertModal] = useState(false);
     const [disabled, setDisabled] = useState(true);
+    const { remove, isUpdate } = useDelete();
 
     // 사용자가 입력하고 있는 댓글
     let [comment, setComment] = useState("");
@@ -43,7 +45,7 @@ function PostDetail() {
     // 댓글리스트를 담기
     let [feedComments, setFeedComments] = useState([]);
 
-    // 게시 클릭시 할생하는 post 함수
+    // 게시 클릭시 할생하는 함수
     let addComment = (e) => {
         createComment(comment);
         setComment("");
@@ -65,6 +67,8 @@ function PostDetail() {
         content: "로그아웃",
         onClick: () => {},
     };
+
+    // 댓글 작성
     async function createComment(comment) {
         const token = localStorage.getItem("token");
 
@@ -92,6 +96,7 @@ function PostDetail() {
         getComments();
     }
 
+    // 댓글 리스트
     async function getComments() {
         const token = localStorage.getItem("token");
 
@@ -113,10 +118,7 @@ function PostDetail() {
         return json;
     }
 
-    useEffect(() => {
-        getComments();
-    }, []);
-
+    // 게시글 상세
     async function getPostDetail() {
         const token = localStorage.getItem("token");
 
@@ -142,45 +144,57 @@ function PostDetail() {
 
     useEffect(() => {
         getPostDetail();
-    }, []);
+        getComments();
+    }, [isUpdate]);
 
     return (
         <>
-            <TopNav
-                leftChild={<BackButton />}
-                rightChild={<ModalButton onClick={() => setModal(!modal)} />}
-            />
-            <DetailMain>
-                <DetailWrap>{post ? <Post datas={post} /> : null}</DetailWrap>
-                <PostComment post_id={post_id} feedComments={feedComments} />
-            </DetailMain>
-            <InputFooter
-                img={user.image}
-                ir="댓글입력하기"
-                placeholder="댓글 입력하기"
-                value={comment}
-                onChange={(e) => {
-                    setComment(e.target.value);
-                    e.target.value.length > 0
-                        ? setDisabled(false)
-                        : setDisabled(true);
-                }}
-                onClick={addComment}
-                disabled={disabled}
-                btnTxt="게시"
-            />
-            <Modal
-                modal={modal}
-                setModal={setModal}
-                modalMenuList={modalMenuList}
-            />
-            <AlertModal
-                alertModal={alertModal}
-                setAlertModal={setAlertModal}
-                setModal={setModal}
-                content={"로그아웃하시겠어요?"}
-                alertButton={alertButton}
-            />
+            {user && (
+                <>
+                    <TopNav
+                        leftChild={<BackButton />}
+                        rightChild={
+                            <ModalButton onClick={() => setModal(!modal)} />
+                        }
+                    />
+                    <DetailMain>
+                        <DetailWrap>
+                            {post ? <Post datas={post} /> : null}
+                        </DetailWrap>
+                        <PostComment
+                            feedComments={feedComments}
+                            remove={remove}
+                        />
+                    </DetailMain>
+                    <InputFooter
+                        img={user.image}
+                        ir="댓글입력하기"
+                        placeholder="댓글 입력하기"
+                        value={comment}
+                        onChange={(e) => {
+                            setComment(e.target.value);
+                            e.target.value.length > 0
+                                ? setDisabled(false)
+                                : setDisabled(true);
+                        }}
+                        onClick={addComment}
+                        disabled={disabled}
+                        btnTxt="게시"
+                    />
+                    <Modal
+                        modal={modal}
+                        setModal={setModal}
+                        modalMenuList={modalMenuList}
+                    />
+                    <AlertModal
+                        alertModal={alertModal}
+                        setAlertModal={setAlertModal}
+                        setModal={setModal}
+                        content={"로그아웃하시겠어요?"}
+                        alertButton={alertButton}
+                    />
+                </>
+            )}
         </>
     );
 }
