@@ -37,7 +37,6 @@ const PostImgDiv = styled.div`
     max-height: 228px;
     border-radius: 10px;
     overflow: hidden;
-    /* 슬라이드 형식으로 구현 염두 */
 `;
 const PostImgList = styled.ul`
     display: flex;
@@ -81,18 +80,16 @@ const ModalButtonWrap = styled.div`
     right: 0;
 `;
 
-const Post = ({ datas }) => {
+const Post = ({ datas, callRefetch }) => {
     // Post 좀 분리해야함...
-    const location = useLocation();
     const [modal, setModal] = useState(false);
     const [alertModal, setAlertModal] = useState(false);
+    const [alertButton, setAlertButton] = useState({});
     const [selectedPostId, setSelectedPostId] = useState();
     const [prevPostData, setPrevPostData] = useState();
     const navigate = useNavigate();
     const imgRef = useRef([]);
     const { deletePost } = useAxios();
-
-    const [alertButton, setAlertButton] = useState({});
     const [content, setContent] = useState();
     const [author, setAuthor] = useState();
     const { user } = useAuthContext();
@@ -125,6 +122,10 @@ const Post = ({ datas }) => {
                     },
                 },
             ]);
+
+    const getRefetch = () => {
+        callRefetch();
+    }
     const modifyButton = {
         content: "수정",
         onClick: () => {
@@ -137,7 +138,9 @@ const Post = ({ datas }) => {
         onClick: () => {
             console.log("delete");
             deletePost(selectedPostId);
-            window.location.reload();
+            getRefetch();
+            setModal(false);
+            setAlertModal(false);
         },
     };
     return (
