@@ -1,38 +1,15 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
-import ImageSelect from "../ui/ImageSelect";
-import Button from "../ui/Button";
-import WarningMessage from "../ui/WarningMessage";
-import Input from "../ui/Input.jsx";
-import { useForm } from "react-hook-form";
-import ProfileImage from "../ui/ProfileImage";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { Wrapper, ImageWrapper, StyledImageSelect, SaveButton } from "./ProfileModification.style";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import WarningMessage from "../ui/WarningMessage";
+import Input from "../ui/Input.jsx";
+import ProfileImage from "../ui/ProfileImage";
 import TopNav from "../ui/TopNav";
 import BackButton from "../ui/BackButton";
-import { useAuthContext } from "../../hooks/useAuthContext";
 
-const Wrapper = styled.div`
-    padding: 30px 34px;
-`;
-
-const ImageWrapper = styled.div`
-    width: 110px;
-    margin: 0 auto;
-    position: relative;
-    margin-bottom: 30px;
-`;
-
-const StyledImageSelect = styled(ImageSelect)`
-    position: absolute;
-    bottom: 0;
-    right: 0;
-`;
-
-const SaveButton = styled(Button)`
-    padding: 7px 0px;
-    width: 90px;
-`;
 
 function ProfileModification() {
     const defaultImgSrc =
