@@ -28,7 +28,7 @@ function NavBar() {
                 inActiveIcon={process.env.PUBLIC_URL + "/icons/icon-home.png"}
             />
             <NavFooterItem
-                link="/chat"
+                link="/chat/list"
                 content="채팅"
                 activeIcon={
                     process.env.PUBLIC_URL +

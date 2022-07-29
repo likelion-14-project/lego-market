@@ -1,0 +1,25 @@
+{
+    "chatData": [
+        {
+            "id": 1,
+            "image": "/images/LegoDefaultImage.png",
+            "userName": "레고마켓 관리자",
+            "message": "안녕하세요. 레고마켓 관리자입니다. 무엇을 도와드릴까요?",
+            "date": "2022.08.01"
+        },
+        {
+            "id": 2,
+            "image": "/images/chatlego1.png",
+            "userName": "나는레고왕",
+            "message": "그대의 레고 좀 보고싶습니다.",
+            "date": "2022.06.28"
+        },
+        {
+            "id": 3,
+            "image": "/images/chatlego2.png",
+            "userName": "현재원빈",
+            "message": "레고마켓을 만들어 주셔서 감사합니다.",
+            "date": "2022.03.28"
+        }
+    ]
+}

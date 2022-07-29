@@ -1,10 +1,10 @@
 import React from "react";
-import Chat from "../components/chat/Chat";
+import ChatList from "../components/chat/ChatList";
 
 function ChatPage() {
     return (
         <>
-            <Chat />
+            <ChatList />
         </>
     );
 }
