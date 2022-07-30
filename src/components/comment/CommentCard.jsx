@@ -1,54 +1,25 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
-import ModalButton from "../ui/modalButton/ModalButton";
-import Modal from "../modal/modal/Modal";
-import AlertModal from "../modal/alertModal/AlertModal";
 import { timeForToday } from "../../utils/DateUtil";
+import {
+    CommentItem,
+    CommentUserWap,
+    UserIdLink,
+    CommentUserImg,
+    CommentDate,
+    CommentTxt,
+    MoreRight,
+} from "./Comment.style";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useReport } from "../../hooks/useReport";
 
-const CommentItem = styled.li`
-    position: relative;
-    font-size: 14px;
-    margin-bottom: 25px;
-    width: 358px;
-`;
-
-const CommentUserWap = styled.div`
-    display: flex;
-    align-items: center;
-`;
-
-const CommentUserImg = styled.img`
-    border: 0.5px solid #dbdbdb;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-`;
-const UserIdLink = styled(Link)`
-    margin: 13px 10px;
-    font-size: 14px;
-    font-weight: 500;
-`;
-
-const CommentDate = styled.span`
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    color: #767676;
-`;
-
-const CommentTxt = styled.p`
-    margin-left: 50px;
-    font-size: 14px;
-`;
-const MoreRight = styled.div`
-    margin-left: auto;
-`;
+import ModalButton from "../ui/modalButton/ModalButton";
+import Modal from "../modal/modal/Modal";
+import AlertModal from "../modal/alertModal/AlertModal";
 
 function CommentCard(props) {
     const { remove, comment_id, commentAuthor } = props;
+
     const [modal, setModal] = useState(false);
     const [deleteAlertModal, setDeleteAlertModal] = useState(false);
     const [reportAlertModal, setReportAlertModal] = useState(false);
@@ -99,14 +70,14 @@ function CommentCard(props) {
         <>
             <CommentItem>
                 <CommentUserWap>
-                    <Link to='#none'>
+                    <Link to="#none">
                         <CommentUserImg src={props.userProfile} />
                     </Link>
-                    <UserIdLink to='#none'>{props.userName}</UserIdLink>
+                    <UserIdLink to="#none">{props.userName}</UserIdLink>
                     <CommentDate>{timeForToday(props.createdAt)}</CommentDate>
                     <MoreRight>
                         <ModalButton
-                            type='button'
+                            type="button"
                             onClick={() => setModal(!modal)}
                         />
                     </MoreRight>

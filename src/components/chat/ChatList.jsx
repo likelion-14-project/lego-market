@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
     ChatListMain,
     ChatListUl,
@@ -9,7 +10,6 @@ import {
     UserMessage,
     ChatDate,
 } from "./ChatList.style";
-import { Link, useNavigate } from "react-router-dom";
 
 import TopNav from "../ui/topNav/TopNav";
 import BackButton from "../ui/backButton/BackButton";
@@ -41,6 +41,7 @@ function ChatList() {
         onClick: () => {
             localStorage.removeItem("token");
             navigate("/");
+            window.location.reload();
         },
     };
     return (
