@@ -12,7 +12,13 @@ const defaultImgSrc = process.env.PUBLIC_URL + "/images/LegoDefaultImage.png";
 function ProfileImage(props) {
     const { imgSrc, className } = props;
 
-    return <Image className={className} src={imgSrc} />;
+    return (
+        <Image
+            className={className}
+            src={imgSrc}
+            alt="사용자 프로필 이미지 입니다."
+        />
+    );
 }
 
 ProfileImage.defaultProps = {

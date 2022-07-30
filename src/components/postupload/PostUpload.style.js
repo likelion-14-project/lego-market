@@ -1,4 +1,8 @@
 import styled from "styled-components";
+<<<<<<< HEAD
+=======
+import Button from "../ui/button/Button";
+>>>>>>> 9679afbea5b8d47d0e483ca7d26f5dc06ef82986
 
 export const Main = styled.main`
     width: 100%;
@@ -7,9 +11,20 @@ export const Main = styled.main`
     box-sizing: border-box;
     display: flex;
     min-width: 390px;
+<<<<<<< HEAD
     margin-top: 48px;
     padding: 20px 0 20px 16px;
 `;
+=======
+    padding: 20px 0 20px 16px;
+`;
+
+export const UploadBtn = styled(Button)`
+    width: 90px;
+    padding: 7px 26px 7px 25px;
+`;
+
+>>>>>>> 9679afbea5b8d47d0e483ca7d26f5dc06ef82986
 export const UserProfile = styled.img`
     width: 42px;
     height: 42px;
@@ -17,14 +32,17 @@ export const UserProfile = styled.img`
     margin-right: 12px;
     border: 0.5px solid #dbdbdb;
 `;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9679afbea5b8d47d0e483ca7d26f5dc06ef82986
 export const Article = styled.article`
     position: relative;
     min-width: 300px;
     width: 100%;
     padding-right: 16px;
-    /* overflow-y: scroll; */
-    overflow-y: hidden;
 `;
+
 export const Form = styled.form`
     width: 100%;
     padding-top: 16px;
@@ -38,9 +56,11 @@ export const PostTextarea = styled.textarea`
     outline: none;
     border: none;
 `;
+
 export const UploadImgSection = styled.section`
     display: block;
 `;
+
 export const UploadImgInput = styled.input`
     position: absolute;
     left: -10000px;
@@ -66,9 +86,8 @@ export const UploadImgList = styled.ul`
     display: flex;
     gap: 8px;
     width: 100%;
-    overflow-x: scroll;
-    overflow-y: hidden;
 `;
+
 export const ImgItem = styled.li`
     position: relative;
     border-radius: 10px;
