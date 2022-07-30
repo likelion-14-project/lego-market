@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import Button from "./Button";
+import Button from "./button/Button";
 
 const Header = styled.header`
     position: fixed;
@@ -47,19 +47,26 @@ function TopAdd(props) {
         <Header>
             <Section>
                 <ArrowButton
-                    type="button"
+                    type='button'
                     onClick={() => {
                         navigate(-1);
                     }}
                 >
                     <img
-                        src={process.env.PUBLIC_URL + "icons/icon-arrow-left.png"}
-                        alt="뒤로가기"
+                        src={
+                            process.env.PUBLIC_URL + "icons/icon-arrow-left.png"
+                        }
+                        alt='뒤로가기'
                     />
                 </ArrowButton>
-                <StyledButton onClick={()=>{onClick()
-                upLoadButtonClicked()
-                }} content={content} disabled={disabled} />
+                <StyledButton
+                    onClick={() => {
+                        onClick();
+                        upLoadButtonClicked();
+                    }}
+                    content={content}
+                    disabled={disabled}
+                />
             </Section>
         </Header>
     );

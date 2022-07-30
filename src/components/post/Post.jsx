@@ -1,11 +1,11 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAxios } from "../../hooks/useAxios";
-import AlertModal from "../modal/AlertModal";
-import Modal from "../modal/Modal";
+import AlertModal from "../modal/alertModal/AlertModal";
+import Modal from "../modal/modal/Modal";
 import LikeComment from "./LikeComment";
 import SearchUserItem from "../search/SearchUserItem";
-import ModalButton from "../ui/ModalButton";
+import ModalButton from "../ui/modalButton/ModalButton";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import {
     FeedArticle,
@@ -92,7 +92,7 @@ const Post = ({ datas, callRefetch }) => {
                                 profileImg={v.author.image}
                                 userName={v.author.username}
                                 userId={v.author.accountname}
-                                imgSize="small"
+                                imgSize='small'
                             />
                         </AuthorSection>
                         <ModalButtonWrap>
@@ -135,7 +135,9 @@ const Post = ({ datas, callRefetch }) => {
                                         if (v) {
                                             return (
                                                 <li>
-                                                    <SliderButton id={i}></SliderButton>
+                                                    <SliderButton
+                                                        id={i}
+                                                    ></SliderButton>
                                                 </li>
                                             );
                                         }
@@ -149,14 +151,20 @@ const Post = ({ datas, callRefetch }) => {
                                 postId={v.id}
                             />
                             <PostDate>
-                                {v.createdAt.slice(0, 10).replace("-", "년 ").replace("-", "월 ") +
-                                    "일 "}
+                                {v.createdAt
+                                    .slice(0, 10)
+                                    .replace("-", "년 ")
+                                    .replace("-", "월 ") + "일 "}
                             </PostDate>
                         </PostSection>
                     </FeedArticle>
                 );
             })}
-            <Modal modal={modal} setModal={setModal} modalMenuList={modalMenuList} />
+            <Modal
+                modal={modal}
+                setModal={setModal}
+                modalMenuList={modalMenuList}
+            />
             <AlertModal
                 alertModal={alertModal}
                 setAlertModal={setAlertModal}

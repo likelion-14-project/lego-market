@@ -5,11 +5,11 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import styled from "styled-components";
 import Post from "../post/Post";
 import PostComment from "../comment/PostComment";
-import TopNav from "../ui/TopNav";
-import BackButton from "../ui/BackButton";
-import ModalButton from "../ui/ModalButton";
-import Modal from "../modal/Modal";
-import AlertModal from "../modal/AlertModal";
+import TopNav from "../ui/topNav/TopNav";
+import BackButton from "../ui/backButton/BackButton";
+import ModalButton from "../ui/modalButton/ModalButton";
+import Modal from "../modal/modal/Modal";
+import AlertModal from "../modal/alertModal/AlertModal";
 import InputFooter from "../ui/InputFooter";
 
 const DetailMain = styled.main`
@@ -168,8 +168,8 @@ function PostDetail() {
                     </DetailMain>
                     <InputFooter
                         img={user.image}
-                        ir="댓글입력하기"
-                        placeholder="댓글 입력하기"
+                        ir='댓글입력하기'
+                        placeholder='댓글 입력하기'
                         value={comment}
                         onChange={(e) => {
                             setComment(e.target.value);
@@ -179,7 +179,7 @@ function PostDetail() {
                         }}
                         onClick={addComment}
                         disabled={disabled}
-                        btnTxt="게시"
+                        btnTxt='게시'
                     />
                     <Modal
                         modal={modal}

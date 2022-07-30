@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Button from "../ui/Button";
+import Button from "../../ui/button/Button";
 
 const StyledUl = styled.ul`
     margin-top: 24px;
@@ -33,14 +33,14 @@ function MyButton() {
         <StyledUl>
             <li>
                 <ProfileModifyButton
-                    content="프로필 수정"
+                    content='프로필 수정'
                     disabled={false}
                     onClick={() => navigate("/profileModify")}
                 />
             </li>
             <li>
                 <ProductRegisterButton
-                    content="상품 등록"
+                    content='상품 등록'
                     disabled={false}
                     onClick={() => navigate("/product")}
                 />

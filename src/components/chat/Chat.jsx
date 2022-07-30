@@ -11,11 +11,11 @@ import {
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 
-import TopNav from "../ui/TopNav";
-import BackButton from "../ui/BackButton";
-import ModalButton from "../ui/ModalButton";
-import Modal from "../modal/Modal";
-import AlertModal from "../modal/AlertModal";
+import TopNav from "../ui/topNav/TopNav";
+import BackButton from "../ui/backButton/BackButton";
+import ModalButton from "../ui/modalButton/ModalButton";
+import Modal from "../modal/modal/Modal";
+import AlertModal from "../modal/alertModal/AlertModal";
 import InputFooter from "../ui/InputFooter";
 import dataChat from "./dataChat";
 
@@ -87,7 +87,7 @@ function Chat() {
             </Main>
             <InputFooter
                 img={user ? user.image : ""}
-                placeholder="메세지 입력하기..."
+                placeholder='메세지 입력하기...'
                 value={chat}
                 onChange={(e) => {
                     setChat(e.target.value);
@@ -97,7 +97,7 @@ function Chat() {
                 }}
                 onClick={sendChat}
                 disabled={disabled}
-                btnTxt="게시"
+                btnTxt='게시'
             />
             <Modal
                 modal={modal}

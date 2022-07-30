@@ -1,11 +1,12 @@
 import React from "react";
-import Profile from "../components/profile/Profile";
-import { useParams } from "react-router-dom";
-import { useAuthContext } from "../hooks/useAuthContext";
-import ProfilePost from "../components/profile/ProfilePost";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
-import ProductList from "../components/productlist/ProductList";
+import Profile from "../../components/profile/profile/Profile";
+import ProfilePost from "../../components/profile/ProfilePost";
+import ProductList from "../../components/productlist/ProductList";
+
 const ProfileMainWrap = styled.div`
     min-width: 390px;
     width: 100%;
@@ -13,6 +14,7 @@ const ProfileMainWrap = styled.div`
     overflow-y: auto;
     overflow-x: hidden;
 `;
+
 function ProfilePage() {
     const { accountname } = useParams();
     const { user } = useAuthContext();
@@ -37,7 +39,7 @@ function ProfilePage() {
                 profileAccountName={profileAccountName}
                 myAccountName={myAccountName}
             />
-            <ProfilePost profileAccountName={profileAccountName}/>
+            <ProfilePost profileAccountName={profileAccountName} />
         </ProfileMainWrap>
     );
 }

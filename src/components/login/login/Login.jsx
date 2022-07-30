@@ -1,45 +1,12 @@
 import React from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useLogin } from "../../hooks/useLogin";
+import { useLogin } from "../../../hooks/useLogin";
 
-import styled from "styled-components";
-import Input from "../ui/Input";
-import Button from "../ui/Button";
-import WarningMessage from "../ui/WarningMessage";
-import LoadingPage from "../../pages/LoadingPage";
-
-const Wrapper = styled.div`
-    padding: 30px 34px;
-`;
-
-const H1 = styled.h1`
-    font-family: "Spoqa Han Sans Neo";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 30px;
-    text-align: center;
-    margin-bottom: ${(props) => props.marginBottom}px;
-`;
-
-const StyledLink = styled(Link)`
-    font-family: "Spoqa Han Sans Neo";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 15px;
-    text-decoration: none;
-    color: #767676;
-    display: block;
-    margin-top: 20px;
-    text-align: center;
-`;
-
-const StyledButton = styled(Button)`
-    padding: 13px 0px;
-    margin-top: 30px;
-`;
+import Input from "../../ui/input/Input";
+import WarningMessage from "../../ui/warningMessage/WarningMessage";
+import LoadingPage from "../../../pages/LoadingPage";
+import { Wrapper, H1, StyledButton, StyledLink } from "./Login.style";
 
 function Login() {
     const navigate = useNavigate();
@@ -84,8 +51,8 @@ function Login() {
                     <H1 marginBottom={40}>로그인</H1>
                     <form onSubmit={handleSubmit(onValid, onInvalid)}>
                         <Input
-                            type="email"
-                            label="이메일"
+                            type='email'
+                            label='이메일'
                             register={register("이메일", {
                                 required: {
                                     value: true,
@@ -100,8 +67,8 @@ function Login() {
                             WarningMessage={WarningMessage}
                         />
                         <Input
-                            type="password"
-                            label="비밀번호"
+                            type='password'
+                            label='비밀번호'
                             marginTop={16}
                             register={register("비밀번호", {
                                 required: {
@@ -112,7 +79,7 @@ function Login() {
                             errors={errors}
                             WarningMessage={WarningMessage}
                         />
-                        <StyledButton content="로그인" disabled={!isValid} />
+                        <StyledButton content='로그인' disabled={!isValid} />
                         <StyledLink to={"/joinpage"}>
                             이메일로 회원가입
                         </StyledLink>
