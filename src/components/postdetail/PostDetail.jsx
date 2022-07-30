@@ -1,54 +1,46 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDelete } from "../../hooks/useDelete";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import styled from "styled-components";
+import { DetailMain, DetailWrap } from "./PostDetail.style";
+
 import Post from "../post/Post";
 import PostComment from "../comment/PostComment";
-import TopNav from "../ui/topNav/TopNav";
-import BackButton from "../ui/backButton/BackButton";
-import ModalButton from "../ui/modalButton/ModalButton";
-import Modal from "../modal/modal/Modal";
-import AlertModal from "../modal/alertModal/AlertModal";
-import InputFooter from "../ui/InputFooter";
-
-const DetailMain = styled.main`
-    width: 100%;
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-    align-items: center;
-    height: calc(100% - 148px);
-    overflow-y: scroll;
-    overflow-x: hidden;
-`;
-
-const DetailWrap = styled.div`
-    width: 100%;
-    padding: 20px 16px;
-    border-bottom: 1px solid #dbdbdb;
-`;
+import TopNav from "../ui/TopNav";
+import BackButton from "../ui/BackButton";
+import ModalButton from "../ui/ModalButton";
+import Modal from "../modal/Modal";
+import AlertModal from "../modal/AlertModal";
+import InputFooter from "../ui/inputfooter/InputFooter";
 
 function PostDetail() {
-    const { user } = useAuthContext();
-    const [post, setPost] = useState([]);
-    const { post_id } = useParams();
-    const [modal, setModal] = useState(false);
-    const [alertModal, setAlertModal] = useState(false);
-    const [disabled, setDisabled] = useState(true);
-    const { remove, isUpdate } = useDelete();
-
     // 사용자가 입력하고 있는 댓글
     let [comment, setComment] = useState("");
-
     // 댓글리스트를 담기
     let [feedComments, setFeedComments] = useState([]);
 
-    // 게시 클릭시 할생하는 함수
+    const [post, setPost] = useState([]);
+
+    const [disabled, setDisabled] = useState(true);
+    const [modal, setModal] = useState(false);
+    const [alertModal, setAlertModal] = useState(false);
+
+    const { user } = useAuthContext();
+    const { post_id } = useParams();
+    const navigate = useNavigate();
+    const { remove, isUpdate } = useDelete();
+
+    // 게시 클릭시 댓글 올라가는 함수
     let addComment = (e) => {
         createComment(comment);
         setComment("");
+    };
+
+    // 엔터 입력시 댓글 올라가는 함수
+    let handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            addComment();
+        }
     };
 
     const modalMenuList = [
@@ -65,7 +57,11 @@ function PostDetail() {
     ];
     const alertButton = {
         content: "로그아웃",
-        onClick: () => {},
+        onClick: () => {
+            localStorage.removeItem("token");
+            navigate("/");
+            window.location.reload();
+        },
     };
 
     // 댓글 작성
@@ -138,6 +134,7 @@ function PostDetail() {
         console.log(json);
 
         const tempArr = [];
+        console.log(tempArr);
         tempArr.push(json.post);
         setPost(tempArr);
     }
@@ -168,8 +165,8 @@ function PostDetail() {
                     </DetailMain>
                     <InputFooter
                         img={user.image}
-                        ir='댓글입력하기'
-                        placeholder='댓글 입력하기'
+                        ir="댓글입력하기"
+                        placeholder="댓글 입력하기"
                         value={comment}
                         onChange={(e) => {
                             setComment(e.target.value);
@@ -178,8 +175,9 @@ function PostDetail() {
                                 : setDisabled(true);
                         }}
                         onClick={addComment}
+                        onKeyPress={handleKeyPress}
                         disabled={disabled}
-                        btnTxt='게시'
+                        btnTxt="게시"
                     />
                     <Modal
                         modal={modal}
