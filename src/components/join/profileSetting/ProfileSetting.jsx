@@ -1,54 +1,19 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import ImageSelect from "../ui/ImageSelect";
-import ProfileImage from "../ui/ProfileImage";
-import Input from "../ui/Input.jsx";
-import { useForm } from "react-hook-form";
-import WarningMessage from "../ui/WarningMessage";
-import Button from "../ui/Button";
 import { useNavigate } from "react-router-dom";
-import { useLogin } from "../../hooks/useLogin";
+import { useForm } from "react-hook-form";
+import { useLogin } from "../../../hooks/useLogin";
 
-const Wrapper = styled.div`
-    padding: 30px 34px;
-`;
-
-const H1 = styled.h1`
-    font-style: normal;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 30px;
-    margin-bottom: 12px;
-    text-align: center;
-`;
-
-const P = styled.p`
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 14px;
-    color: #767676;
-    text-align: center;
-    margin-bottom: 30px;
-`;
-
-const ImageWrapper = styled.div`
-    width: 110px;
-    margin: 0 auto;
-    position: relative;
-    margin-bottom: 30px;
-`;
-
-const StyledImageSelect = styled(ImageSelect)`
-    position: absolute;
-    bottom: 0;
-    right: 0;
-`;
-
-const StyledButton = styled(Button)`
-    padding: 13px 0px;
-    margin-top: 30px;
-`;
+import ProfileImage from "../../ui/profileImage/ProfileImage";
+import Input from "../../ui/input/Input.jsx";
+import WarningMessage from "../../ui/warningMessage/WarningMessage";
+import {
+    Wrapper,
+    H1,
+    P,
+    ImageWrapper,
+    StyledImageSelect,
+    StyledButton,
+} from "./ProfileSetting.style";
 
 function ProfileSetting(props) {
     const navigate = useNavigate();

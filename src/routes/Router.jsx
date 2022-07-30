@@ -4,16 +4,16 @@ import { useInfo } from "../hooks/useInfo";
 import Home from "../components/home/Home";
 import Splash from "../pages/Splash";
 import SearchUserPage from "../pages/SearchUserPage";
-import LoginPage from "../pages/LoginPage";
-import JoinPage from "../pages/JoinPage";
+import LoginPage from "../pages/loginPage/LoginPage";
+import JoinPage from "../pages/joinPage/JoinPage";
 import WithNav from "./WithNav";
 
-import ProfilePage from "../pages/ProfilePage";
-import ProfileModifyPage from "../pages/ProfileModifyPage";
+import ProfilePage from "../pages/profilePage/ProfilePage";
+import ProfileModifyPage from "../pages/profileModifyPage/ProfileModifyPage";
 import PostUploadPage from "../pages/PostUploadPage";
 import ChatPage from "../pages/ChatPage";
 import Chat from "../components/chat/Chat";
-import NotFoundPage from "../pages/NotFoundPage";
+import NotFoundPage from "../pages/notFoundPage/NotFoundPage";
 import FollowPage from "../pages/FollowPage";
 import AddProductListPage from "../pages/AddProductPage";
 import ProductListPage from "../pages/ProductListPage";
@@ -64,9 +64,9 @@ const Router = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Splash tokenState={valid} />} />
-                <Route path="/loginpage" element={<LoginPage />} />
-                <Route path="/joinpage" element={<JoinPage />} />
+                <Route path='/' element={<Splash tokenState={valid} />} />
+                <Route path='/loginpage' element={<LoginPage />} />
+                <Route path='/joinpage' element={<JoinPage />} />
                 {valid || (
                     <>
                         <></>
@@ -75,53 +75,53 @@ const Router = () => {
                 {valid && (
                     <>
                         <Route
-                            path="/profileModify"
+                            path='/profileModify'
                             element={<ProfileModifyPage />}
                         />
-                        <Route path="/editpost" element={<PostUploadPage />} />
+                        <Route path='/editpost' element={<PostUploadPage />} />
                         <Route
-                            path="/post/:postid/edit"
+                            path='/post/:postid/edit'
                             element={<PostModify />}
                         />
                         <Route
-                            path="/postdetail/:post_id"
+                            path='/postdetail/:post_id'
                             element={<PostDetailPage />}
                         />
                         <Route element={<WithNav />}>
-                            <Route path="/home" element={<Home />} />
+                            <Route path='/home' element={<Home />} />
                             <Route
-                                path="/search"
+                                path='/search'
                                 element={<SearchUserPage />}
                             />
                             <Route
-                                path="/myprofile"
+                                path='/myprofile'
                                 element={<ProfilePage />}
                             />
                             <Route
-                                path="/myprofile/:accountname"
+                                path='/myprofile/:accountname'
                                 element={<ProfilePage />}
                             />
                             <Route
-                                path="/follow/:accountname/:type"
+                                path='/follow/:accountname/:type'
                                 element={<FollowPage />}
                             />
                             <Route
-                                path="/editpost"
+                                path='/editpost'
                                 element={<PostUploadPage />}
                             />
-                            <Route path="/chat/list" element={<ChatPage />} />
-                            <Route path="/chat/:id" element={<Chat />} />
+                            <Route path='/chat/list' element={<ChatPage />} />
+                            <Route path='/chat/:id' element={<Chat />} />
                             <Route
-                                path="/productlist"
+                                path='/productlist'
                                 element={<ProductListPage />}
                             />
                             <Route
-                                path="/product"
+                                path='/product'
                                 element={<AddProductListPage />}
                             />
                         </Route>
-                        <Route path="*" element={<NotFoundPage />} />
-                        <Route path="/notfound" element={<NotFoundPage />} />
+                        <Route path='*' element={<NotFoundPage />} />
+                        <Route path='/notfound' element={<NotFoundPage />} />
                     </>
                 )}
             </Routes>

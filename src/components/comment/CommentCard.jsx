@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
-import ModalButton from "../ui/ModalButton";
-import Modal from "../modal/Modal";
-import AlertModal from "../modal/AlertModal";
+import ModalButton from "../ui/modalButton/ModalButton";
+import Modal from "../modal/modal/Modal";
+import AlertModal from "../modal/alertModal/AlertModal";
 import { timeForToday } from "../../utils/DateUtil";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useReport } from "../../hooks/useReport";
@@ -99,14 +99,14 @@ function CommentCard(props) {
         <>
             <CommentItem>
                 <CommentUserWap>
-                    <Link to="#none">
+                    <Link to='#none'>
                         <CommentUserImg src={props.userProfile} />
                     </Link>
-                    <UserIdLink to="#none">{props.userName}</UserIdLink>
+                    <UserIdLink to='#none'>{props.userName}</UserIdLink>
                     <CommentDate>{timeForToday(props.createdAt)}</CommentDate>
                     <MoreRight>
                         <ModalButton
-                            type="button"
+                            type='button'
                             onClick={() => setModal(!modal)}
                         />
                     </MoreRight>

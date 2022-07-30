@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import TopNav from "../ui/TopNav";
-import BackButton from "../ui/BackButton";
+import TopNav from "../ui/topNav/TopNav";
+import BackButton from "../ui/backButton/BackButton";
 import FollowCard from "./FollowCard";
 
 const Main = styled.main`

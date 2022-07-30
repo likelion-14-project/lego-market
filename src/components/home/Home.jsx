@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getFeedPost } from "../../hooks/useAxios";
 import HomeMain from "./HomeMain";
 import Post from "../post/Post";
-import TopNav from "../ui/TopNav";
+import TopNav from "../ui/topNav/TopNav";
 import { HeaderStrong, HomeHeaderImg, MainContentsWrap } from "./Home.style";
 
 const Home = () => {
@@ -29,7 +29,7 @@ const Home = () => {
                 rightChild={
                     <HomeHeaderImg
                         src={process.env.PUBLIC_URL + "/icons/icon-search.png"}
-                        alt="피드찾기"
+                        alt='피드찾기'
                         onClick={() => navigate("/search")}
                     />
                 }

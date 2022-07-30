@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import Input from "../ui/Input";
-import WarningMessage from "../ui/WarningMessage";
+import Input from "../ui/input/Input";
+import WarningMessage from "../ui/warningMessage/WarningMessage";
 import styled from "styled-components";
-import TopNav from "../ui/TopNav";
-import Button from "../ui/Button";
+import TopNav from "../ui/topNav/TopNav";
+import Button from "../ui/button/Button";
 
-import BackButton from "../ui/BackButton";
+import BackButton from "../ui/backButton/BackButton";
 import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
@@ -139,7 +139,7 @@ const AddProduct = (props) => {
                 leftChild={<BackButton />}
                 rightChild={
                     <SaveButton
-                        content="저장"
+                        content='저장'
                         disabled={!isValid}
                         onClick={add}
                     />
@@ -148,23 +148,23 @@ const AddProduct = (props) => {
             <Wrapper>
                 <section>
                     <LabelDiv>이미지 등록</LabelDiv>
-                    <FileLabel for="ex-file" onChange={handleGetImageUrl}>
-                        <IMG id="aa" width={"322"} height={"204"}></IMG>
-                        <UiImg src="./images/img-button.png" />
+                    <FileLabel for='ex-file' onChange={handleGetImageUrl}>
+                        <IMG id='aa' width={"322"} height={"204"}></IMG>
+                        <UiImg src='./images/img-button.png' />
                     </FileLabel>
                     <InputFile
-                        type="file"
-                        id="ex-file"
-                        accept="image/*"
+                        type='file'
+                        id='ex-file'
+                        accept='image/*'
                         onChange={handleGetImageUrl}
                     ></InputFile>
                 </section>
                 <form>
                     <Input
-                        type="text"
-                        label="상품명"
+                        type='text'
+                        label='상품명'
                         marginTop={16}
-                        placeholder="2~15자 이내여야 합니다."
+                        placeholder='2~15자 이내여야 합니다.'
                         register={register("상품명", {
                             required: {
                                 value: true,
@@ -186,11 +186,11 @@ const AddProduct = (props) => {
                 </form>
                 <div>
                     <Input
-                        type="text"
+                        type='text'
                         value={Commaprice}
-                        label="가격"
+                        label='가격'
                         marginTop={16}
-                        placeholder="숫자만 입력 가능합니다."
+                        placeholder='숫자만 입력 가능합니다.'
                         register={register("가격", {
                             required: {
                                 value: true,
@@ -203,10 +203,10 @@ const AddProduct = (props) => {
                 </div>
                 <div>
                     <Input
-                        type="text"
-                        label="판매 링크"
+                        type='text'
+                        label='판매 링크'
                         marginTop={16}
-                        placeholder="URL을 입력해 주세요"
+                        placeholder='URL을 입력해 주세요'
                         register={register("판매 링크", {
                             required: {
                                 value: true,

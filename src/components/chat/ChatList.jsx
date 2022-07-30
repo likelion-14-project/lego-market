@@ -11,11 +11,11 @@ import {
 } from "./ChatList.style";
 import { Link, useNavigate } from "react-router-dom";
 
-import TopNav from "../ui/TopNav";
-import BackButton from "../ui/BackButton";
-import ModalButton from "../ui/ModalButton";
-import Modal from "../modal/Modal";
-import AlertModal from "../modal/AlertModal";
+import TopNav from "../ui/topNav/TopNav";
+import BackButton from "../ui/backButton/BackButton";
+import ModalButton from "../ui/modalButton/ModalButton";
+import Modal from "../modal/modal/Modal";
+import AlertModal from "../modal/alertModal/AlertModal";
 import dataChat from "./dataChat";
 
 function ChatList() {
@@ -54,7 +54,7 @@ function ChatList() {
                     {dataChat.chatData.map((chatArr, i) => {
                         return (
                             <ChatListli key={i}>
-                                <UserLink to="#none">
+                                <UserLink to='#none'>
                                     <img
                                         src={
                                             process.env.PUBLIC_URL +
