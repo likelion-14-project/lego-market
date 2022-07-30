@@ -16,8 +16,8 @@ function BackButton() {
     return (
         <StyledButton onClick={() => {
             navigate(-1)
-        }}>
-            <img src={process.env.PUBLIC_URL + "/icons/icon-arrow-left.png"} alt="" width="22px" height="22px"/>
+        }} aria-label="뒤로가기버튼">
+            <img src={process.env.PUBLIC_URL + "/icons/icon-arrow-left.png"} alt="뒤로가기이미지" width="22px" height="22px"/>
         </StyledButton>
     )
 }

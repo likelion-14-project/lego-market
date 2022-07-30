@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
 import axios from "axios";
-
+// baseURL 설정
 axios.defaults.baseURL = "https://mandarin.api.weniv.co.kr";
 axios.defaults.headers["content-Type"] = "application/json";
+
+// 요청하기전에 헤더에 토큰 추가
 axios.interceptors.request.use(
     function (config) {
         config.headers["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
@@ -13,7 +14,8 @@ axios.interceptors.request.use(
     }
 );
 
-export const getFeedPost = async() => {
+// 팔로우한 게시글 불러오기
+export const getFeedPost = async () => {
     console.log("getFeedPost-Called");
     const config = {
         method: "GET",
@@ -25,14 +27,14 @@ export const getFeedPost = async() => {
     } catch (error) {
         console.log(error);
     }
-}
-
-export const searchUser = async(keyword) => {
+};
+// 사용자 검색
+export const searchUser = async (keyword) => {
     const config = {
         method: "GET",
         url: `/user/searchuser/`,
         params: {
-            keyword : keyword === "" ? false : keyword,
+            keyword: keyword === "" ? false : keyword,
         },
     };
     try {
@@ -42,117 +44,71 @@ export const searchUser = async(keyword) => {
         console.log(error);
         throw error;
     }
-}
-
-export const useAxios = (axiosParams) => {
-    console.log(axiosParams);
-
-    const [response, setResponse] = useState(null);
-    const [error, setError] = useState(null);
-    const [isPending, setIsPending] = useState(false);
-    const [refetch, setRefetch] = useState(0);
-
-    const callRefetch = () => {
-        setRefetch(Date.now());
+};
+// 좋아요 추가
+export const addLikeCall = async (postId) => {
+    console.log("addLikeCall");
+    const config = {
+        method: "POST",
+        url: `/post/${postId}/heart`,
     };
-
-    const getData = async (params) => {
-        if (!params) {
-            return;
-        }
-        try {
-            const response = await axios.request(params);
-            console.log(response.data);
-            setResponse(response);
-            setIsPending(true);
-        } catch (err) {
-            setError(err.message);
-            setIsPending(false);
-            console.log(err.message);
-        }
-    };
-
-    const getFeedPost = async() => {
-        console.log("getFeedPost-Called");
-        const config = {
-            method: "GET",
-            url: `/post/feed`,
-        };
-        try {
-            const response = await axios.request(config);
-            return response;
-        } catch (error) {
-            console.log(error);
-        }
+    try {
+        const response = await axios.request(config);
+        return response.data;
+    } catch (error) {
+        throw error;
     }
-
-    const addLikeCall = async (postId) => {
-        console.log("addLikeCall");
-        const config = {
-            method: "POST",
-            url: `/post/${postId}/heart`,
-        };
-        try {
-            const response = await axios.request(config);
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
+};
+// 좋아요 취소
+export const cancelLikeCall = async (postId) => {
+    console.log("cancelLikeCall");
+    const config = {
+        method: "DELETE",
+        url: `/post/${postId}/unheart`,
     };
-
-    const cancelLikeCall = async (postId) => {
-        console.log("cancelLikeCall");
-        const config = {
-            method: "DELETE",
-            url: `/post/${postId}/unheart`,
-        };
-        try {
-            const response = await axios.request(config);
-            return response.data;
-        } catch (error) {
-            console.log(error);
-        }
+    try {
+        const response = await axios.request(config);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+// 게시글 상세정보 요청
+export const getPostInfo = async (postId) => {
+    const config = {
+        method: "GET",
+        url: `/post/${postId}/`,
     };
-
-    const getPostInfo = async (postId) => {
-        const config = {
-            method: "GET",
-            url: `/post/${postId}/`,
-        };
-        try {
-            const response = await axios.request(config);
-            return response.data;
-        } catch (error) {
-            console.log(error);
-        }
+    try {
+        const response = await axios.request(config);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+// 게시글 삭제요청
+export const deletePost = async (postId) => {
+    const config = {
+        method: "DELETE",
+        url: `/post/${postId}/`,
     };
-    const deletePost = async (postId) => {
-        const config = {
-            method: "DELETE",
-            url: `/post/${postId}/`,
-        };
-        try {
-            const response = await axios.request(config);
-            return response.data;
-        } catch (error) {
-            return error;
-        }
+    try {
+        const response = await axios.request(config);
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+};
+// Profile 의 유저 게시글을 요청
+export const getProfilePost = async (accountName) => {
+    const config = {
+        method: "GET",
+        url: `/post/${accountName}/userpost`,
     };
-
-    useEffect(() => {
-        getData(axiosParams);
-    }, [refetch]);
-
-    return {
-        error,
-        isPending,
-        response,
-        callRefetch,
-        getData,
-        addLikeCall,
-        cancelLikeCall,
-        getPostInfo,
-        deletePost,
-        getFeedPost,
-    };
+    try {
+        const response = await axios.request(config);
+        return response.data;
+    } catch (error) {
+        return console.log(error);
+    }
 };

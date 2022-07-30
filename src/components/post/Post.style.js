@@ -33,9 +33,9 @@ export const PostImgList = styled.ul`
     display: flex;
 `;
 export const PostImg = styled.img`
+    width: 304px;
+    height: 228px;
     min-width: 304px;
-    width: 100%;
-    height: 100%;
     max-height: 228px;
     min-height: 228px;
     overflow: hidden;

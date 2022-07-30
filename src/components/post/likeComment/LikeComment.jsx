@@ -1,45 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { useAxios } from "../../hooks/useAxios";
-
-const LikeCommentDiv = styled.div`
-    display: flex;
-    margin-bottom: 16px;
-`;
-const LIkeCommentIcon = styled.img`
-    display: block;
-    width: 20px;
-    height: 20px;
-    margin-right: 6px;
-    margin-top: 1px;
-    cursor: pointer;
-`;
-const LikeButton = styled.button`
-    display: flex;
-    margin-right: 18px;
-    background-color: inherit;
-    padding: 0;
-`;
-const LikeCommentCounter = styled.span`
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 22px;
-`;
-
-const LinkToPost = styled(Link)`
-    display: flex;
-    margin-right: 18px;
-    background-color: inherit;
-    padding: 0;
-`;
+import { addLikeCall, cancelLikeCall, getPostInfo } from "../../../hooks/useAxios";
+import {
+    LikeCommentDiv,
+    LikeButton,
+    LIkeCommentIcon,
+    LikeCommentCounter,
+    LinkToPost,
+} from "./LikeComment.style";
 
 const LikeComment = ({ postId }) => {
     const [_heartState, setHeartState] = useState();
     const [_heartCount, setHeartCount] = useState();
     const [_commentCount, setCommentCount] = useState();
-
-    const { addLikeCall, cancelLikeCall, getPostInfo } = useAxios();
 
     async function controlHeart() {
         if (_heartState) {
@@ -59,10 +31,10 @@ const LikeComment = ({ postId }) => {
             setCommentCount(res?.post.commentCount);
         }
         initHeart();
-    }, [_heartState, postId, getPostInfo]);
+    }, [postId, _heartState]);
     return (
         <LikeCommentDiv>
-            <LikeButton>
+            <LikeButton aria-label="좋아요버튼">
                 {
                     <LIkeCommentIcon
                         src={
@@ -71,12 +43,14 @@ const LikeComment = ({ postId }) => {
                                 : process.env.PUBLIC_URL + "/icons/icon-heart.png"
                         }
                         onClick={controlHeart}
+                        alt={_heartState ? "좋아요취소" : "좋아요"}
+                        // 이미지가 안보일 때 꽉찬하트일 때 누르면 좋아요가 취소되니 좋아요취소 라고 표기하는게 맞는거 같아서 이렇게 했습니다.
                     />
                 }
                 <LikeCommentCounter>{_heartCount}</LikeCommentCounter>
             </LikeButton>
             <LinkToPost to={`/postdetail/${postId}`}>
-                <LIkeCommentIcon src={process.env.PUBLIC_URL + "/icons/icon-message-circle.png"} />
+                <LIkeCommentIcon src={process.env.PUBLIC_URL + "/icons/icon-message-circle.png"} alt="덧글로 이동"/>
                 <LikeCommentCounter>{_commentCount}</LikeCommentCounter>
             </LinkToPost>
         </LikeCommentDiv>

@@ -1,6 +1,6 @@
 import React from "react";
-import SocialLoginItem from "./SocialLoginItem";
-import JoinLink from "./JoinLink";
+import SocialLoginItem from "../socialLoginItem/SocialLoginItem";
+import JoinLink from "../JoinLink";
 import { LoginArticle, SocialLoginWrap } from "./LoginModal.style";
 
 function LoginModal({ splashLoading }) {

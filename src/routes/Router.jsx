@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useInfo } from "../hooks/useInfo";
 import Home from "../components/home/Home";
-import Splash from "../pages/Splash";
+import Splash from "../pages/splash/Splash";
 import SearchUserPage from "../pages/SearchUserPage";
 import LoginPage from "../pages/loginPage/LoginPage";
 import JoinPage from "../pages/joinPage/JoinPage";

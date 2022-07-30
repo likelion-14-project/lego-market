@@ -8,19 +8,14 @@ import { HeaderStrong, HomeHeaderImg, MainContentsWrap } from "./Home.style";
 
 const Home = () => {
     const [postData, setPostData] = useState();
-    const [refetch, setRefetch] = useState(0);
     const navigate = useNavigate();
-
-    function reqRefetch(data) {
-        setRefetch(data);
-    }
 
     useEffect(() => {
         (async () => {
             const res = await getFeedPost();
             setPostData(res);
         })();
-    }, [refetch]);
+    },[]);
 
     return (
         <>
@@ -37,7 +32,7 @@ const Home = () => {
 
             <MainContentsWrap>
                 {postData?.data.posts ? (
-                    <Post datas={postData.data.posts} reqRefetch={reqRefetch} />
+                    <Post datas={postData.data.posts}/>
                 ) : (
                     <HomeMain />
                 )}

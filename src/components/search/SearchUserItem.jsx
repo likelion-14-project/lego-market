@@ -10,6 +10,7 @@ function SearchUserItem({ profileImg, userName, userId, imgSize }) {
             <UserProfileImg
                 src={profileImg === null ? defaultImgSrc : profileImg}
                 imgSize={imgSize}
+                alt={`${userName}의 프로필이미지`}
             />
             <UserInfoDiv>
                 <UserName>{userName}</UserName>

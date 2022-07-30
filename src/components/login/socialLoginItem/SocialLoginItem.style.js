@@ -1,7 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
-const SocialLoginItemList = styled.li`
+export const SocialLoginItemList = styled.li`
     width: 100%;
     color: black;
     background-color: white;
@@ -20,18 +19,23 @@ const SocialLoginItemList = styled.li`
         margin-left: 14px;
         margin-top: 10px;
     }
-    ${props => props.socialName === "카카오톡" && `
+    ${(props) =>
+        props.socialName === "카카오톡" &&
+        `
         border: 1px solid #f2c94c;
     `}
-    ${props => props.socialName === "구글"  && `
+    ${(props) =>
+        props.socialName === "구글" &&
+        `
         border: 1px solid #767676;
     `}
-    ${props => props.socialName === "페이스북"  && `
+    ${(props) =>
+        props.socialName === "페이스북" &&
+        `
         border: 1px solid #2d9cdb;
     `}
 `;
-
-const SocialLoginAnchor = styled.a`
+export const SocialLoginAnchor = styled.a`
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
@@ -39,13 +43,3 @@ const SocialLoginAnchor = styled.a`
     padding: 13px 38px;
     text-align: center;
 `;
-
-const SocialLoginItem = ({ position, socialName }) => {
-    return (
-        <SocialLoginItemList position={position} socialName={socialName}>
-            <SocialLoginAnchor>{socialName}계정으로 로그인</SocialLoginAnchor>
-        </SocialLoginItemList>
-    );
-};
-
-export default SocialLoginItem;

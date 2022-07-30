@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Post from "../post/Post";
 import PostAlbum from "./PostAlbum";
-import { useAxios } from "../../hooks/useAxios";
+import { getProfilePost} from "../../hooks/useAxios";
 import { useLocation } from "react-router-dom";
 import {
     PostTypeControlDiv,
@@ -11,6 +11,8 @@ import {
 } from "./ProfilePost.style";
 
 const ProfilePost = ({ profileAccountName }) => {
+    const [profilePostData, setProfilePostData] = useState();
+    const [refetch, setRefetch] = useState(0);
     const [btnState, setBtnState] = useState("list");
     const [accountName, setAccountName] = useState();
     const location = useLocation();
@@ -18,23 +20,28 @@ const ProfilePost = ({ profileAccountName }) => {
     function toggleBtnState() {
         btnState === "list" ? setBtnState("album") : setBtnState("list");
     }
-
-    let getUserPost = {
-        url: `/post/${accountName}/userpost`,
-        method: "GET",
-    };
-
-    const { response, callRefetch } = useAxios(getUserPost);
+    function reqRefetch(data) {
+        setRefetch(data);
+    }
 
     useEffect(() => {
         let data = location?.state;
-        callRefetch();
         if (data) {
             setAccountName(data);
         } else if (profileAccountName) {
             setAccountName(profileAccountName);
         }
     }, [location, profileAccountName]);
+
+    useEffect(() => {
+        (async () => {
+            const res = await getProfilePost(accountName);
+            if (res) {
+                setProfilePostData(res);
+                console.log(res);
+            }
+        })();
+    }, [accountName,refetch]);
     return (
         <>
             <PostTypeControlDiv>
@@ -59,12 +66,12 @@ const ProfilePost = ({ profileAccountName }) => {
                     </button>
                 </PostTypeControlWrap>
             </PostTypeControlDiv>
-            {response && (
+            {profilePostData && (
                 <ProfilePostWrap>
                     {btnState === "list" ? (
-                        <Post datas={response?.data.post} callRefetch={callRefetch} />
+                        <Post datas={profilePostData?.post} reqRefetch={reqRefetch} />
                     ) : (
-                        <PostAlbum datas={response?.data.post} />
+                        <PostAlbum datas={profilePostData?.post} />
                     )}
                 </ProfilePostWrap>
             )}

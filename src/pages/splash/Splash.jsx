@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import LoginModal from "../components/login/LoginModal";
 import { useNavigate } from "react-router-dom";
+import LoginModal from "../../components/login/loginModal/LoginModal";
 import { MainDiv, MainHeader } from "./Splash.style";
 
 function Splash({tokenState}) {

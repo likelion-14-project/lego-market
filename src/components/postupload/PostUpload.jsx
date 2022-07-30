@@ -1,116 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import TopAdd from "../ui/TopAdd";
-
-const Main = styled.main`
-    width: 100%;
-    height: 100vh;
-    background-color: #fff;
-    box-sizing: border-box;
-    display: flex;
-    min-width: 390px;
-    margin-top: 48px;
-    padding: 20px 0 20px 16px;
-`;
-
-const UserProfile = styled.img`
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    margin-right: 12px;
-    border: 0.5px solid #dbdbdb;
-`;
-
-const Article = styled.article`
-    position: relative;
-    min-width: 300px;
-    width: 100%;
-    padding-right: 16px;
-    /* overflow-y: scroll; */
-    overflow-y: hidden;
-`;
-
-const Form = styled.form`
-    width: 100%;
-    padding-top: 16px;
-`;
-
-const PostTextarea = styled.textarea`
-    width: 100%;
-    margin-bottom: 16px;
-    font-size: 14px;
-    padding: 0;
-    resize: none;
-    outline: none;
-    border: none;
-`;
-
-const UploadImgSection = styled.section`
-    display: block;
-`;
-
-const UploadImgInput = styled.input`
-    position: absolute;
-    left: -10000px;
-    top: auto;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    padding: 0;
-`;
-
-const UploadImgIcon = styled.label`
-    position: fixed;
-    bottom: 16px;
-    right: 16px;
-    width: 50px;
-    height: 50px;
-    background-image: url(${process.env.PUBLIC_URL + `/images/img-button.png`});
-    background-position: center;
-    background-size: cover;
-    cursor: pointer;
-    z-index: 100;
-`;
-const UploadImgList = styled.ul`
-    display: flex;
-    gap: 8px;
-    width: 100%;
-    overflow-x: scroll;
-    overflow-y: hidden;
-`;
-
-const ImgItem = styled.li`
-    position: relative;
-    border-radius: 10px;
-    width: 304px;
-    height: 228px;
-    overflow: hidden;
-    border: 0.5px solid #767676;
-`;
-
-const PostUploadImg = styled.img`
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-`;
-
-const RemoveBtn = styled.button`
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    height: 22px;
-    width: 22px;
-    background-image: url(${process.env.PUBLIC_URL + `/icons/icon-delete.png`});
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    background-color: inherit;
-`;
+import {
+    Main,
+    UserProfile,
+    Article,
+    Form,
+    PostTextarea,
+    UploadImgIcon,
+    UploadImgInput,
+    UploadImgSection,
+    UploadImgList,
+    ImgItem,
+    PostUploadImg,
+    RemoveBtn,
+} from "./PostUpload.style";
 
 function PostUpload({ prevData }) {
     const [postContent, setPostContent] = useState("");
@@ -181,7 +86,7 @@ function PostUpload({ prevData }) {
         setPostImg(postImg.filter((photo) => photo != deleteUrl));
     };
     function upLoadButtonClicked() {
-        navigate("/myprofile", {replace: true});
+        navigate("/myprofile", { replace: true });
     }
 
     useEffect(() => {
@@ -193,7 +98,12 @@ function PostUpload({ prevData }) {
 
     return (
         <>
-            <TopAdd content="업로드" onClick={uploadPost} disabled={disabled} upLoadButtonClicked={upLoadButtonClicked} />
+            <TopAdd
+                content="업로드"
+                onClick={uploadPost}
+                disabled={disabled}
+                upLoadButtonClicked={upLoadButtonClicked}
+            />
             <Main>
                 <h2 className="visually_hidden">게시글 작성</h2>
                 {user ? (

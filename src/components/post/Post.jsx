@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAxios } from "../../hooks/useAxios";
+import { deletePost } from "../../hooks/useAxios";
 import AlertModal from "../modal/alertModal/AlertModal";
 import Modal from "../modal/modal/Modal";
-import LikeComment from "./LikeComment";
+import LikeComment from "./likeComment/LikeComment";
 import SearchUserItem from "../search/SearchUserItem";
 import ModalButton from "../ui/modalButton/ModalButton";
 import { useAuthContext } from "../../hooks/useAuthContext";
@@ -21,7 +21,7 @@ import {
     ModalButtonWrap,
 } from "./Post.style";
 
-const Post = ({ datas, callRefetch }) => {
+const Post = ({ datas, reqRefetch }) => {
     const [modal, setModal] = useState(false);
     const [alertModal, setAlertModal] = useState(false);
     const [alertButton, setAlertButton] = useState({});
@@ -29,7 +29,6 @@ const Post = ({ datas, callRefetch }) => {
     const [prevPostData, setPrevPostData] = useState();
     const navigate = useNavigate();
     const imgRef = useRef([]);
-    const { deletePost } = useAxios();
     const [content, setContent] = useState();
     const [author, setAuthor] = useState();
     const { user } = useAuthContext();
@@ -64,7 +63,7 @@ const Post = ({ datas, callRefetch }) => {
           ]);
 
     const getRefetch = () => {
-        callRefetch();
+        reqRefetch(Date.now());
     };
     const modifyButton = {
         content: "수정",
@@ -84,15 +83,15 @@ const Post = ({ datas, callRefetch }) => {
     return (
         <>
             {datas?.map((v, i) => {
-                const PostImgSrc = v.image.split(",");
+                const postImgSrc = v.image.split(",").filter((v) => v);
                 return (
-                    <FeedArticle>
+                    <FeedArticle key={v.id}>
                         <AuthorSection>
                             <SearchUserItem
                                 profileImg={v.author.image}
                                 userName={v.author.username}
                                 userId={v.author.accountname}
-                                imgSize='small'
+                                imgSize="small"
                             />
                         </AuthorSection>
                         <ModalButtonWrap>
@@ -119,28 +118,25 @@ const Post = ({ datas, callRefetch }) => {
                                         imgRef.current[i] = el;
                                     }}
                                 >
-                                    {PostImgSrc &&
-                                        PostImgSrc.map((v) => {
-                                            if (v) {
-                                                return (
-                                                    <li key={i}>
-                                                        <PostImg src={v} />
-                                                    </li>
-                                                );
-                                            }
-                                        })}
+                                    {postImgSrc.map((v, i) => {
+                                        return (
+                                            <li key={v}>
+                                                <PostImg
+                                                    src={v}
+                                                    alt={v.split(/^(https?)\/\//)}
+                                                    loading="lazy"
+                                                />
+                                            </li>
+                                        );
+                                    })}
                                 </PostImgList>
-                                <SliderButtonWrap id={i}>
-                                    {PostImgSrc.map((v, i) => {
-                                        if (v) {
-                                            return (
-                                                <li>
-                                                    <SliderButton
-                                                        id={i}
-                                                    ></SliderButton>
-                                                </li>
-                                            );
-                                        }
+                                <SliderButtonWrap>
+                                    {postImgSrc.map((v, i) => {
+                                        return (
+                                            <li key={v}>
+                                                <SliderButton aria-label="이미지이동버튼"></SliderButton>
+                                            </li>
+                                        );
                                     })}
                                 </SliderButtonWrap>
                             </PostImgDiv>
@@ -151,20 +147,14 @@ const Post = ({ datas, callRefetch }) => {
                                 postId={v.id}
                             />
                             <PostDate>
-                                {v.createdAt
-                                    .slice(0, 10)
-                                    .replace("-", "년 ")
-                                    .replace("-", "월 ") + "일 "}
+                                {v.createdAt.slice(0, 10).replace("-", "년 ").replace("-", "월 ") +
+                                    "일 "}
                             </PostDate>
                         </PostSection>
                     </FeedArticle>
                 );
             })}
-            <Modal
-                modal={modal}
-                setModal={setModal}
-                modalMenuList={modalMenuList}
-            />
+            <Modal modal={modal} setModal={setModal} modalMenuList={modalMenuList} />
             <AlertModal
                 alertModal={alertModal}
                 setAlertModal={setAlertModal}
