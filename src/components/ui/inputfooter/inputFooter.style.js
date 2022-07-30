@@ -1,7 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
-const FooterWap = styled.footer`
+export const FooterWap = styled.footer`
     position: fixed;
     left: 0;
     bottom: 0;
@@ -12,7 +11,7 @@ const FooterWap = styled.footer`
     border-top: 0.5px solid #c4c4c4;
 `;
 
-const Section = styled.section`
+export const Section = styled.section`
     position: relative;
     display: flex;
     align-items: center;
@@ -27,7 +26,7 @@ const Section = styled.section`
     }
 `;
 
-const InputLabel = styled.label`
+export const InputLabel = styled.label`
     position: absolute;
     left: -10000px;
     top: auto;
@@ -36,7 +35,7 @@ const InputLabel = styled.label`
     overflow: hidden;
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
     width: calc(100% - 128px);
     font-size: 14px;
     line-height: 18px;
@@ -46,7 +45,7 @@ const Input = styled.input`
     outline: none;
 `;
 
-const BtnSend = styled.button`
+export const BtnSend = styled.button`
     border: none;
     background: none;
     cursor: pointer;
@@ -56,28 +55,3 @@ const BtnSend = styled.button`
         color: #ccc;
     }
 `;
-
-function InputFooter(props) {
-    const { img, ir, placeholder, value, onChange, onClick, btnTxt, disabled } =
-        props;
-
-    return (
-        <FooterWap>
-            <Section>
-                <img src={img} />
-                <label className="visually_hidden">{ir}</label>
-                <Input
-                    type="text"
-                    placeholder={placeholder}
-                    value={value}
-                    onChange={onChange}
-                />
-                <BtnSend type="button" onClick={onClick} disabled={disabled}>
-                    {btnTxt}
-                </BtnSend>
-            </Section>
-        </FooterWap>
-    );
-}
-
-export default InputFooter;
