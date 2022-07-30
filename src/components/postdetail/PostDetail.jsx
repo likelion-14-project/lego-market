@@ -6,11 +6,11 @@ import { DetailMain, DetailWrap } from "./PostDetail.style";
 
 import Post from "../post/Post";
 import PostComment from "../comment/PostComment";
-import TopNav from "../ui/TopNav";
-import BackButton from "../ui/BackButton";
-import ModalButton from "../ui/ModalButton";
-import Modal from "../modal/Modal";
-import AlertModal from "../modal/AlertModal";
+import TopNav from "../ui/topNav/TopNav";
+import BackButton from "../ui/backButton/BackButton";
+import ModalButton from "../ui/modalButton/ModalButton";
+import Modal from "../modal/modal/Modal";
+import AlertModal from "../modal/alertModal/AlertModal";
 import InputFooter from "../ui/inputfooter/InputFooter";
 
 function PostDetail() {

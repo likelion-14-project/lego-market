@@ -13,9 +13,9 @@ import {
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useReport } from "../../hooks/useReport";
 
-import ModalButton from "../ui/ModalButton";
-import Modal from "../modal/Modal";
-import AlertModal from "../modal/AlertModal";
+import ModalButton from "../ui/modalButton/ModalButton";
+import Modal from "../modal/modal/Modal";
+import AlertModal from "../modal/alertModal/AlertModal";
 
 function CommentCard(props) {
     const { remove, comment_id, commentAuthor } = props;
