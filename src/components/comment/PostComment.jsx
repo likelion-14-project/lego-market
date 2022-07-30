@@ -1,12 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import CommentCard from "./CommentCard";
-
-const CommentSection = styled.section`
-    max-width: 390px;
-    padding: 20px 16px 0;
-    margin: 0 auto;
-`;
+import { CommentSection } from "./Comment.style";
 
 function PostComment(props) {
     return (
