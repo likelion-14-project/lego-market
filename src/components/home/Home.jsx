@@ -5,6 +5,7 @@ import HomeMain from "./HomeMain";
 import Post from "../post/Post";
 import TopNav from "../ui/topNav/TopNav";
 import { HeaderStrong, HomeHeaderImg, MainContentsWrap } from "./Home.style";
+import LoadingPage from "../../pages/LoadingPage";
 
 const Home = () => {
     const [postData, setPostData] = useState();
@@ -15,8 +16,11 @@ const Home = () => {
             const res = await getFeedPost();
             setPostData(res);
         })();
-    },[]);
+    }, []);
 
+    if (postData === []) {
+        return <HomeMain />;
+    }
     return (
         <>
             <TopNav
@@ -24,18 +28,14 @@ const Home = () => {
                 rightChild={
                     <HomeHeaderImg
                         src={process.env.PUBLIC_URL + "/icons/icon-search.png"}
-                        alt='피드찾기'
+                        alt="피드찾기"
                         onClick={() => navigate("/search")}
                     />
                 }
             />
 
             <MainContentsWrap>
-                {postData?.data.posts ? (
-                    <Post datas={postData.data.posts}/>
-                ) : (
-                    <HomeMain />
-                )}
+                {postData?.data.posts ? <Post datas={postData.data.posts} /> : <LoadingPage />}
             </MainContentsWrap>
         </>
     );

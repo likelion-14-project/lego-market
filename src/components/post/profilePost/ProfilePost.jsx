@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Post from "../post/Post";
-import PostAlbum from "./PostAlbum";
-import { getProfilePost } from "../../hooks/useAxios";
+import { getProfilePost } from "../../../hooks/useAxios";
 import { useLocation } from "react-router-dom";
+import Post from "../Post"
+import PostAlbum from "../postAlbum/PostAlbum"
 import {
     PostTypeControlDiv,
     PostTypeControlWrap,
     PostTypeControlIcon,
     ProfilePostWrap,
-} from "./ProfilePost.style";
+} from "../profilePost/ProfilePost.style"
 
 const ProfilePost = ({ profileAccountName }) => {
     const [profilePostData, setProfilePostData] = useState();
@@ -50,7 +50,7 @@ const ProfilePost = ({ profileAccountName }) => {
         <>
             <PostTypeControlDiv>
                 <PostTypeControlWrap>
-                    <button type="button" onClick={toggleBtnState}>
+                    <button type="button" onClick={toggleBtnState} >
                         <PostTypeControlIcon
                             src={
                                 btnState === "list"

@@ -7,7 +7,7 @@ export const DetailMain = styled.main`
     flex-direction: column;
     justify-items: center;
     align-items: center;
-    height: calc(100% - 148px);
+    height: calc(100% - 108px);
     overflow-y: scroll;
     overflow-x: hidden;
 `;

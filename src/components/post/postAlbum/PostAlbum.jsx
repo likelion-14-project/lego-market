@@ -15,13 +15,13 @@ const ProfilePostAlbum = ({ datas }) => {
                     ?.filter((i) => i.image.length !== 0)
                     .map((v, i) => {
                         const PostImgSrc = v.image.split(",");
-                        console.log(v);
-                        console.log(v.id);
-                        console.log(PostImgSrc);
                         return (
                             <PostItem key={i}>
                                 <PostLink to={`/postdetail/:${v.id}`}>
-                                    <PostImg src={PostImgSrc[imgNum]} />
+                                    <PostImg
+                                        src={PostImgSrc[imgNum]}
+                                        alt={v.image.split(/^(https?)\/\//)}
+                                    />
                                 </PostLink>
                             </PostItem>
                         );

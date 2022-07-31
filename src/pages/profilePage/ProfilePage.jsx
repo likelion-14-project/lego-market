@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
 import Profile from "../../components/profile/profile/Profile";
-import ProfilePost from "../../components/profile/ProfilePost";
+import ProfilePost from "../../components/post/profilePost/ProfilePost";
 import ProductList from "../../components/productlist/ProductList";
 
 const ProfileMainWrap = styled.div`
