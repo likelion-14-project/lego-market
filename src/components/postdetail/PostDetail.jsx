@@ -29,6 +29,7 @@ function PostDetail() {
     const { post_id } = useParams();
     const navigate = useNavigate();
     const { remove, isUpdate } = useDelete();
+    const url = "https://mandarin.api.weniv.co.kr";
 
     // 게시 클릭시 댓글 올라가는 함수
     let addComment = (e) => {
@@ -73,10 +74,8 @@ function PostDetail() {
                 content: comment,
             },
         };
-
-        const res = await fetch(
-            `https://mandarin.api.weniv.co.kr/post/${post_id}/comments/`,
-            {
+        try {
+            const res = await fetch(`${url}/post/${post_id}/comments/`, {
                 method: "POST",
 
                 headers: {
@@ -84,60 +83,68 @@ function PostDetail() {
                     "Content-type": "application/json",
                 },
                 body: JSON.stringify(reqData),
-            }
-        );
+            });
 
-        const json = await res.json();
-        console.log(json);
-        getComments();
+            const json = await res.json();
+            console.log(json);
+            getComments();
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     // 댓글 리스트
     async function getComments() {
         const token = localStorage.getItem("token");
 
-        const res = await fetch(
-            `https://mandarin.api.weniv.co.kr/post/${post_id}/comments/`,
-            {
+        try {
+            const res = await fetch(`${url}/post/${post_id}/comments/`, {
                 method: "GET",
 
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-type": "application/json",
                 },
-            }
-        );
+            });
 
-        const json = await res.json();
-        console.log(json.comments);
-        setFeedComments(json.comments);
-        return json;
+            const json = await res.json();
+            console.log(json.comments);
+            setFeedComments(json.comments);
+            return json;
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     // 게시글 상세
     async function getPostDetail() {
         const token = localStorage.getItem("token");
 
-        const res = await fetch(
-            `https://mandarin.api.weniv.co.kr/post/${post_id}`,
-            {
+        try {
+            const res = await fetch(`${url}/post/${post_id}`, {
                 method: "GET",
 
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-type": "application/json",
                 },
-            }
-        );
+            });
 
-        const json = await res.json();
-        console.log(json);
+            const json = await res.json();
+            console.log(json);
 
-        const tempArr = [];
-        console.log(tempArr);
-        tempArr.push(json.post);
-        setPost(tempArr);
+            const tempArr = [];
+            console.log(tempArr);
+            tempArr.push(json.post);
+            setPost(tempArr);
+        } catch (error) {
+            console.error(error);
+        }
     }
+    useEffect(() => {
+        getPostDetail();
+        getComments();
+    }, []);
 
     useEffect(() => {
         getPostDetail();
