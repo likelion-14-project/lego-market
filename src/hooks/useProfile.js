@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const useProfile = () => {
+    const [isUpdate, setIsUpdate] = useState(false);
     const [error, setError] = useState(null);
     const [isPending, setIsPending] = useState(false);
     const [profile, setProfile] = useState();
@@ -29,11 +30,7 @@ export const useProfile = () => {
                 },
             });
 
-            console.log("response : ", response);
-
             const json = await response.json();
-
-            console.log("json :", json);
 
             if (json.profile) {
                 setError(null);
@@ -52,9 +49,5 @@ export const useProfile = () => {
         }
     };
 
-    // useEffect(() => {
-    //     getProfile(accountname);
-    // }, [accountname]);
-
-    return { error, isPending, getProfile, profile };
+    return { error, isPending, getProfile, profile, isUpdate, setIsUpdate };
 };
