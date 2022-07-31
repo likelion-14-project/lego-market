@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { timeForToday } from "../../utils/DateUtil";
+import { timeForToday } from "./DateUtil";
 import {
     CommentItem,
     CommentUserWap,
@@ -70,10 +70,12 @@ function CommentCard(props) {
         <>
             <CommentItem>
                 <CommentUserWap>
-                    <Link to="#none">
+                    <Link to={`/myprofile/${commentAuthor}`}>
                         <CommentUserImg src={props.userProfile} />
                     </Link>
-                    <UserIdLink to="#none">{props.userName}</UserIdLink>
+                    <UserIdLink to={`/myprofile/${commentAuthor}`}>
+                        {props.userName}
+                    </UserIdLink>
                     <CommentDate>{timeForToday(props.createdAt)}</CommentDate>
                     <MoreRight>
                         <ModalButton
