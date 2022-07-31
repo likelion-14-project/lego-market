@@ -17,7 +17,7 @@ const ProfilePostAlbum = ({ datas }) => {
                         const PostImgSrc = v.image.split(",");
                         return (
                             <PostItem key={i}>
-                                <PostLink to={`/postdetail/:${v.id}`}>
+                                <PostLink to={`/postdetail/${v?.id}`}>
                                     <PostImg
                                         src={PostImgSrc[imgNum]}
                                         alt={v.image.split(/^(https?)\/\//)}
