@@ -1,18 +1,12 @@
-import Splash from "./pages/Splash";
-import { createGlobalStyle } from "styled-components"
-import reset from "styled-reset"
-
-const GlobalStyle = createGlobalStyle`
-    ${reset}
-    * { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
-`
+import Router from "./routes/Router";
+import { GlobalStyle } from "./styles/GlobalStyle";
 
 function App() {
     return (
-        <div className="App">
+        <>
             <GlobalStyle />
-            <Splash />
-        </div>
+            <Router />
+        </>
     );
 }
 

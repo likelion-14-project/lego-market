@@ -1,0 +1,192 @@
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useAuthContext } from "../../../hooks/useAuthContext";
+
+import WarningMessage from "../../ui/warningMessage/WarningMessage";
+import Input from "../../ui/input/Input.jsx";
+import ProfileImage from "../../ui/profileImage/ProfileImage";
+import TopNav from "../../ui/topNav/TopNav";
+import BackButton from "../../ui/backButton/BackButton";
+import {
+    SaveButton,
+    Wrapper,
+    ImageWrapper,
+    StyledImageSelect,
+} from "./ProfileModification.style";
+
+function ProfileModification() {
+    const defaultImgSrc =
+        process.env.PUBLIC_URL + "/images/LegoDefaultImage.png";
+
+    const navigate = useNavigate();
+    const [imgSrc, setImgSrc] = useState(defaultImgSrc);
+    const { user, dispatch } = useAuthContext();
+
+    const {
+        watch,
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors, isValid },
+    } = useForm({
+        mode: "onChange",
+    });
+
+    useEffect(() => {
+        if (user) {
+            setValue("사용자 이름", user.username);
+            setValue("계정 ID", user.accountname);
+            setValue("소개", user.intro);
+            setImgSrc(user.image);
+        }
+    }, [user]);
+
+    const accountValid = async () => {
+        if (watch("계정 ID") === user.accountname) {
+            return;
+        }
+        try {
+            const url =
+                "https://mandarin.api.weniv.co.kr/user/accountnamevalid";
+
+            const reqData = {
+                user: {
+                    accountname: watch("계정 ID"),
+                },
+            };
+
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify(reqData),
+            });
+
+            const json = await response.json();
+            const message = json.message;
+
+            if (message === "이미 가입된 계정ID 입니다.") {
+                return "*이미 가입된 계정ID 입니다.";
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const save = async () => {
+        try {
+            const token = localStorage.getItem("token");
+
+            const url = "https://mandarin.api.weniv.co.kr/user";
+            const reqData = {
+                user: {
+                    username: watch("사용자 이름"),
+                    accountname: watch("계정 ID"),
+                    intro: watch("소개"),
+                    image: imgSrc,
+                },
+            };
+
+            const response = await fetch(url, {
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify(reqData),
+            });
+
+            const json = await response.json();
+            dispatch({ type: "modify", payload: json.user });
+            navigate("/home");
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    return (
+        <>
+            <TopNav
+                leftChild={<BackButton />}
+                rightChild={
+                    <SaveButton
+                        content='저장'
+                        disabled={!isValid}
+                        onClick={save}
+                    />
+                }
+            />
+            <Wrapper>
+                <form onSubmit={handleSubmit()}>
+                    <ImageWrapper>
+                        <ProfileImage
+                            label='프로필 사진'
+                            imgSrc={imgSrc}
+                            register={register("프로필 사진")}
+                        />
+                        <StyledImageSelect width={30} setImgSrc={setImgSrc} />
+                    </ImageWrapper>
+                    <Input
+                        label='사용자 이름'
+                        type='text'
+                        placeholder='2~10자 이내여야 합니다.'
+                        register={register("사용자 이름", {
+                            required: {
+                                value: true,
+                                message: "*필수 입력 값입니다.",
+                            },
+                            validate: {
+                                always: (value) =>
+                                    (value.length >= 2 && value.length <= 10) ||
+                                    "*2~10자 이내여야 합니다.",
+                            },
+                        })}
+                        errors={errors}
+                        WarningMessage={WarningMessage}
+                    />
+                    <Input
+                        label='계정 ID'
+                        type='text'
+                        placeholder='영문, 숫자, 특수문자(.),(_)만 사용 가능합니다.'
+                        register={register("계정 ID", {
+                            required: {
+                                value: true,
+                                message: "*필수 입력 값입니다.",
+                            },
+                            pattern: {
+                                value: /^[a-zA-Z0-9._]*$/,
+                                message:
+                                    "*영문, 숫자, 특수문자(.),(_)만 사용 가능합니다.",
+                            },
+                            validate: {
+                                always: accountValid,
+                            },
+                        })}
+                        errors={errors}
+                        WarningMessage={WarningMessage}
+                        marginTop={16}
+                    />
+                    <Input
+                        label='소개'
+                        type='text'
+                        placeholder='자신과 판매할 상품에 대해 소개해 주세요!'
+                        register={register("소개", {
+                            required: {
+                                value: true,
+                                message: "*필수 입력 값입니다.",
+                            },
+                        })}
+                        errors={errors}
+                        WarningMessage={WarningMessage}
+                        marginTop={16}
+                    />
+                </form>
+            </Wrapper>
+        </>
+    );
+}
+
+export default ProfileModification;
