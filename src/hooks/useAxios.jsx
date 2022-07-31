@@ -12,7 +12,6 @@ axios.interceptors.request.use(
         return Promise.reject(error);
     }
 );
-
 // 팔로우한 게시글 불러오기
 export const getFeedPost = async () => {
     const config = {

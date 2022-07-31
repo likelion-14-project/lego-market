@@ -26,7 +26,8 @@ const SearchUseHook = () => {
         <>
             <TopNav
                 leftChild={<BackButton />}
-                centerChild={<SearchInput placeholder="계정검색" onChange={onChange}></SearchInput>}
+                centerChild={
+                <SearchInput placeholder="계정검색" onChange={onChange} />}
             />
             <MainContentsWrap>
                 {userList ? (

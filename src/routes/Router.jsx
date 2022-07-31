@@ -77,7 +77,7 @@ const Router = () => {
                             <Route path="/editpost" element={<PostUploadPage />} />
                             <Route path="/post/:postid/edit" element={<PostModify />} />
                             <Route path="/postdetail/:post_id" element={<PostDetailPage />} />
-                            <Route path="/" element={<WithNav />}>
+                            <Route element={<WithNav />}>
                                 <Route path="/home" element={<Home />} />
                                 <Route path="/search" element={<SearchUserPage />} />
                                 <Route path="/myprofile" element={<ProfilePage />} />
@@ -88,9 +88,9 @@ const Router = () => {
                                 <Route path="/chat/:id" element={<Chat />} />
                                 <Route path="/productlist" element={<ProductListPage />} />
                                 <Route path="/product" element={<AddProductListPage />} />
+                            </Route>
                             <Route path="*" element={<NotFoundPage />} />
                             <Route path="/notfound" element={<NotFoundPage />} />
-                            </Route>
                         </>
                     )}
                 </Routes>

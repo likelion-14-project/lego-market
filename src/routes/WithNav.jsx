@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet } from "react-router-dom";
-import NavBar from "../components/ui/NavBar";
+import NavBar from "../components/ui/navBar/NavBar"
 
 const WithNav = () => {
   return (
@@ -11,3 +11,5 @@ const WithNav = () => {
   );
 };
 export default WithNav
+
+

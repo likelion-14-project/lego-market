@@ -4,23 +4,18 @@ import { useAuthContext } from "./useAuthContext";
 export const useLogin = () => {
     const [error, setError] = useState(null);
     const [isPending, setIsPending] = useState(false);
-
     const { dispatch } = useAuthContext();
-
     const login = async (email, password) => {
         try {
             setError(null);
             setIsPending(true);
-
             const url = "https://mandarin.api.weniv.co.kr/user/login";
-
             const loginData = {
                 user: {
                     email: email,
                     password: password,
                 },
             };
-
             const response = await fetch(url, {
                 method: "POST",
                 headers: {
@@ -28,9 +23,7 @@ export const useLogin = () => {
                 },
                 body: JSON.stringify(loginData),
             });
-
             const json = await response.json();
-
             if (json.user) {
                 localStorage.setItem("token", json.user.token);
                 dispatch({ type: "login", payload: json.user });
@@ -45,9 +38,7 @@ export const useLogin = () => {
         } catch (error) {
             setError(error);
             setIsPending(false);
-            console.log(error);
         }
     };
-
     return { error, isPending, login };
 };
