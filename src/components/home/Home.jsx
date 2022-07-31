@@ -5,7 +5,6 @@ import HomeMain from "./HomeMain";
 import Post from "../post/Post";
 import TopNav from "../ui/topNav/TopNav";
 import { HeaderStrong, HomeHeaderImg, MainContentsWrap } from "./Home.style";
-import LoadingPage from "../../pages/LoadingPage";
 
 const Home = () => {
     const [postData, setPostData] = useState();
@@ -15,12 +14,10 @@ const Home = () => {
         (async () => {
             const res = await getFeedPost();
             setPostData(res);
+            console.log(res);
         })();
     }, []);
 
-    if (postData === []) {
-        return <HomeMain />;
-    }
     return (
         <>
             <TopNav
@@ -35,7 +32,11 @@ const Home = () => {
             />
 
             <MainContentsWrap>
-                {postData?.data.posts ? <Post datas={postData.data.posts} /> : <LoadingPage />}
+                {postData && postData?.data.posts.length !== 0 ? (
+                    <Post datas={postData?.data.posts} />
+                ) : (
+                    <HomeMain />
+                )}
             </MainContentsWrap>
         </>
     );
