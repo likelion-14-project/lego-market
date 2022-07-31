@@ -9,10 +9,11 @@ function PostComment(props) {
                 <h2 className="visually_hidden">댓글 목록</h2>
                 <ul>
                     {props.feedComments
-                        .map((commentsArr, i) => {
+                        .map((commentsArr) => {
                             return (
                                 <CommentCard
-                                    key={i}
+                                    key={commentsArr.id}
+                                    // accountname={commentsArr.author.accountname}
                                     userProfile={commentsArr.author.image}
                                     userName={commentsArr.author.username}
                                     userCommet={commentsArr.content}
