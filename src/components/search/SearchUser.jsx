@@ -4,12 +4,8 @@ import { searchUser } from "../../hooks/useAxios";
 import SearchUserItem from "./SearchUserItem";
 import TopNav from "../ui/topNav/TopNav";
 import BackButton from "../ui/backButton/BackButton";
-import {
-    SearchInput,
-    SearchDivWrap,
-    ListWrap,
-    MainContentsWrap,
-} from "./SearchUser.style";
+import { SearchInput, SearchDivWrap, ListWrap, MainContentsWrap } from "./SearchUser.style";
+import LoadingPage from "../../pages/LoadingPage";
 
 const SearchUseHook = () => {
     const [userList, setUserList] = useState();
@@ -30,12 +26,7 @@ const SearchUseHook = () => {
         <>
             <TopNav
                 leftChild={<BackButton />}
-                centerChild={
-                    <SearchInput
-                        placeholder='계정검색'
-                        onChange={onChange}
-                    ></SearchInput>
-                }
+                centerChild={<SearchInput placeholder="계정검색" onChange={onChange}></SearchInput>}
             />
             <MainContentsWrap>
                 {userList ? (
@@ -53,7 +44,7 @@ const SearchUseHook = () => {
                         })}
                     </SearchDivWrap>
                 ) : (
-                    <div> loading ....</div>
+                    <LoadingPage />
                 )}
             </MainContentsWrap>
         </>
