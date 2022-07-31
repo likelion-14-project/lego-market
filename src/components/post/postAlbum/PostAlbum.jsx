@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { AlbumPostWrap, PostList, PostItem, PostImg, PostLink } from "./PostAlbum.style";
 
 const ProfilePostAlbum = ({ datas }) => {
     const [imgNum, setImgNum] = useState("0");
-
-    useEffect(() => {
-        console.log(datas);
-    }, [datas]);
 
     return (
         <AlbumPostWrap>

@@ -1,46 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import Modal from "../modal/modal/Modal";
 import AlertModal from "../modal/alertModal/AlertModal";
-import { useNavigate } from "react-router-dom";
+import { Section, Head, Wrapper, Button, IMG, DIV, P } from "./ProductList.style";
 
-const Wrapper = styled.div`
-    display: flex;
-    margin-top: 16px;
-    white-space: nowrap;
-    overflow: auto;
-`;
-const IMG = styled.img`
-    width: 140px;
-    height: 90px;
-    border-radius: 8px;
-`;
-
-const P = styled.p`
-    color: #ffa200;
-    font-size: 12px;
-    font-weight: 700;
-    margin-top: 4px;
-    text-align: left;
-`;
-const DIV = styled.div`
-    font-size: 14px;
-    font-weight: 400;
-    margin-top: 6px;
-    text-align: left;
-`;
-const Head = styled.div`
-    font-size: 16px;
-    font-weight: 700;
-`;
-const Section = styled.section`
-    margin: 20px 21px;
-`;
-const Button = styled.button`
-    background-color: white;
-    cursor: pointer;
-`;
 const ProductList = (props) => {
     const { profileAccountName, myAccountName } = props;
 
@@ -82,18 +45,14 @@ const ProductList = (props) => {
                 console.log(json);
                 const productLoad = async () => {
                     const token = window.localStorage.getItem("token");
-                    const res = await fetch(
-                        url + `/product/${profileAccountName}`,
-                        {
-                            method: "GET",
-                            headers: {
-                                Authorization: `Bearer ${token}`,
-                                "Content-type": "application/json",
-                            },
-                        }
-                    );
+                    const res = await fetch(url + `/product/${profileAccountName}`, {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-type": "application/json",
+                        },
+                    });
                     const json = await res.json();
-                    console.log(json);
                     setProducts(json.product);
                     setModal(false);
                     setAlertModal(false);
@@ -113,23 +72,22 @@ const ProductList = (props) => {
     useEffect(() => {
         const productLoad = async () => {
             const token = window.localStorage.getItem("token");
-            const res = await fetch(url + `/product/${profileAccountName}`, {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-type": "application/json",
-                },
-            });
-            const json = await res.json();
-            console.log(json);
-            setProducts(json.product);
+            if (profileAccountName) {
+                const res = await fetch(url + `/product/${profileAccountName}`, {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-type": "application/json",
+                    },
+                });
+                const json = await res.json();
+                setProducts(json.product);
+            }
         };
 
         // 함수 실행
         productLoad();
     }, [profileAccountName]);
-
-    const navigate = useNavigate();
 
     if (!products) {
         return <div></div>;
@@ -145,33 +103,26 @@ const ProductList = (props) => {
                             .toString()
                             .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                         return (
-                            <>
-                                <Button
-                                    onClick={() => {
-                                        if (
-                                            profileAccountName === myAccountName
-                                        ) {
-                                            setModal(!modal);
-                                            setTargetProduct(product.id);
-                                        } else {
-                                            window.open(product.link);
-                                        }
-                                    }}
-                                >
-                                    <IMG src={product.itemImage}></IMG>
-                                    <DIV>{product.itemName}</DIV>
-                                    <P>{product.price}원</P>
-                                </Button>
-                            </>
+                            <Button
+                                onClick={() => {
+                                    if (profileAccountName === myAccountName) {
+                                        setModal(!modal);
+                                        setTargetProduct(product.id);
+                                    } else {
+                                        window.open(product.link);
+                                    }
+                                }}
+                                key={`${product.id}`}
+                            >
+                                <IMG src={product.itemImage} alt={product.itemName}></IMG>
+                                <DIV>{product.itemName}</DIV>
+                                <P>{product.price}원</P>
+                            </Button>
                         );
                     })}
                 </Wrapper>
             </Section>
-            <Modal
-                modal={modal}
-                setModal={setModal}
-                modalMenuList={modalMenuList}
-            />
+            <Modal modal={modal} setModal={setModal} modalMenuList={modalMenuList} />
             <AlertModal
                 alertModal={alertModal}
                 setAlertModal={setAlertModal}

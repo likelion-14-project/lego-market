@@ -15,7 +15,6 @@ axios.interceptors.request.use(
 
 // 팔로우한 게시글 불러오기
 export const getFeedPost = async () => {
-    console.log("getFeedPost-Called");
     const config = {
         method: "GET",
         url: `/post/feed`,
@@ -46,7 +45,6 @@ export const searchUser = async (keyword) => {
 };
 // 좋아요 추가
 export const addLikeCall = async (postId) => {
-    console.log("addLikeCall");
     const config = {
         method: "POST",
         url: `/post/${postId}/heart`,
@@ -60,7 +58,6 @@ export const addLikeCall = async (postId) => {
 };
 // 좋아요 취소
 export const cancelLikeCall = async (postId) => {
-    console.log("cancelLikeCall");
     const config = {
         method: "DELETE",
         url: `/post/${postId}/unheart`,

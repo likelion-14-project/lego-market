@@ -29,7 +29,6 @@ const ProfilePost = ({ profileAccountName }) => {
         if (data) {
             setAccountName(data);
         } else if (profileAccountName) {
-            console.log("profileAccountName");
             setAccountName(profileAccountName);
         }
     }, [location, profileAccountName]);
@@ -40,7 +39,6 @@ const ProfilePost = ({ profileAccountName }) => {
                 const res = await getProfilePost(accountName);
                 if (res) {
                     setProfilePostData(res);
-                    console.log(res);
                 }
             })();
         }

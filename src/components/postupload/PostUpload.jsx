@@ -79,7 +79,6 @@ function PostUpload({ prevData }) {
         });
 
         const json = await res.json();
-        console.log(json);
         return json;
     }
     const onRemoveImg = (deleteUrl) => {
@@ -146,8 +145,8 @@ function PostUpload({ prevData }) {
                                     ? setDisabled(false)
                                     : setDisabled(true);
                             }}
+                            defaultValue={prevData?.post.content}
                         >
-                            {prevData?.post.content}
                         </PostTextarea>
                         <UploadImgIcon
                             htmlFor="uploadImg"

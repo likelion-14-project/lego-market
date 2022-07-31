@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../../../hooks/useAuthContext";
-import { useInfo } from "../../../hooks/useInfo";
 import {
     StyledUl,
     Messaageicon,
@@ -29,7 +27,6 @@ function UserButton(props) {
             }
         );
         const json = await response.json();
-        console.log(json);
         setIsUpdate(!isUpdate);
     }
     async function unfollow() {

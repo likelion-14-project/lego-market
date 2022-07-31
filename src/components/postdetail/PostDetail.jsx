@@ -84,9 +84,7 @@ function PostDetail() {
                 },
                 body: JSON.stringify(reqData),
             });
-
             const json = await res.json();
-            console.log(json);
             getComments();
         } catch (error) {
             console.error(error);
@@ -106,9 +104,7 @@ function PostDetail() {
                     "Content-type": "application/json",
                 },
             });
-
             const json = await res.json();
-            console.log(json.comments);
             setFeedComments(json.comments);
             return json;
         } catch (error) {
@@ -131,10 +127,7 @@ function PostDetail() {
             });
 
             const json = await res.json();
-            console.log(json);
-
             const tempArr = [];
-            console.log(tempArr);
             tempArr.push(json.post);
             setPost(tempArr);
         } catch (error) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useInfo } from "../hooks/useInfo";
 import Home from "../components/home/Home";
@@ -7,7 +7,6 @@ import SearchUserPage from "../pages/SearchUserPage";
 import LoginPage from "../pages/loginPage/LoginPage";
 import JoinPage from "../pages/joinPage/JoinPage";
 import WithNav from "./WithNav";
-
 import ProfilePage from "../pages/profilePage/ProfilePage";
 import ProfileModifyPage from "../pages/profileModifyPage/ProfileModifyPage";
 import PostUploadPage from "../pages/PostUploadPage";
@@ -63,68 +62,38 @@ const Router = () => {
 
     return (
         <BrowserRouter>
-            <Routes>
-                <Route path='/' element={<Splash tokenState={valid} />} />
-                <Route path='/loginpage' element={<LoginPage />} />
-                <Route path='/joinpage' element={<JoinPage />} />
-                {valid || (
-                    <>
-                        <></>
-                    </>
-                )}
-                {valid && (
-                    <>
-                        <Route
-                            path='/profileModify'
-                            element={<ProfileModifyPage />}
-                        />
-                        <Route path='/editpost' element={<PostUploadPage />} />
-                        <Route
-                            path='/post/:postid/edit'
-                            element={<PostModify />}
-                        />
-                        <Route
-                            path='/postdetail/:post_id'
-                            element={<PostDetailPage />}
-                        />
-                        <Route element={<WithNav />}>
-                            <Route path='/home' element={<Home />} />
-                            <Route
-                                path='/search'
-                                element={<SearchUserPage />}
-                            />
-                            <Route
-                                path='/myprofile'
-                                element={<ProfilePage />}
-                            />
-                            <Route
-                                path='/myprofile/:accountname'
-                                element={<ProfilePage />}
-                            />
-                            <Route
-                                path='/follow/:accountname/:type'
-                                element={<FollowPage />}
-                            />
-                            <Route
-                                path='/editpost'
-                                element={<PostUploadPage />}
-                            />
-                            <Route path='/chat/list' element={<ChatPage />} />
-                            <Route path='/chat/:id' element={<Chat />} />
-                            <Route
-                                path='/productlist'
-                                element={<ProductListPage />}
-                            />
-                            <Route
-                                path='/product'
-                                element={<AddProductListPage />}
-                            />
-                        </Route>
-                        <Route path='*' element={<NotFoundPage />} />
-                        <Route path='/notfound' element={<NotFoundPage />} />
-                    </>
-                )}
-            </Routes>
+                <Routes>
+                    <Route path="/" element={<Splash tokenState={valid} />} />
+                    <Route path="/loginpage" element={<LoginPage />} />
+                    <Route path="/joinpage" element={<JoinPage />} />
+                    {valid || (
+                        <>
+                            <></>
+                        </>
+                    )}
+                    {valid && (
+                        <>
+                            <Route path="/profileModify" element={<ProfileModifyPage />} />
+                            <Route path="/editpost" element={<PostUploadPage />} />
+                            <Route path="/post/:postid/edit" element={<PostModify />} />
+                            <Route path="/postdetail/:post_id" element={<PostDetailPage />} />
+                            <Route path="/" element={<WithNav />}>
+                                <Route path="/home" element={<Home />} />
+                                <Route path="/search" element={<SearchUserPage />} />
+                                <Route path="/myprofile" element={<ProfilePage />} />
+                                <Route path="/myprofile/:accountname" element={<ProfilePage />} />
+                                <Route path="/follow/:accountname/:type" element={<FollowPage />} />
+                                <Route path="/editpost" element={<PostUploadPage />} />
+                                <Route path="/chat/list" element={<ChatPage />} />
+                                <Route path="/chat/:id" element={<Chat />} />
+                                <Route path="/productlist" element={<ProductListPage />} />
+                                <Route path="/product" element={<AddProductListPage />} />
+                            <Route path="*" element={<NotFoundPage />} />
+                            <Route path="/notfound" element={<NotFoundPage />} />
+                            </Route>
+                        </>
+                    )}
+                </Routes>
         </BrowserRouter>
     );
 };
