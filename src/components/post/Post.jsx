@@ -127,7 +127,9 @@ const Post = ({ datas, reqRefetch }) => {
                                             <li key={v}>
                                                 <PostImg
                                                     src={v}
-                                                    alt={v.split(/^(https?)\/\//)}
+                                                    alt={v.split(
+                                                        /^(https?)\/\//
+                                                    )}
                                                     loading="lazy"
                                                 />
                                             </li>
@@ -151,14 +153,20 @@ const Post = ({ datas, reqRefetch }) => {
                                 postId={v.id}
                             />
                             <PostDate>
-                                {v.createdAt.slice(0, 10).replace("-", "년 ").replace("-", "월 ") +
-                                    "일 "}
+                                {v.createdAt
+                                    .slice(0, 10)
+                                    .replace("-", "년 ")
+                                    .replace("-", "월 ") + "일 "}
                             </PostDate>
                         </PostSection>
                     </FeedArticle>
                 );
             })}
-            <Modal modal={modal} setModal={setModal} modalMenuList={modalMenuList} />
+            <Modal
+                modal={modal}
+                setModal={setModal}
+                modalMenuList={modalMenuList}
+            />
             <AlertModal
                 alertModal={alertModal}
                 setAlertModal={setAlertModal}
