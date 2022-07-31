@@ -2,7 +2,6 @@ import axios from "axios";
 // baseURL 설정
 axios.defaults.baseURL = "https://mandarin.api.weniv.co.kr";
 axios.defaults.headers["content-Type"] = "application/json";
-
 // 요청하기전에 헤더에 토큰 추가
 axios.interceptors.request.use(
     function (config) {
@@ -94,7 +93,7 @@ export const deletePost = async (postId) => {
     };
     try {
         const response = await axios.request(config);
-        return response.data;
+        return response;
     } catch (error) {
         return error;
     }
