@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "../../../hooks/useAuthContext";
+import { useInfo } from "../../../hooks/useInfo";
 import {
     StyledUl,
     Messaageicon,
@@ -9,11 +11,10 @@ import {
 } from "./UserButton.style";
 
 function UserButton(props) {
-    const { profileAccountName } = props;
-    const [isFollow, setIsFollow] = useState(false);
-    const toggle = () => {
-        setIsFollow((isFollow) => !isFollow);
-    };
+    const { profileAccountName, profile, setIsUpdate, isUpdate } = props;
+
+    const [isFollow, setIsFollow] = useState(profile.isfollow);
+
     async function follow() {
         const url = "https://mandarin.api.weniv.co.kr";
         const token = window.localStorage.getItem("token");
@@ -29,7 +30,7 @@ function UserButton(props) {
         );
         const json = await response.json();
         console.log(json);
-        toggle();
+        setIsUpdate(!isUpdate);
     }
     async function unfollow() {
         const url = "https://mandarin.api.weniv.co.kr";
@@ -46,7 +47,7 @@ function UserButton(props) {
         );
         const json = await response.json();
         console.log(json);
-        toggle();
+        setIsUpdate(!isUpdate);
     }
     return (
         <StyledUl>

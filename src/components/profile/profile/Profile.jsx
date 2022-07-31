@@ -22,10 +22,12 @@ import {
     FollowingWrapper,
     FollowingLink,
 } from "./Profile.style";
+import { useInfo } from "../../../hooks/useInfo";
 
 function Profile(props) {
     const { profileAccountName, myAccountName } = props;
-    const { error, profile, isPending, getProfile } = useProfile();
+    const { error, profile, isPending, getProfile, isUpdate, setIsUpdate } =
+        useProfile();
     const [modal, setModal] = useState(false);
     const [alertModal, setAlertModal] = useState(false);
 
@@ -55,7 +57,7 @@ function Profile(props) {
 
     useEffect(() => {
         getProfile(profileAccountName);
-    }, [profileAccountName]);
+    }, [profileAccountName, isUpdate]);
 
     return (
         <>
@@ -83,6 +85,9 @@ function Profile(props) {
                                 ) : (
                                     <UserButton
                                         profileAccountName={profileAccountName}
+                                        profile={profile}
+                                        isUpdate={isUpdate}
+                                        setIsUpdate={setIsUpdate}
                                     />
                                 )}
 
