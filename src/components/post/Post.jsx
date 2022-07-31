@@ -74,8 +74,12 @@ const Post = ({ datas, reqRefetch }) => {
     const deleteButton = {
         content: "삭제",
         onClick: () => {
-            deletePost(selectedPostId);
-            getRefetch();
+            deletePost(selectedPostId).then((res) => {
+                if (res) {
+                    console.log(res.data.message);
+                    getRefetch();
+                }
+            });
             setModal(false);
             setAlertModal(false);
         },

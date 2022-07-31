@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Post from "../post/Post";
 import PostAlbum from "./PostAlbum";
-import { getProfilePost} from "../../hooks/useAxios";
+import { getProfilePost } from "../../hooks/useAxios";
 import { useLocation } from "react-router-dom";
 import {
     PostTypeControlDiv,
@@ -29,19 +29,23 @@ const ProfilePost = ({ profileAccountName }) => {
         if (data) {
             setAccountName(data);
         } else if (profileAccountName) {
+            console.log("profileAccountName");
             setAccountName(profileAccountName);
         }
     }, [location, profileAccountName]);
 
     useEffect(() => {
-        (async () => {
-            const res = await getProfilePost(accountName);
-            if (res) {
-                setProfilePostData(res);
-                console.log(res);
-            }
-        })();
-    }, [accountName,refetch]);
+        if (accountName) {
+            (async () => {
+                const res = await getProfilePost(accountName);
+                if (res) {
+                    setProfilePostData(res);
+                    console.log(res);
+                }
+            })();
+        }
+    }, [accountName, refetch]);
+
     return (
         <>
             <PostTypeControlDiv>
