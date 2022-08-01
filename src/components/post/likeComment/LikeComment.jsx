@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { addLikeCall, cancelLikeCall, getPostInfo } from "../../../hooks/useAxios";
+import {
+    addLikeCall,
+    cancelLikeCall,
+    getPostInfo,
+} from "../../../hooks/useAxios";
 import {
     LikeCommentDiv,
     LikeButton,
@@ -39,8 +43,10 @@ const LikeComment = ({ postId }) => {
                     <LIkeCommentIcon
                         src={
                             _heartState
-                                ? process.env.PUBLIC_URL + "/icons/icon-heart-active.png"
-                                : process.env.PUBLIC_URL + "/icons/icon-heart.png"
+                                ? process.env.PUBLIC_URL +
+                                  "/icons/icon-heart-active.png"
+                                : process.env.PUBLIC_URL +
+                                  "/icons/icon-heart.png"
                         }
                         onClick={controlHeart}
                         alt={_heartState ? "좋아요취소" : "좋아요"}
@@ -50,7 +56,13 @@ const LikeComment = ({ postId }) => {
                 <LikeCommentCounter>{_heartCount}</LikeCommentCounter>
             </LikeButton>
             <LinkToPost to={`/postdetail/${postId}`}>
-                <LIkeCommentIcon src={process.env.PUBLIC_URL + "/icons/icon-message-circle.png"} alt="덧글로 이동"/>
+                <LIkeCommentIcon
+                    src={
+                        process.env.PUBLIC_URL +
+                        "/icons/icon-message-circle.png"
+                    }
+                    alt="덧글로 이동"
+                />
                 <LikeCommentCounter>{_commentCount}</LikeCommentCounter>
             </LinkToPost>
         </LikeCommentDiv>
