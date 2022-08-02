@@ -1,229 +1,442 @@
-# 레고 마켓
+# <레고 마켓 최종 발표자료>
 
-### 🙏🏼 중간 피드백 요청 사항입니다..
+## 1. 프로젝트 소개
 
-<details>
-<summary>현섭: 아주아주 완전 완전 냉정하게 피드백 부탁드립니다..!!</summary>
-<div markdown="1">
-<ol>
-<li>useAxios를 제외한 커스텀훅들을 만들어봤는데 제대로 만들고 사용하고 있는것인지 궁금합니다.</li>
-<li>또한, 커스텀 훅을 포함한 맡은 부분에 대해서 try catch를 사용한 에러처리가 잘되어있는지 궁금합니다.</li>
-<li>제가 작성한 코드들에 대해서 리렌더링이 자주 일어나게되는거 같은데,, 조금더 효율적인 방법이 있을지 궁금합니다.</li>
-<ul>
-</div>
-</details>
-<details>
-<summary>재모</summary>
-<div markdown="1">
-전체적으로 그냥 한번 체크해주시면 좋겠습니다
-</div>
-</details>
-</details>
-<details>
-<summary>원형: 아주아주 완전 완전 냉정하게 피드백 부탁드립니다..!! </summary>
-<div markdown="1">
-<ol>
-<li> Splash 에서 토큰확인 후 /home 으로 넘어가는 부분이 있는데 이 부분도 라우터파일에서 처리를 해야하는지 궁금합니다. </li>
-<li> 토큰, baseURL 을 따로 설정해서 컴포넌트에서는 url, 경로만 config 로 넘겨서 값만 받아오고 싶었고  axios 공부하면서 intercept 도 사용해보고 싶어서 useAxios 를 만들어서 썼습니다. </li>
-(이 부분은 일단 공부하는 목적에서 팀원분들 다 따로 구현했습니다) 
-최종적으로는 api 호출을 한 파일에서 관리해야 한다고 하신점에서 이 방법은 옳지 않은것 같은데 이렇게 useAxios 를 따로 사용하는 예시에는 어떤것이 있는지 궁금합니다.
-<li>Navbar.jsx 안에서 NavFooterItem 으로 컴포넌트를 따로 빼서 구현했는데 불필요한 분리였는지 알고싶습니다.</li>
-</ol>
-</div>
-</details>
-<details>
-<summary>혜빈 </summary>
-<div markdown="1">
-<ul>
-<li> 구글링으로 이것저것 추가하며 구현되는 대로,,,하드코딩으로만 구현하였는데,, 어떤 코드 부분을 개선해야 할지 전반적으로 피드백 받고 싶습니다.. </li>
-<ul>
-</div>
-</details>
+![레고마켓 썸네일.png](readmeImg/logomarket/titleImage.png)
 
+### 1.1💡 프로젝트 명: 레고마켓
 
+> **🔗 배포 URL:** [https://fir-project-3397b.web.app](https://fir-project-3397b.web.app/)
 
-<br>
-<hr>
+```jsx
+🟥  SNS와 마켓 서비스를 제공합니다.
 
-### [배포 URL]
+🟨  레고를 판매, 홍보할 수 있습니다.
 
--   URL:
--   테스트 계정
-    -   🧑🏻‍💻 ID : test13@test.com
-    -   🔐 PW : 123123
+🟩  팔로우를 통해 게시물을 구경하며, 원하는 게시물에 '좋아요'를 누르거나 댓글을 달수 있습니다.
 
-<br>
-
-### [ 프로젝트 설치 및 실행 방법 ]
-
-```
-npm install
-npm start
+🟦  레고가 없어도 플랫폼을 이용할 수 있습니다.
 ```
 
-<br>
+## 1.2 개발 환경
 
-## 💡 개요
-
-```
-🟥  레고마켓은 레고에 진심인 사람들의 SNS와 마켓 서비스를 제공합니다.
-
-🟨  판매자는 자신의 스토어에서 판매하고 있는 레고를 등록하여 판매 또는 홍보할 수 있습니다.
-
-🟩  사용자 간의 팔로워, 팔로우 기능으로 서로 게시물을 구경하며, 원하는 게시물에 '좋아요'를 누르거나 댓글을 달수 있습니다.
-
-🟦  물론 레고가 없는 사용자도 플랫폼의 모든 기능을 사용할 수 있습니다.
-
-```
-
- <br>
- 
-<div align='left'>
-<h2> 👨‍👨‍👧‍👦 팀원 소개 </h2>
-
-|                                                               **FE 이현섭**                                                               |                                                    **FE 박재모**                                                     |                                                        **FE 이원형**                                                         |                                                  **FE 우혜빈**                                                  |
-| :---------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
-|                           <img src="https://avatars.githubusercontent.com/u/94344796?v=4" height=180 width=180>                           |                <img src="https://avatars.githubusercontent.com/u/98381294?v=4" height=180 width=180>                 |                    <img src="https://avatars.githubusercontent.com/u/54429762?v=4" height=180 width=180>                     |              <img src="https://avatars.githubusercontent.com/u/98005356?v=4" height=180 width=180>              |
-|                                        **github**: [leehyeonseop](https://github.com/leehyeonseop)                                        |                                 **github**: [Jamgoori](https://github.com/Jamgoori)                                  |                                    **github**: [bigfile57](https://github.com/bigfile57)                                     |                             **github**: [Hyebin-woo](https://github.com/Hyebin-woo)                             |
-| ![FrontEnd](https://img.shields.io/badge/FrontEnd-3f97fb) ![Development%20leader](https://img.shields.io/badge/Development%20leader-f8b62d) | ![FrontEnd](https://img.shields.io/badge/FrontEnd-3f97fb) ![Planning%20leader](https://img.shields.io/badge/-Planning%20leader-f67280) | ![FrontEnd](https://img.shields.io/badge/FrontEnd-3f97fb)![Team%20leader](https://img.shields.io/badge/-Team%20leader-green) | ![FrontEnd](https://img.shields.io/badge/FrontEnd-3f97fb)![Design%20leader](https://img.shields.io/badge/-Design%20leader-orange) |
-
-</div>
-<br>
-
-## ⚙️ 기술
-
-**➡️ FrontEnd**
-
+### ⚙️   사용기술 
 <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/styled-components-DB7093?style=for-the-badge&logo=styled-components&logoColor=black">
 
-**➡️ BackEnd** 제공된 API 사용
+### 배포
+<img src="https://img.shields.io/badge/firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white">
 
-<br>
+### **🔎   이슈 관리**
 
-## 🔎 이슈 관리
+- [🔗 GitHub](https://github.com/likelion-14-project/lego-market), [🔗 GitHub_Project](https://github.com/likelion-14-project/lego-market/projects/1), [🔗 GitHub_issues](https://github.com/likelion-14-project/lego-market/issues)
+- Notion: 기획, 코딩 컨벤션, 회의록
 
--   [🔗 GitHub](https://github.com/likelion-14-project/lego-market), [🔗 GitHub_Project](https://github.com/likelion-14-project/lego-market/projects/1), [🔗 GitHub_issues](https://github.com/likelion-14-project/lego-market/issues)
--   Notion
--   Figma
+# 2. 팀원 소개
 
-<br>
-<br>
+![팀원.PNG](readmeImg/temprofile.png)
 
-## 💡 요구사항
+# 3. 기능구현 및 역할 분담
 
-### [기능 구현]
+![역활분담](readmeImg/logomarket/역활분배.png)
 
-    - 🔐 인증
-        - 로그인
-        - 회원가입
-        - 회원 정보 수정
-        - 유효성 평가
+# 4. 핵심기능 시연
 
-    - 🎁 상품
-        - 상품 목록 / 등록 / 수정 / 삭제
-        - 이미지 파일 업로드 / 수정 / 미리보기
-        - 유효성 평가
+| splash                                                 | 회원가입                                                             |
+| ------------------------------------------------------ | -------------------------------------------------------------------- |
+| ![splash.gif](/readmeImg/logomarket/splash.gif)        | ![회원가입후로그인 2.gif](/readmeImg/logomarket/join.gif) |
+| 로그인                                                 | 로그아웃                                                             |
+| ![로그인](/readmeImg/logomarket/login.gif)             | ![로그아웃](/readmeImg/logomarket/logout.gif)                        |
+| 프로필수정                                             | 상품등록                                                             |
+| ![프로필수정](/readmeImg/logomarket/modifyProfile.gif) | ![상품등록](/readmeImg/logomarket/uploadItem.gif)                    |
+| 게시글등록                                             | 채팅                                                                 |
+| ![게시글등록](/readmeImg/logomarket/uploadPost.gif)    | ![채팅](/readmeImg/logomarket/chat.gif)                              |
+| 유저검색                                               | 팔로우                                                               |
+| ![유저검색](/readmeImg/logomarket/searchUser.gif)      | ![팔로우](/readmeImg/logomarket/userFollow.gif)                      |
+| 상품삭제                                               | 게시글삭제                                                           |
+| ![상품삭제](/readmeImg/logomarket/deleteItem.gif)      | ![게시글삭제](/readmeImg/logomarket/deletePost.gif)                  |
+|                                                        |                                                                      |
+|                                                        |                                                                      |
 
-    - 📋 게시글
-        - 게시글 목록 / 등록 / 수정 / 삭제
-        - 다중 이미지 파일 업로드 / 수정 / 미리보기
+## 4. 폴더 구조
 
-    - 💬 댓글
-        - 댓글 등록 / 삭제
-
-    - 🔍 검색
-
-    - 👬 follow / unfollow
-
-    - ❤️  좋아요
-
-<br>
-<br>
- <h2> 🧩 역할 분담</h2>
- 
- - 저희 프로젝트 팀은 페이지 별로 구현해서 합치는 방향으로 분담하였습니다.
-
--   공통으로 사용되는 컴포넌트의 경우(버튼, 인풋양식 등등) 공통분담으로 진행했습니다.
-
-<br>
-
-### 🧑🏻‍💻 이현섭 
-- 사용자 프로필 페이지(사용자 정보)
-- 이메일 로그인 페이지 
-- 회원가입 페이지
-- 내 프로필 수정 페이지
-- 기본 모달, Alert 모달
-- 404페이지
-- 유저정보 context 관리
-- Custom Hook 제작 
-
-<br>
-
-### 🧑🏻‍💻 박재모 
-- 로그인 페이지 구현
-- 상품 등록, 수정, 삭제
-- 프로필에서 상품리스트 불러오기
-- 팔로우 / 언팔로우 기능 구현
-<br>
-
-### 🧑🏻‍💻 이원형 
-
--   서비스 접속 초기화면
--   로그인화면 모달창(sns로그인, 로그인, 이메일회원가입)
--   홈 피드페이지
--   검색페이지 + 검색기능
--   사용자 프로필 페이지(공통분담)에서 게시글 섹션(목록형, 앨범형 버튼 및 기능 포함), 팔로우기능
--   하단 탭 메뉴
--   게시글 하단의 좋아요 버튼, 좋아요 기능
-
-<br>
-
-### 👩🏻‍💻 우혜빈 
-
--   전반적인 디자인 기획 
--   게시글과 이미지 업로드 기능 구현
--   댓글 추가, 수정, 삭제 기능 구현
--   팔로우 / 팔로잉 목록 페이지 구현
--   채팅창 ui구현
-
-<br>
-<br>
-<hr>
-
-## 🌲 페이지 경로, 파일 구조
-```
+```jsx
 📦Lego-Market
  ┣ 📂 public
- ┃ ┣ 📂 images               // 이미지 파일 폴더
- ┃ ┣ 📂 icons                // 아이콘 파일 폴더
+ ┃ ┣ 📂 images           // 이미지 파일 폴더
+ ┃ ┣ 📂 icons            // 아이콘 파일 폴더
  ┃ ┗ index.html
- ┃ 📦src
- ┃ ┣ 📂components       //라우터에 적용할 페이지에 포함될 컴포넌트들을 용도마다 폴더로 나눠서 관리
- ┃ ┃ ┣ 📂addproduct
- ┃ ┃ ┣ 📂chat
- ┃ ┃ ┣ 📂comment
- ┃ ┃ ┣ 📂follow
- ┃ ┃ ┣ 📂home
- ┃ ┃ ┣ 📂join
- ┃ ┃ ┣ 📂login
- ┃ ┃ ┣ 📂modal
- ┃ ┃ ┣ 📂postupload
- ┃ ┃ ┣ 📂productlist
- ┃ ┃ ┣ 📂profile
- ┃ ┃ ┣ 📂search
- ┃ ┃ ┗ 📂ui             // 공통으로 사용되는 컴포넌트 폴더
- ┃ ┣ 📂context          // 로그인 한 사용자 정보를 담기 위한 context 파일 관리 폴더
- ┃ ┣ 📂hooks            // 만들어서 사용한 훅 폴더
- ┃ ┣ 📂pages            // 페이지 컴포넌트 
- ┃ ┣ 📂routes           // 라우터 파일 관리
- ┃ ┣ 📂styles           // 전역 styled-component 관리
- ┃ ┣ 📂utils            // 기능 함수 관리
- ┃ ┣ 📜App.jsx
- ┃ ┣ 📜Portal.js
- ┃ ┗ 📜index.js
+ ┃ 📦 src
+ ┃ ┣ 📂 components       //스타일도 분리했기 때문에 각각 용도별로 폴더를 나눠서 관리
+ ┃ ┃ ┣ 📂 addproduct
+ ┃ ┃ ┣ 📂 chat
+ ┃ ┃ ┣ 📂 comment
+ ┃ ┃ ┣ 📂 follow
+ ┃ ┃ ┣ 📂 home
+ ┃ ┃ ┣ 📂 join
+ ┃ ┃ ┣ 📂 login
+ ┃ ┃ ┣ 📂 modal
+ ┃ ┃ ┣ 📂 post
+ ┃ ┃ ┣ 📂 postdetail
+ ┃ ┃ ┣ 📂 postModify
+ ┃ ┃ ┣ 📂 postupload
+ ┃ ┃ ┣ 📂 productlist
+ ┃ ┃ ┣ 📂 profile
+ ┃ ┃ ┣ 📂 search
+ ┃ ┃ ┗ 📂 ui             // 공통으로 사용되는 컴포넌트 폴더
+ ┃ ┣ 📂 context          // 로그인 한 사용자 정보를 담기 위한 context 파일 관리 폴더
+ ┃ ┣ 📂 hooks            // 만들어서 사용한 훅 폴더
+ ┃ ┣ 📂 pages            // 페이지 컴포넌트
+ ┃ ┣ 📂 routes           // 라우터 파일 관리
+ ┃ ┣ 📂 styles           // 전역 styled-component 관리
+ ┃ ┣ 📜 App.jsx
+ ┃ ┣ 📜 Portal.js
+ ┃ ┗ 📜 index.js
  ┣ 📜 .gitignore
  ┣ 📜 README.md
  ┣ 📜 package-lock.json
  ┗ 📜 package.json
 ```
-### 🙌 이슈 및 해결 (추가 예정)
+
+## 5. 주요코드
+
+### 5.1 **페이지마다 있는 UI 재사용 하도록 구현**
+
+<hr>
+
+상단 네비게이션 바인 TopNav와 재사용 예
+
+```jsx
+function TopNav(props) {
+    const { leftChild, centerChild, rightChild } = props;
+
+    return (
+        <Wrapper>
+            <Left>{leftChild}</Left>
+            <Center>{centerChild}</Center>
+            <Right>{rightChild}</Right>
+        </Wrapper>
+    );
+}
+```
+
+Home페이지에서 재사용한 TopNav 컴포넌트
+
+```jsx
+<TopNav
+    leftChild={<HeaderStrong>레고마켓피드</HeaderStrong>}
+    rightChild={
+        <HomeHeaderImg
+            src={process.env.PUBLIC_URL + "/icons/icon-search.png"}
+            alt="피드찾기"
+            onClick={() => navigate("/search")}
+        />
+    }
+/>
+```
+
+![home피드상단](/readmeImg/logomarket/상단nav1.png)
+
+Search페이지에서 재사용한 TopNav 컴포넌트
+
+``` jsx
+<TopNav
+    leftChild={<BackButton />}
+    centerChild={<SearchInput placeholder="계정검색" onChange={onChange}></SearchInput>}
+/>
+```
+
+![search페이지 상단](/readmeImg/logomarket/상단nav2.png)
+
+### 5.2 **context를 사용하여 로그인 한 사용자 정보를 관리**
+
+로그인 요청 또는 프로필 수정 시 서버에서 오는 데이터를 **context**에 저장해서 **Props Driling**을 피하고 어느 컴포넌트에서든 로그인한 유저의 정보를 사용할 수 있게 하였습니다.
+
+```jsx
+import { createContext, useReducer } from "react";
+
+const AuthContext = createContext();
+
+const authReducer = (state, action) => {
+    switch (action.type) {
+        case "login":
+            return { ...state, user: action.payload };
+        case "modify":
+            return { ...state, user: action.payload };
+        default:
+            return state;
+    }
+};
+
+const AuthContextProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(authReducer, {
+        user: null,
+    });
+
+    return (
+        <AuthContext.Provider value={{ ...state, dispatch }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
+
+export { AuthContext, authReducer, AuthContextProvider };
+
+```
+
+```jsx
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+
+export const useAuthContext = () => {
+    const context = useContext(AuthContext);
+    return context;
+};
+```
+
+저장해둔 user 정보를 프로필 페이지에서 사용한 경우입니다.
+
+```jsx
+
+import React from "react";
+import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import { useAuthContext } from "../../hooks/useAuthContext";
+
+import Profile from "../../components/profile/profile/Profile";
+import ProfilePost from "../../components/post/profilePost/ProfilePost";
+import ProductList from "../../components/productlist/ProductList";
+
+const ProfileMainWrap = styled.div`
+    min-width: 390px;
+    width: 100%;
+    height: calc(100% - 61px);
+    overflow-y: auto;
+    overflow-x: hidden;
+`;
+
+function ProfilePage() {
+    const { accountname } = useParams();
+    const { user } = useAuthContext();
+
+    let profileAccountName;
+    let myAccountName;
+    if (user) {
+        myAccountName = user.accountname;
+
+        accountname === undefined
+            ? (profileAccountName = myAccountName)
+            : (profileAccountName = accountname);
+    }
+
+    return (
+        <ProfileMainWrap>
+            <Profile
+                profileAccountName={profileAccountName}
+                myAccountName={myAccountName}
+            />
+            <ProductList
+                profileAccountName={profileAccountName}
+                myAccountName={myAccountName}
+            />
+            <ProfilePost profileAccountName={profileAccountName} />
+        </ProfileMainWrap>
+    );
+}
+
+export default ProfilePage;
+
+```
+
+
+### 5.3 **API 요청**
+
+비슷한 API 요청들을 훅으로 구현해서 사용하는 방법과 요청들을 하나의 파일에 모아서 사용하는 방식 두 가지로 진행했습니다. 이건 여러 방법들을 시도해 보자는 학습적인의도로 진행했습니다.
+
+요청을 모아서 사용하는 방법에선 아래와 같이 API 주소를 기본값으로 설정해서 따로 입력하지 않도록 했습니다. 또 요청을 하는 시점에 토큰 값을 조회해서 헤더에 넣어주도록 했습니다.
+
+```jsx
+// /src/componenets/hooks/useAxios.jsx 파일
+import axios from "axios";
+// baseURL 설정
+axios.defaults.baseURL = "https://mandarin.api.weniv.co.kr";
+axios.defaults.headers["content-Type"] = "application/json";
+// 요청하기전에 헤더에 토큰 추가
+axios.interceptors.request.use(
+    function (config) {
+        config.headers["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+```
+
+요청 메서드와 경로를 넣어서 값을 반환하는 함수를 하나의 요청마다 만들어서 사용했습니다.
+
+```jsx
+// 팔로우한 게시글 불러오기
+export const getFeedPost = async () => {
+    console.log("getFeedPost-Called");
+    const config = {
+        method: "GET",
+        url: `/post/feed`,
+    };
+    try {
+        const response = await axios.request(config);
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+};
+```
+
+만든 함수는 아래와 같이 필요한 컴포넌트에서 import 해서 async-await 로 반환값을 state 변수로 관리해 사용 했습니다.
+
+```jsx
+import { getFeedPost } from "../../hooks/useAxios";
+....
+
+const Home = () => {
+    const [postData, setPostData] = useState();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        (async () => {
+            const res = await getFeedPost();
+            setPostData(res);
+        })();
+    }, []);
+```
+
+유사한 요청을 훅으로 만들어 사용한 경우입니다.
+대표적으로 댓글, 게시물, 상품의 삭제 요청이 동일해서 재사용하면 좋을 거 같아 아래와 같이 구현했습니다.
+
+```jsx
+import { useState } from "react";
+
+export const useDelete = () => {
+    const [isUpdate, setIsUpdate] = useState(false);
+    const remove = async (addUrl) => {
+        try {
+            const token = localStorage.getItem("token");
+            const serverUrl = "https://mandarin.api.weniv.co.kr";
+            const url = serverUrl + addUrl;
+
+            const res = await fetch(url, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-type": "application/json",
+                },
+            });
+            const json = await res.json();
+            console.log(json);
+            setIsUpdate(!isUpdate);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    return { remove, isUpdate, setIsUpdate };
+};
+```
+
+댓글삭제 기능에서 아래와 같이 사용했습니다.
+
+```jsx
+const [deleteAlertModal, setDeleteAlertModal] = useState(false);
+
+...
+
+const deleteAlertButton = {
+        content: "삭제",
+        onClick: () => {
+            remove(`/post/${post_id}/comments/${comment_id}`); 
+            // 클릭 시 삭제요청
+            setModal(false);
+            setDeleteAlertModal(false);
+   },
+};
+```
+
+### 5.4 **하단 네비게이션 바**
+
+하단 네비게이션 바를 만들었는데 필요한 페이지, 필요하지 않은 페이지들이 있어서 필요한 컴포넌트에만 넣어서 사용해야 하나 고민하다가 라우팅중첩을 이용해 아래처럼 필요한 페이지들만 묶어서 구현했습니다.
+
+```jsx
+const WithNav = () => {
+  return (
+      <>
+          <NavBar />
+          <Outlet />
+      </>
+  );
+};
+export default WithNav
+```
+
+```jsx
+<Route element={<WithNav />}>
+    <Route path='/home' element={<Home />} />
+    <Route path='/search' element={<SearchUserPage/>}/>
+    <Route path='/myprofile' element={<ProfilePage/>} />
+    <Route path='/myprofile/:accountname' element={<ProfilePage/>} />
+    <Route path='/follow/:accountname/:type' element={<FollowPage/>}/>
+    <Route path='/editpost' element={<PostUploadPage/>} /> 
+    <Route path='/chat/list' element={<ChatPage/>} />
+    <Route path='/chat/:id' element={<Chat/>} />                                     
+    <Route path='/productlist' element={<ProductListPage/>} />                 
+    <Route  path='/product'  element={<AddProductListPage/>} />                                   
+</Route>
+```
+
+## 6. 이슈 및 해결
+
+1. 게시글 삭제 “ 왜 바로 삭제 안돼,,”
+    - 게시글을 삭제 시 삭제가 바로 반영이 되지 않아서 window.location.onload() 로 새로고침을 강제로 해줬습니다. 그런데 삭제할 때마다 딜레이가 되어 문제가 발생
+    - 고민하다가 삭제 버튼을 누르는 시점에 유저의 데이터를 가져오는 컴포넌트(ProfilePost)에 데이터를 갱신하도록 refetch state 변수를 설정하여 해결
+2. SearchUser 페이지 “키워드를 입력하기 전에 결과 뜨지 않도록 하기”
+    - SearchUser 페이지에 들어갔을 때 키워드를 입력하지 않아서 모든 유저들을 불러오는 문제가 있었는데
+        전달하는 값이 “ ” 빈 값일 때 값을 반환하지 않도록 false를 넣어줘서 해결했습니다.
+
+    ```jsx
+    export const searchUser = async (keyword) => {
+        const config = {
+            method: "GET",
+            url: `/user/searchuser/`,
+            params: {
+                keyword: keyword === "" ? false : keyword,
+            },
+        };
+        try {
+            const response = await axios.request(config);
+            return response;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    };
+    ```
+
+3. headers 오타 “왜 에러가 안 날까?”
+    - api 요청 시 headers 설정에서 “**s”**를 넣지 않았는데 에러 표시가 뜨지 않아서 오류를 찾는데 많은 시간이 지체되었던 점.
+
+## 7. 프로젝트 후기
+
+### 아쉬운점
+
+- 프로젝트 초반 깃 활용 어려움으로, 깃 플로우 전략 늦게 사용 (main - develop - feature 3가지만 써서 제대로 사용하진 못했다)
+- 잦은 깃 충돌로 인해 많은 시간 지체
+- 기능 구현을 최우선으로 진행하여 문서화를 자세하게 하지못함
+- 프로젝트 막바지에 스타일 컴포넌트 분리 작업
+
+### 잘한점
+
+- 99% 비대면 회의 진행: 수업 후, 매주 평일 2시간씩 회의하며 작업 내용 공유 및 일정 관리
+- 매일 서로 해결되지 않는 문제들을 공유하며 함께 문제 해결, 리액트 스터디를 진행하여 개념 이해
+
+### 계획
+
+- 8월 둘째 주까지 추가적으로 남은 기능 구현(게시물수정, 신고)와 최적화를 위해 계속해서 업데이트 예정
+    최적화 중에 큰 용량의 이미지을 받았을 때 이미지를 리사이징해서 사용하는 방법을 먼저 적용해 보고 싶습니다.
+
